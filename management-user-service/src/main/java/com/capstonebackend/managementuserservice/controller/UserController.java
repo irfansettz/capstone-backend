@@ -155,7 +155,7 @@ public class UserController {
     public ResponseEntity<UserResponseDTO> addUserDepartment(@RequestBody UserDepartmentDTO userDept){
         // get data
         UserEntity user = userServices.getUserByUuid(userDept.getUseruuid());
-        DepartmentEntity department = departmentService.getDeptByUuid(userDept.getDeptartmentuuid());
+        DepartmentEntity department = departmentService.getDeptByUuid(userDept.getDepartmentuuid());
 
         // save data
         UserDepartmentEntity userDepartment = new UserDepartmentEntity(user.getId(), department.getId());
@@ -196,7 +196,30 @@ public class UserController {
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-    
+
+    @DeleteMapping("/departments")
+    public ResponseEntity<UserResponseDTO> deleteUserDepartment(@RequestParam String useruuid, @RequestParam String departmentuuid){
+        // get data
+        UserEntity user = userServices.getUserByUuid(useruuid);
+        DepartmentEntity department = departmentService.getDeptByUuid(departmentuuid);
+        UserDepartmentEntity userDepartment = userDepartmentService.getDeptByUseridAndDeptid(user.getId(), department.getId());
+
+        // delete user department
+        userDepartmentService.deleteById(userDepartment.getId());
+
+        // make response
+        UserDTO userDTO = fnGetUserByUuid(useruuid);
+
+        // return response
+        UserResponseDTO response = new UserResponseDTO();
+        response.setData(List.of(userDTO));
+        response.setCode(201);
+        response.setStatus("success");
+        response.setMessage("deleted");
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
     public UserDTO fnGetUserByUuid(String uuid){
         UserEntity user = userServices.getUserByUuid(uuid);
 

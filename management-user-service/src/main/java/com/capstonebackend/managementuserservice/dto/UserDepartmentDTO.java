@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserDepartmentDTO {
     private String useruuid;
-    private String deptartmentuuid;
+    private String departmentuuid;
 }

@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface UserDepartmentRepository extends JpaRepository<UserDepartmentEntity, Long> {
     List<UserDepartmentEntity> findAllByUserid(long id);
+
+    UserDepartmentEntity findByUseridAndDepartmentid(long userid, Long departmentid);
 }

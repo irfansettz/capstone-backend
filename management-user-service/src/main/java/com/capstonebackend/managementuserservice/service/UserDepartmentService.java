@@ -10,4 +10,8 @@ public interface UserDepartmentService {
     List<UserDepartmentEntity> getAllDepartmentByUserid(long id);
 
     void addUserDepartment(UserDepartmentEntity userDepartment);
+
+    UserDepartmentEntity getDeptByUseridAndDeptid(long userid, Long departmentid);
+
+    void deleteById(Long id);
 }

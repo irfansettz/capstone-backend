@@ -58,5 +58,10 @@ Content-Type: application/json
 
 {
   "useruuid": "32f2fcb3-bb48-4341-8d25-233ea4690dae",
-  "deptartmentuuid": "90O2fcb3-bb48-4341-8d25-233ea4690dae"
+  "departmentuuid": "90O2fcb3-bb48-4341-8d25-233ea4690dae"
 }
+
+###
+#delete user department
+DELETE http://localhost:8082/v1/api/users/departments?useruuid=32f2fcb3-bb48-4341-8d25-233ea4690dae&departmentuuid=90O2fcb3-bb48-4341-8d25-233ea4690dae
+Content-Type: application/json

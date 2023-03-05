@@ -22,4 +22,14 @@ public class UserDepartmentServiceImpl implements UserDepartmentService {
     public void addUserDepartment(UserDepartmentEntity userDepartment) {
         userDepartmentRepository.save(userDepartment);
     }
+
+    @Override
+    public UserDepartmentEntity getDeptByUseridAndDeptid(long userid, Long departmentid) {
+        return userDepartmentRepository.findByUseridAndDepartmentid(userid, departmentid);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        userDepartmentRepository.deleteById(id);
+    }
 }
