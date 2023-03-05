@@ -6,6 +6,8 @@ import com.capstonebackend.managementuserservice.service.DepartmentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class DepartmentServiceImpl implements DepartmentService {
@@ -14,5 +16,10 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public DepartmentEntity getDepartmentById(Long departmentid) {
         return departmentRepository.findById(departmentid).get();
+    }
+
+    @Override
+    public List<DepartmentEntity> getAllDept() {
+        return departmentRepository.findAll();
     }
 }

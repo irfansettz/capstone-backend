@@ -117,4 +117,20 @@ public class UserController {
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @GetMapping("/departments")
+    public ResponseEntity<DepartmentResponseDTO> getAllDepartments(){
+        // get data
+        List<DepartmentEntity> allDept = departmentService.getAllDept();
+        List<DepartmentDTO> departmentDTO = new ArrayList<>();
+        for (DepartmentEntity department : allDept) {
+            departmentDTO.add(new DepartmentDTO(department.getUuid(), department.getCode(), department.getName()));
+        }
+
+        // return response
+        DepartmentResponseDTO response = new DepartmentResponseDTO(departmentDTO);
+        response.setCode(200);
+        response.setStatus("success");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }
