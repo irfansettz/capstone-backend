@@ -34,6 +34,7 @@ public class UserController {
         addUser.setActive(user.getActive());
         addUser.setCreatedby(user.getCreatedby());
         addUser.setLastupatedby(user.getLastupdatedby());
+        
         // save data
         UserEntity newUser = userServices.addUser(addUser);
 
@@ -73,6 +74,7 @@ public class UserController {
             DepartmentDTO departmentDTO = new DepartmentDTO(department.getUuid(), department.getCode(), department.getName());
             allDeptUser.add(departmentDTO);
         }
+
         // make response
         UserDTO userDTO = new UserDTO(user.getUuid(), user.getUsername(), user.getEmail(), user.isActive(), user.getToken(), user.getCreatedby(), user.getCreatedon(), user.getLastupatedby(), user.getLastupdatedon(), allDeptUser, allRoleUser);
 
@@ -83,6 +85,5 @@ public class UserController {
         response.setStatus("success");
 
         return new ResponseEntity<>(response, HttpStatus.OK);
-
     }
 }
