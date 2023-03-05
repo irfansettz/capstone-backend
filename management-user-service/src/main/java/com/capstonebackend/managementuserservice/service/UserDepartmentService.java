@@ -8,4 +8,6 @@ import java.util.List;
 @Service
 public interface UserDepartmentService {
     List<UserDepartmentEntity> getAllDepartmentByUserid(long id);
+
+    void addUserDepartment(UserDepartmentEntity userDepartment);
 }

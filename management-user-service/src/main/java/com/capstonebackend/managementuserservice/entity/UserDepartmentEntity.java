@@ -15,4 +15,9 @@ public class UserDepartmentEntity {
     private Long id;
     private Long userid;
     private Long departmentid;
+
+    public UserDepartmentEntity(long userid, Long departmentid) {
+        this.userid = userid;
+        this.departmentid = departmentid;
+    }
 }

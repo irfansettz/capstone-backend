@@ -17,4 +17,9 @@ public class UserDepartmentServiceImpl implements UserDepartmentService {
     public List<UserDepartmentEntity> getAllDepartmentByUserid(long id) {
         return userDepartmentRepository.findAllByUserid(id);
     }
+
+    @Override
+    public void addUserDepartment(UserDepartmentEntity userDepartment) {
+        userDepartmentRepository.save(userDepartment);
+    }
 }

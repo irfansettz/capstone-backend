@@ -151,6 +151,28 @@ public class UserController {
 
     }
 
+    @PostMapping("/departments")
+    public ResponseEntity<UserResponseDTO> addUserDepartment(@RequestBody UserDepartmentDTO userDept){
+        // get data
+        UserEntity user = userServices.getUserByUuid(userDept.getUseruuid());
+        DepartmentEntity department = departmentService.getDeptByUuid(userDept.getDeptartmentuuid());
+
+        // save data
+        UserDepartmentEntity userDepartment = new UserDepartmentEntity(user.getId(), department.getId());
+        userDepartmentService.addUserDepartment(userDepartment);
+
+        // make response
+        UserDTO userDTO = fnGetUserByUuid(userDept.getUseruuid());
+
+        // return response
+        UserResponseDTO response = new UserResponseDTO();
+        response.setData(List.of(userDTO));
+        response.setCode(201);
+        response.setStatus("success");
+        response.setMessage("created");
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
     public UserDTO fnGetUserByUuid(String uuid){
         UserEntity user = userServices.getUserByUuid(uuid);
 
