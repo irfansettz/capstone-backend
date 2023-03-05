@@ -34,7 +34,7 @@ public class UserController {
         addUser.setActive(user.getActive());
         addUser.setCreatedby(user.getCreatedby());
         addUser.setLastupatedby(user.getLastupdatedby());
-        
+
         // save data
         UserEntity newUser = userServices.addUser(addUser);
 
@@ -86,4 +86,23 @@ public class UserController {
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @GetMapping("/roles")
+    public ResponseEntity<RoleResponseDTO> getAllRoles(){
+        // get data
+        List<RoleEntity> allRole = roleService.getAllRole();
+        List<RoleDTO> roleDTO = new ArrayList<>();
+        for (RoleEntity role: allRole) {
+            roleDTO.add(new RoleDTO(role.getUuid(), role.getName()));
+        }
+
+        // set response
+        RoleResponseDTO response = new RoleResponseDTO();
+        response.setCode(200);
+        response.setStatus("success");
+        response.setData(roleDTO);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    
 }

@@ -6,6 +6,8 @@ import com.capstonebackend.managementuserservice.service.RoleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class RoleServiceImpl implements RoleService {
@@ -14,5 +16,15 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public RoleEntity getRoleById(Long roleid) {
         return roleRepository.findById(roleid).get();
+    }
+
+    @Override
+    public List<RoleEntity> getAllRole() {
+        return roleRepository.findAll();
+    }
+
+    @Override
+    public RoleEntity getRoleByUuid(String uuid) {
+        return roleRepository.findByUuid(uuid);
     }
 }
