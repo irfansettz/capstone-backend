@@ -96,7 +96,7 @@ public class UserController {
             roleDTO.add(new RoleDTO(role.getUuid(), role.getName()));
         }
 
-        // set response
+        // return response
         RoleResponseDTO response = new RoleResponseDTO();
         response.setCode(200);
         response.setStatus("success");
@@ -104,5 +104,17 @@ public class UserController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    
+    @GetMapping("/roles/{uuid}")
+    public ResponseEntity<RoleResponseDTO> getRoleByUuid(@PathVariable String uuid){
+        // get data
+        RoleEntity role = roleService.getRoleByUuid(uuid);
+        RoleDTO roleDTO = new RoleDTO(role.getUuid(), role.getName());
+
+        // return response
+        RoleResponseDTO response = new RoleResponseDTO(List.of(roleDTO));
+        response.setCode(200);
+        response.setStatus("success");
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }

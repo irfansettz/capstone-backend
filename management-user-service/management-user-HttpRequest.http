@@ -1,3 +1,4 @@
+# add user endpoint
 POST http://localhost:8082/v1/api/users
 Content-Type: application/json
 
@@ -11,9 +12,16 @@ Content-Type: application/json
 }
 
 ###
+# get user by uuid
 GET http://localhost:8082/v1/api/users/32f2fcb3-bb48-4341-8d25-233ea4690dae
 Content-Type: application/json
 
 ###
+#get all roles
 GET http://localhost:8082/v1/api/users/roles
+Content-Type: application/json
+
+###
+#get roles by uuid
+GET http://localhost:8082/v1/api/users/roles/32f2fcb3-bb48-4342-8d25-233ea4690dae
 Content-Type: application/json
