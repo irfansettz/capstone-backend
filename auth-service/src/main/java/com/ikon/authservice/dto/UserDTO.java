@@ -13,7 +13,7 @@ public class UserDTO {
     private Integer id;
     private String username;
     private String email;
-//    private String password;
+    private String password;
     private String name;
     private UserRole role;
     private UserDepartment department;
