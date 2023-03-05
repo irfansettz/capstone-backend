@@ -1,5 +1,6 @@
 package com.capstonebackend.managementuserservice.entity;
 
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,24 +16,36 @@ import java.util.Date;
 @Data
 @RequiredArgsConstructor
 @Table(name = "users")
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(unique = true)
+    @NotNull
     private String uuid;
 
+    @Column(unique = true)
+    @NotNull
     private String username;
 
+    @Column(unique = true)
+    @NotNull
     private String email;
 
+    @Column(unique = true)
+    @NotNull
     private String password;
 
+    @NotNull
     private boolean active;
 
     private String token;
 
     @Column(name = "created_by")
+    @NotNull
     private String createdby;
 
     @CreationTimestamp
@@ -40,6 +53,7 @@ public class UserEntity {
     private java.sql.Timestamp createdon;
 
     @Column(name = "last_updated_by")
+    @NotNull
     private String lastupatedby;
 
     @UpdateTimestamp

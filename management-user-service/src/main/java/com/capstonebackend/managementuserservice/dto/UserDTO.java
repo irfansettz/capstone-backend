@@ -19,7 +19,7 @@ public class UserDTO {
     private String createdby;
     private java.sql.Timestamp createdon;
     private String lastupdatedby;
-    private Timestamp lastupdatedon;
-    private List<UserDepartmentDTO> departments;
-    private List<UserRoleDTO> roles;
+    private java.sql.Timestamp lastupdatedon;
+    private List<DepartmentDTO> departments;
+    private List<RoleDTO> roles;
 }

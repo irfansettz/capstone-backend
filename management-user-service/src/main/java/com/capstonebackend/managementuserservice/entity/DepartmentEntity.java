@@ -1,6 +1,9 @@
 package com.capstonebackend.managementuserservice.entity;
 
+import com.sun.istack.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -12,19 +15,29 @@ import java.sql.Timestamp;
 @Data
 @RequiredArgsConstructor
 @Table(name = "departments")
+@AllArgsConstructor
+@NoArgsConstructor
 public class DepartmentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
+    @NotNull
     private String uuid;
 
+    @Column(unique = true)
+    @NotNull
     private String code;
 
+    @Column(unique = true)
+    @NotNull
     private String name;
 
+    @NotNull
     private boolean active;
 
+    @NotNull
     @Column(name = "created_by")
     private String createdby;
 
@@ -32,6 +45,7 @@ public class DepartmentEntity {
     @Column(name = "created_on")
     private java.sql.Timestamp createdon;
 
+    @NotNull
     @Column(name = "last_updated_by")
     private String lastupatedby;
 

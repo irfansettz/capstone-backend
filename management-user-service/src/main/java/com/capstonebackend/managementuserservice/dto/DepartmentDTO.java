@@ -7,7 +7,8 @@ import lombok.RequiredArgsConstructor;
 @Data
 @AllArgsConstructor
 @RequiredArgsConstructor
-public class UserDepartmentDTO {
-    private String useridUuid;
-    private String departmentUuid;
+public class DepartmentDTO {
+    private String uuid;
+    private String code;
+    private String name;
 }

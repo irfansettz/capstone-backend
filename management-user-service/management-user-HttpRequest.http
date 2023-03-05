@@ -11,3 +11,6 @@ Content-Type: application/json
 }
 
 ###
+GET http://localhost:8082/v1/api/users/cc288479-912a-4b06-b7a5-0657220cdef5
+Content-Type: application/json
+
