@@ -13,7 +13,7 @@ Content-Type: application/json
 
 ###
 # get user by uuid
-GET http://localhost:8082/v1/api/users/32f2fcb3-bb48-4341-8d25-233ea4690dae
+GET http://localhost:8082/v1/api/users/7fa11c88-5922-49b0-be0d-14c500d466ca
 Content-Type: application/json
 
 ###
@@ -23,7 +23,7 @@ Content-Type: application/json
 
 ###
 #get roles by uuid
-GET http://localhost:8082/v1/api/users/roles/32f2fcb3-bb48-4342-8d25-233ea4690dae
+GET http://localhost:8082/v1/api/users/roles/288eaaa9-69fe-47e9-8f53-9720370ad04b
 Content-Type: application/json
 
 ###
@@ -33,7 +33,7 @@ Content-Type: application/json
 
 ###
 #get departments by uuid
-GET http://localhost:8082/v1/api/users/departments/67g2fcb3-bb48-4341-8d25-233ea4690dae
+GET http://localhost:8082/v1/api/users/departments/bbf449db-a89a-4533-8625-e37d20076c89
 Content-Type: application/json
 
 ###
@@ -42,13 +42,13 @@ POST http://localhost:8082/v1/api/users/roles
 Content-Type: application/json
 
 {
-  "useruuid": "32f2fcb3-bb48-4341-8d25-233ea4690dae",
-  "roleuuid": "78f2fcb3-bb48-4342-8d25-233ea4690dae"
+  "useruuid": "7fa11c88-5922-49b0-be0d-14c500d466ca",
+  "roleuuid": "288eaaa9-69fe-47e9-8f53-9720370ad04b"
 }
 
 ###
 # delete user role
-DELETE http://localhost:8082/v1/api/users/roles?useruuid=32f2fcb3-bb48-4341-8d25-233ea4690dae&roleuuid=78f2fcb3-bb48-4342-8d25-233ea4690dae
+DELETE http://localhost:8082/v1/api/users/roles?useruuid=7fa11c88-5922-49b0-be0d-14c500d466ca&roleuuid=288eaaa9-69fe-47e9-8f53-9720370ad04b
 Content-Type: application/json
 
 ###
@@ -57,11 +57,11 @@ POST http://localhost:8082/v1/api/users/departments
 Content-Type: application/json
 
 {
-  "useruuid": "32f2fcb3-bb48-4341-8d25-233ea4690dae",
-  "departmentuuid": "90O2fcb3-bb48-4341-8d25-233ea4690dae"
+  "useruuid": "7fa11c88-5922-49b0-be0d-14c500d466ca",
+  "departmentuuid": "bbf449db-a89a-4533-8625-e37d20076c89"
 }
 
 ###
 #delete user department
-DELETE http://localhost:8082/v1/api/users/departments?useruuid=32f2fcb3-bb48-4341-8d25-233ea4690dae&departmentuuid=90O2fcb3-bb48-4341-8d25-233ea4690dae
+DELETE http://localhost:8082/v1/api/users/departments?useruuid=7fa11c88-5922-49b0-be0d-14c500d466ca&departmentuuid=bbf449db-a89a-4533-8625-e37d20076c89
 Content-Type: application/json
