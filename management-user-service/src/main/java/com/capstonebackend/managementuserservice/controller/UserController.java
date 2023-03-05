@@ -25,6 +25,7 @@ public class UserController {
     private final DepartmentService departmentService;
     @PostMapping
     public ResponseEntity<UserResponseDTO> addUser(@RequestBody UserRequestDTO user){
+        //set up data to save
         UserEntity addUser = new UserEntity();
         addUser.setUuid(UUID.randomUUID().toString());
         addUser.setUsername(user.getUsername());
@@ -33,13 +34,15 @@ public class UserController {
         addUser.setActive(user.getActive());
         addUser.setCreatedby(user.getCreatedby());
         addUser.setLastupatedby(user.getLastupdatedby());
-
+        // save data
         UserEntity newUser = userServices.addUser(addUser);
 
+        // make response
         List<RoleDTO> listRoles = new ArrayList<>();
         List<DepartmentDTO> listDepartments = new ArrayList<>();
-
         UserDTO userDTO = new UserDTO(newUser.getUuid(), newUser.getUsername(), newUser.getEmail(), newUser.isActive(), newUser.getToken(), newUser.getCreatedby(), newUser.getCreatedon(), newUser.getLastupatedby(), newUser.getLastupdatedon(), listDepartments, listRoles);
+
+        // return response
         UserResponseDTO response = new UserResponseDTO();
         response.setData(List.of(userDTO));
         response.setCode(201);
@@ -70,7 +73,10 @@ public class UserController {
             DepartmentDTO departmentDTO = new DepartmentDTO(department.getUuid(), department.getCode(), department.getName());
             allDeptUser.add(departmentDTO);
         }
+        // make response
         UserDTO userDTO = new UserDTO(user.getUuid(), user.getUsername(), user.getEmail(), user.isActive(), user.getToken(), user.getCreatedby(), user.getCreatedon(), user.getLastupatedby(), user.getLastupdatedon(), allDeptUser, allRoleUser);
+
+        // return response
         UserResponseDTO response = new UserResponseDTO();
         response.setData(List.of(userDTO));
         response.setCode(200);
