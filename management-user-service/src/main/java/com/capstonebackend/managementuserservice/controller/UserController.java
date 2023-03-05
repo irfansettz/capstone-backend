@@ -173,6 +173,30 @@ public class UserController {
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @DeleteMapping("/roles")
+    public ResponseEntity<UserResponseDTO> deleteUserRole(@RequestParam String useruuid, @RequestParam String roleuuid){
+        // get data
+        UserEntity user = userServices.getUserByUuid(useruuid);
+        RoleEntity role = roleService.getRoleByUuid(roleuuid);
+        UserRoleEntity userRole = userRoleService.getDataByUseridAndRoleid(user.getId(), role.getId());
+
+        // delete data
+        userRoleService.deleteById(userRole.getId());
+
+        // make response
+        UserDTO userDTO = fnGetUserByUuid(useruuid);
+
+        // return response
+        UserResponseDTO response = new UserResponseDTO();
+        response.setData(List.of(userDTO));
+        response.setCode(201);
+        response.setStatus("success");
+        response.setMessage("deleted");
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    
     public UserDTO fnGetUserByUuid(String uuid){
         UserEntity user = userServices.getUserByUuid(uuid);
 

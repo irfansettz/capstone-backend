@@ -47,6 +47,11 @@ Content-Type: application/json
 }
 
 ###
+# delete user role
+DELETE http://localhost:8082/v1/api/users/roles?useruuid=32f2fcb3-bb48-4341-8d25-233ea4690dae&roleuuid=78f2fcb3-bb48-4342-8d25-233ea4690dae
+Content-Type: application/json
+
+###
 #add user department
 POST http://localhost:8082/v1/api/users/departments
 Content-Type: application/json

@@ -10,4 +10,8 @@ public interface UserRoleService {
     List<UserRoleEntity> getAllUserRolesByUserid(Long id);
 
     void addData(UserRoleEntity userRole);
+
+    UserRoleEntity getDataByUseridAndRoleid(long userid, Long roleid);
+
+    void deleteById(Long id);
 }

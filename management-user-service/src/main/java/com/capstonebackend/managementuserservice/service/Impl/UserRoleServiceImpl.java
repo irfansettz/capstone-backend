@@ -21,4 +21,14 @@ public class UserRoleServiceImpl implements UserRoleService {
     public void addData(UserRoleEntity userRole) {
         userRoleRepository.save(userRole);
     }
+
+    @Override
+    public UserRoleEntity getDataByUseridAndRoleid(long userid, Long roleid) {
+        return userRoleRepository.findByUseridAndRoleid(userid, roleid);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        userRoleRepository.deleteById(id);
+    }
 }
