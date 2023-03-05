@@ -55,28 +55,8 @@ public class UserController {
 
     @GetMapping("/{uuid}")
     public ResponseEntity<UserResponseDTO> getUserByUuid(@PathVariable String uuid){
-        UserEntity user = userServices.getUserByUuid(uuid);
-
-        // get all roles user
-        List<UserRoleEntity> allUserRole = userRoleService.getAllUserRolesByUserid(user.getId());
-        List<RoleDTO> allRoleUser = new ArrayList<>();
-        for (UserRoleEntity userRoles: allUserRole) {
-            RoleEntity role = roleService.getRoleById(userRoles.getRoleid());
-            RoleDTO roleDTO = new RoleDTO(role.getUuid(), role.getName());
-            allRoleUser.add(roleDTO);
-        }
-
-        // get all departments user
-        List<UserDepartmentEntity> allDepartmentUser = userDepartmentService.getAllDepartmentByUserid(user.getId());
-        List<DepartmentDTO> allDeptUser = new ArrayList<>();
-        for (UserDepartmentEntity userDept: allDepartmentUser) {
-            DepartmentEntity department = departmentService.getDepartmentById(userDept.getDepartmentid());
-            DepartmentDTO departmentDTO = new DepartmentDTO(department.getUuid(), department.getCode(), department.getName());
-            allDeptUser.add(departmentDTO);
-        }
-
         // make response
-        UserDTO userDTO = new UserDTO(user.getUuid(), user.getUsername(), user.getEmail(), user.isActive(), user.getToken(), user.getCreatedby(), user.getCreatedon(), user.getLastupatedby(), user.getLastupdatedon(), allDeptUser, allRoleUser);
+        UserDTO userDTO = fnGetUserByUuid(uuid);
 
         // return response
         UserResponseDTO response = new UserResponseDTO();
@@ -132,5 +112,67 @@ public class UserController {
         response.setCode(200);
         response.setStatus("success");
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/departments/{uuid}")
+    public ResponseEntity<DepartmentResponseDTO> getDepartmentByUuid(@PathVariable String uuid){
+        // get data
+        DepartmentEntity dept = departmentService.getDeptByUuid(uuid);
+        DepartmentDTO departmentDTO = new DepartmentDTO(dept.getUuid(), dept.getCode(), dept.getName());
+
+        // return response
+        DepartmentResponseDTO response = new DepartmentResponseDTO(List.of(departmentDTO));
+        response.setCode(200);
+        response.setStatus("success");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PostMapping("/roles")
+    public ResponseEntity<UserResponseDTO> addUserRole(@RequestBody UserRoleDTO userRoleDTO){
+        // get data
+        UserEntity user = userServices.getUserByUuid(userRoleDTO.getUseruuid());
+        RoleEntity role = roleService.getRoleByUuid(userRoleDTO.getRoleuuid());
+
+        // save data
+        UserRoleEntity userRole = new UserRoleEntity(user.getId(), role.getId());
+        userRoleService.addData(userRole);
+
+        // make response
+        UserDTO userDTO = fnGetUserByUuid(userRoleDTO.getUseruuid());
+
+        // return response
+        UserResponseDTO response = new UserResponseDTO();
+        response.setData(List.of(userDTO));
+        response.setCode(201);
+        response.setStatus("success");
+        response.setMessage("created");
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+
+    }
+
+    public UserDTO fnGetUserByUuid(String uuid){
+        UserEntity user = userServices.getUserByUuid(uuid);
+
+        // get all roles user
+        List<UserRoleEntity> allUserRole = userRoleService.getAllUserRolesByUserid(user.getId());
+        List<RoleDTO> allRoleUser = new ArrayList<>();
+        for (UserRoleEntity userRoles: allUserRole) {
+            RoleEntity role = roleService.getRoleById(userRoles.getRoleid());
+            RoleDTO roleDTO = new RoleDTO(role.getUuid(), role.getName());
+            allRoleUser.add(roleDTO);
+        }
+
+        // get all departments user
+        List<UserDepartmentEntity> allDepartmentUser = userDepartmentService.getAllDepartmentByUserid(user.getId());
+        List<DepartmentDTO> allDeptUser = new ArrayList<>();
+        for (UserDepartmentEntity userDept: allDepartmentUser) {
+            DepartmentEntity department = departmentService.getDepartmentById(userDept.getDepartmentid());
+            DepartmentDTO departmentDTO = new DepartmentDTO(department.getUuid(), department.getCode(), department.getName());
+            allDeptUser.add(departmentDTO);
+        }
+
+        // make response
+        return new UserDTO(user.getUuid(), user.getUsername(), user.getEmail(), user.isActive(), user.getToken(), user.getCreatedby(), user.getCreatedon(), user.getLastupatedby(), user.getLastupdatedon(), allDeptUser, allRoleUser);
     }
 }

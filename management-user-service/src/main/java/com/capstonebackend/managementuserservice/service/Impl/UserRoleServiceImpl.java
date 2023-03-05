@@ -16,4 +16,9 @@ public class UserRoleServiceImpl implements UserRoleService {
     public List<UserRoleEntity> getAllUserRolesByUserid(Long id) {
         return userRoleRepository.findAllByUserid(id);
     }
+
+    @Override
+    public void addData(UserRoleEntity userRole) {
+        userRoleRepository.save(userRole);
+    }
 }

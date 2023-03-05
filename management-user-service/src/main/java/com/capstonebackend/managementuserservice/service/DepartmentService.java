@@ -10,4 +10,6 @@ public interface DepartmentService {
     DepartmentEntity getDepartmentById(Long departmentid);
 
     List<DepartmentEntity> getAllDept();
+
+    DepartmentEntity getDeptByUuid(String uuid);
 }

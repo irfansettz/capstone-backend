@@ -8,4 +8,6 @@ import java.util.List;
 @Service
 public interface UserRoleService {
     List<UserRoleEntity> getAllUserRolesByUserid(Long id);
+
+    void addData(UserRoleEntity userRole);
 }
