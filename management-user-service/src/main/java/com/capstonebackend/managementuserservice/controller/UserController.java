@@ -41,7 +41,7 @@ public class UserController {
         // make response
         List<RoleDTO> listRoles = new ArrayList<>();
         List<DepartmentDTO> listDepartments = new ArrayList<>();
-        UserDTO userDTO = new UserDTO(newUser.getUuid(), newUser.getUsername(), newUser.getEmail(), newUser.isActive(), newUser.getToken(), newUser.getCreatedby(), newUser.getCreatedon(), newUser.getLastupatedby(), newUser.getLastupdatedon(), listDepartments, listRoles);
+        UserDTO userDTO = new UserDTO(newUser.getUuid(), newUser.getUsername(), newUser.getEmail(), newUser.getPassword(), newUser.isActive(), newUser.getToken(), newUser.getCreatedby(), newUser.getCreatedon(), newUser.getLastupatedby(), newUser.getLastupdatedon(), listDepartments, listRoles);
 
         // return response
         UserResponseDTO response = new UserResponseDTO();
@@ -220,6 +220,13 @@ public class UserController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @GetMapping
+    public UserDTO getUserByUsername(@RequestParam String username){
+        UserEntity user = userServices.getUserByUsername(username);
+
+        return fnGetUserByUuid(user.getUuid());
+    }
+
     public UserDTO fnGetUserByUuid(String uuid){
         UserEntity user = userServices.getUserByUuid(uuid);
 
@@ -242,6 +249,6 @@ public class UserController {
         }
 
         // make response
-        return new UserDTO(user.getUuid(), user.getUsername(), user.getEmail(), user.isActive(), user.getToken(), user.getCreatedby(), user.getCreatedon(), user.getLastupatedby(), user.getLastupdatedon(), allDeptUser, allRoleUser);
+        return new UserDTO(user.getUuid(), user.getUsername(), user.getEmail(), user.getPassword(), user.isActive(), user.getToken(), user.getCreatedby(), user.getCreatedon(), user.getLastupatedby(), user.getLastupdatedon(), allDeptUser, allRoleUser);
     }
 }

@@ -14,6 +14,7 @@ public class UserDTO {
     private String uuid;
     private String username;
     private String email;
+    private String password;
     private boolean active;
     private String token;
     private String createdby;

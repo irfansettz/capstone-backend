@@ -20,4 +20,9 @@ public class UserServiceImpl implements UserServices {
     public UserEntity getUserByUuid(String uuid) {
         return userRepository.findByUuid(uuid);
     }
+
+    @Override
+    public UserEntity getUserByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
 }

@@ -8,4 +8,6 @@ public interface UserServices {
     UserEntity addUser(UserEntity user);
 
     UserEntity getUserByUuid(String uuid);
+
+    UserEntity getUserByUsername(String username);
 }

@@ -13,7 +13,12 @@ Content-Type: application/json
 
 ###
 # get user by uuid
-GET http://localhost:8082/v1/api/users/7fa11c88-5922-49b0-be0d-14c500d466ca
+GET http://localhost:8082/v1/api/users/9dede466-d92f-4c80-84cb-12b9847ca06b
+Content-Type: application/json
+
+###
+# get user by username
+GET http://localhost:8082/v1/api/users?username=irfanset
 Content-Type: application/json
 
 ###
@@ -42,13 +47,13 @@ POST http://localhost:8082/v1/api/users/roles
 Content-Type: application/json
 
 {
-  "useruuid": "7fa11c88-5922-49b0-be0d-14c500d466ca",
-  "roleuuid": "288eaaa9-69fe-47e9-8f53-9720370ad04b"
+  "useruuid": "9dede466-d92f-4c80-84cb-12b9847ca06b",
+  "roleuuid": "dbf05dbc-d802-4a31-9ed0-61e62d39a60e"
 }
 
 ###
 # delete user role
-DELETE http://localhost:8082/v1/api/users/roles?useruuid=7fa11c88-5922-49b0-be0d-14c500d466ca&roleuuid=288eaaa9-69fe-47e9-8f53-9720370ad04b
+DELETE http://localhost:8082/v1/api/users/roles?useruuid=9dede466-d92f-4c80-84cb-12b9847ca06b&roleuuid=dbf05dbc-d802-4a31-9ed0-61e62d39a60e
 Content-Type: application/json
 
 ###
