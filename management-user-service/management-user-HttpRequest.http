@@ -18,7 +18,7 @@ Content-Type: application/json
 
 ###
 # get user by username
-GET http://localhost:8082/v1/api/users?username=irfanset
+GET http://localhost:8082/v1/api/users?username=SUPERADMIN
 Content-Type: application/json
 
 ###
