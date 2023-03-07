@@ -23,6 +23,25 @@ public class UserController {
     private final RoleService roleService;
     private final UserDepartmentService userDepartmentService;
     private final DepartmentService departmentService;
+
+    @GetMapping
+    public ResponseEntity<UserResponseDTO> getAllUser(@RequestParam(name = "username", required = false) String username){
+        List<UserDTO> userDTOS = new ArrayList<>();
+        if(username != null) {
+            UserEntity user = userServices.getUserByUsername(username);
+            userDTOS.add(fnGetUserByUuid(user.getUuid()));
+        } else {
+            List<UserEntity> allUser = userServices.getAllUser();
+            for (UserEntity user: allUser) {
+                userDTOS.add(fnGetUserByUuid(user.getUuid()));
+            }
+        }
+
+        UserResponseDTO response = new UserResponseDTO(userDTOS);
+        response.setCode(200);
+        response.setStatus("success");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
     @PostMapping
     public ResponseEntity<UserResponseDTO> addUser(@RequestBody UserRequestDTO user){
         //set up data to save
@@ -218,13 +237,6 @@ public class UserController {
         response.setMessage("deleted");
 
         return new ResponseEntity<>(response, HttpStatus.OK);
-    }
-
-    @GetMapping
-    public UserDTO getUserByUsername(@RequestParam String username){
-        UserEntity user = userServices.getUserByUsername(username);
-
-        return fnGetUserByUuid(user.getUuid());
     }
 
     public UserDTO fnGetUserByUuid(String uuid){
