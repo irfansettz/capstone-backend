@@ -17,9 +17,7 @@ public class UserRoleDataSeeder implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         UserRoleEntity userRole1 = new UserRoleEntity(1,1L);
-        UserRoleEntity userRole2 = new UserRoleEntity(1,2L);
-        UserRoleEntity userRole3 = new UserRoleEntity(1,3L);
 
-        userRoleRepository.saveAll(List.of(userRole1, userRole2, userRole3));
+        userRoleRepository.save(userRole1);
     }
 }

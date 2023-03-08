@@ -34,7 +34,7 @@ Content-Type: application/json
 
 ###
 #get roles by uuid
-GET http://localhost:8082/v1/api/users/roles/288eaaa9-69fe-47e9-8f53-9720370ad04b
+GET http://localhost:8082/v1/api/users/roles/97da98e9-fe3a-4b06-94ad-16f48a8cc852
 Content-Type: application/json
 
 ###
