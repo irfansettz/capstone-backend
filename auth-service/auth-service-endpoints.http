@@ -1,0 +1,30 @@
+POST localhost:8081/api/v1/auth/register
+Content-Type: application/json
+
+{
+  "username" : "numanarif",
+  "email" : "admin@ikon.com",
+  "password" : "Abcd@1234",
+  "name" : "numanarif",
+  "role" : "ADMIN",
+  "department" : "HRD"
+}
+
+###
+
+POST localhost:8081/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "username" : "SUPERADMIN",
+  "password" : "12345678"
+}
+
+> {%
+client.global.set("token", response.body.data);
+%}
+###
+
+GET localhost:8081/api/v1/auth/all-users
+###Authorization: Bearer eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoibnVtYW5hcmlmIiwiZXhwIjoxNjc4MDAyODcxLCJpYXQiOjE2Nzc5OTkyNzEsInNjb3BlIjoiIn0.pkMsNdZTXL6n7eKf2QHPFnsmsNIF2nyWh3_slEvBoNNikew9jltV5VCXzRvgoqOyaoZ11irRkemBYrnk1rqoB04c7wTEmhz-oVzN8Fdy_yjWaZVOPgHe-Dd-6DaPPQd6gprD2oNGLAAoLTkSXJjKz5t_T9PdKtnE_3pNJm8rllYl1MaugzGm0fJ3rrUMz7tBH64an6kgvEmlMdQ5xfoBbTApH8h-U2a6riLJOsLlbedL8JY0WI-G4HSl36sQ7UrYiO7jfo2a18PQhIYCy8a4qvHaI59VmSHS-5ysmIsTM8-KDoOtzMMWAA1PkGvvwgmC-nUW3r-0Z6cQUMamclIH9g
+
