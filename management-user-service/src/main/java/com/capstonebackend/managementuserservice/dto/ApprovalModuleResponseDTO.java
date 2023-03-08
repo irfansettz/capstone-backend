@@ -9,9 +9,6 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RoleDTO {
-    private String uuid;
-    private String name;
-    private List<PermissionDTO> permissions;
-    private List<ApprovalModuleDTO> approvalModules;
+public class ApprovalModuleResponseDTO extends ResponseDTO {
+    private List<ApprovalModuleDTO> data;
 }

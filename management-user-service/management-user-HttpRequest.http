@@ -76,3 +76,8 @@ Content-Type: application/json
 #delete user department
 DELETE http://localhost:8082/v1/api/users/departments?useruuid=7fa11c88-5922-49b0-be0d-14c500d466ca&departmentuuid=bbf449db-a89a-4533-8625-e37d20076c89
 Content-Type: application/json
+
+###
+#get approval module by name
+GET http://localhost:8082/v1/api/users/approval-module?name=ApprovalHeadDept
+Content-Type: application/json

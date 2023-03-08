@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ApprovalModuleRepository extends JpaRepository<ApprovalModuleEntity, Long> {
+    ApprovalModuleEntity findByUuid(String uuid);
+
+    ApprovalModuleEntity findByName(String name);
 }

@@ -23,6 +23,10 @@ public class UserController {
     private final RoleService roleService;
     private final UserDepartmentService userDepartmentService;
     private final DepartmentService departmentService;
+    private final PermissionRoleService permissionRoleService;
+    private final PermissionService permissionService;
+    private final ApprovalGroupService approvalGroupService;
+    private final ApprovalModuleService approvalModuleService;
 
     @GetMapping
     public ResponseEntity<UserResponseDTO> getAllUser(@RequestParam(name = "username", required = false) String username){
@@ -92,7 +96,7 @@ public class UserController {
         List<RoleEntity> allRole = roleService.getAllRole();
         List<RoleDTO> roleDTO = new ArrayList<>();
         for (RoleEntity role: allRole) {
-            roleDTO.add(new RoleDTO(role.getUuid(), role.getName()));
+            roleDTO.add(getRole(role));
         }
 
         // return response
@@ -107,7 +111,7 @@ public class UserController {
     public ResponseEntity<RoleResponseDTO> getRoleByUuid(@PathVariable String uuid){
         // get data
         RoleEntity role = roleService.getRoleByUuid(uuid);
-        RoleDTO roleDTO = new RoleDTO(role.getUuid(), role.getName());
+        RoleDTO roleDTO = getRole(role);
 
         // return response
         RoleResponseDTO response = new RoleResponseDTO(List.of(roleDTO));
@@ -239,6 +243,17 @@ public class UserController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @GetMapping("/approval-module")
+    public ResponseEntity<ApprovalModuleResponseDTO> getApprovalModuleByName(@RequestParam String name){
+        ApprovalModuleEntity approvalModule = approvalModuleService.getByName(name);
+
+        ApprovalModuleResponseDTO response = new ApprovalModuleResponseDTO(List.of(new ApprovalModuleDTO(approvalModule.getUuid(), approvalModule.getName(), approvalModule.getExplain())));
+        response.setCode(200);
+        response.setStatus("success");
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
     public UserDTO fnGetUserByUuid(String uuid){
         UserEntity user = userServices.getUserByUuid(uuid);
 
@@ -247,7 +262,7 @@ public class UserController {
         List<RoleDTO> allRoleUser = new ArrayList<>();
         for (UserRoleEntity userRoles: allUserRole) {
             RoleEntity role = roleService.getRoleById(userRoles.getRoleid());
-            RoleDTO roleDTO = new RoleDTO(role.getUuid(), role.getName());
+            RoleDTO roleDTO = getRole(role);
             allRoleUser.add(roleDTO);
         }
 
@@ -262,5 +277,25 @@ public class UserController {
 
         // make response
         return new UserDTO(user.getUuid(), user.getUsername(), user.getEmail(), user.getPassword(), user.isActive(), user.getToken(), user.getCreatedby(), user.getCreatedon(), user.getLastupatedby(), user.getLastupdatedon(), allDeptUser, allRoleUser);
+    }
+
+    public RoleDTO getRole(RoleEntity role){
+        // get permissions
+        List<PermissionRoleEntity> permissionRoleEntities = permissionRoleService.getAllByRoleid(role.getId());
+        List<PermissionDTO> permissions = new ArrayList<>();
+        for (PermissionRoleEntity permissionRole: permissionRoleEntities) {
+            PermissionEntity permission = permissionService.getById(permissionRole.getPermissionid());
+            permissions.add(new PermissionDTO(permission.getUuid(), permission.getName(), permission.getSlug()));
+        }
+
+        //get approval module
+        List<ApprovalGroupEntity> approvalGroupEntities = approvalGroupService.getAllByRoleid(role.getId());
+        List<ApprovalModuleDTO> approvalModuleDTOS = new ArrayList<>();
+        for (ApprovalGroupEntity approvalGroup: approvalGroupEntities) {
+            ApprovalModuleEntity approvalModule = approvalModuleService.getById(approvalGroup.getModuleid());
+            approvalModuleDTOS.add(new ApprovalModuleDTO(approvalModule.getUuid(), approvalModule.getName(), approvalModule.getExplain()));
+        }
+
+        return new RoleDTO(role.getUuid(), role.getName(), permissions, approvalModuleDTOS);
     }
 }

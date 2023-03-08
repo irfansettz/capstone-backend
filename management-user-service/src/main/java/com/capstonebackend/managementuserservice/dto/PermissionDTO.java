@@ -3,15 +3,13 @@ package com.capstonebackend.managementuserservice.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
+import lombok.RequiredArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RoleDTO {
+public class PermissionDTO {
     private String uuid;
     private String name;
-    private List<PermissionDTO> permissions;
-    private List<ApprovalModuleDTO> approvalModules;
+    private String slug;
 }

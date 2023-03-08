@@ -17,8 +17,8 @@ public class ApprovalModuleDataSeeder implements CommandLineRunner {
     private final ApprovalModuleRepository approvalModuleRepository;
     @Override
     public void run(String... args) throws Exception {
-        ApprovalModuleEntity module1 = new ApprovalModuleEntity(null, UUID.randomUUID().toString(), "Approval Head Dept", "approval request procurement for head department", "SYSTEM INJECTOR", null, "SYSTEM INJECTOR", null);
-        ApprovalModuleEntity module2 = new ApprovalModuleEntity(null, UUID.randomUUID().toString(), "Approval Head FNC", "approval request procurement for head FNC", "SYSTEM INJECTOR", null, "SYSTEM INJECTOR", null);
+        ApprovalModuleEntity module1 = new ApprovalModuleEntity(null, UUID.randomUUID().toString(), "ApprovalHeadDept", "approval request procurement for head department", "SYSTEM INJECTOR", null, "SYSTEM INJECTOR", null);
+        ApprovalModuleEntity module2 = new ApprovalModuleEntity(null, UUID.randomUUID().toString(), "ApprovalHeadFNC", "approval request procurement for head FNC", "SYSTEM INJECTOR", null, "SYSTEM INJECTOR", null);
 
         approvalModuleRepository.saveAll(List.of(module1, module2));
     }
