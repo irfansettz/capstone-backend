@@ -6,6 +6,7 @@ Content-Type: application/json
 
 # add user endpoint
 POST http://localhost:8082/v1/api/users
+Authorization: Bearer eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoiU1VQRVJBRE1JTiIsImV4cCI6MTY3ODMyMTI4MywiaWF0IjoxNjc4MzE3NjgzLCJzY29wZSI6IiJ9.TjavbYttR5PmuCT53slwPrP72v7xK-3Taetyw3Grv6F5nHr3WUYweWPa7Xd2NTapGhOGlTy4StzmiYEXjkGaWqVvRp_R10nS4JZqjivJ7Gq6UvGqNc6NHay6vNWQk6w9_wBtg54EC8HXHxReHAniF69tYdLuOBJPw5mTOC87YziT4IZRWfs-QGMhHH4TTOKwl99yDVEfix5EFJz5vRA8qBMWxvf8-Y-PaNQNUvIeZ-CkdgaQg6gnD7zHBHKGfkBrt_v6fNBe9haTz_qqU8rNfbP30FeoKymrvikl-BOvpYZM-KVrb4XNbpGWnIgp3tpvlUZr5Eh-bJfXKvK1u0z2IQ
 Content-Type: application/json
 
 {
@@ -17,15 +18,24 @@ Content-Type: application/json
   "lastupdatedby": "system"
 }
 
+### LOGIN
+POST http://localhost:8082/v1/api/users/login
+Content-Type: application/json
+
+{
+  "username" : "SUPERADMIN",
+  "password" : "12345678"
+}
+
 ###
 # get user by uuid
 GET http://localhost:8082/v1/api/users/9dede466-d92f-4c80-84cb-12b9847ca06b
-Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoiU1VQRVJBRE1JTiIsImV4cCI6MTY3ODMyMTI4MywiaWF0IjoxNjc4MzE3NjgzLCJzY29wZSI6IiJ9.TjavbYttR5PmuCT53slwPrP72v7xK-3Taetyw3Grv6F5nHr3WUYweWPa7Xd2NTapGhOGlTy4StzmiYEXjkGaWqVvRp_R10nS4JZqjivJ7Gq6UvGqNc6NHay6vNWQk6w9_wBtg54EC8HXHxReHAniF69tYdLuOBJPw5mTOC87YziT4IZRWfs-QGMhHH4TTOKwl99yDVEfix5EFJz5vRA8qBMWxvf8-Y-PaNQNUvIeZ-CkdgaQg6gnD7zHBHKGfkBrt_v6fNBe9haTz_qqU8rNfbP30FeoKymrvikl-BOvpYZM-KVrb4XNbpGWnIgp3tpvlUZr5Eh-bJfXKvK1u0z2IQ
 
 ###
 # get user by username
 GET http://localhost:8082/v1/api/users?username=SUPERADMIN
-Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoiU1VQRVJBRE1JTiIsImV4cCI6MTY3ODMyMTI4MywiaWF0IjoxNjc4MzE3NjgzLCJzY29wZSI6IiJ9.TjavbYttR5PmuCT53slwPrP72v7xK-3Taetyw3Grv6F5nHr3WUYweWPa7Xd2NTapGhOGlTy4StzmiYEXjkGaWqVvRp_R10nS4JZqjivJ7Gq6UvGqNc6NHay6vNWQk6w9_wBtg54EC8HXHxReHAniF69tYdLuOBJPw5mTOC87YziT4IZRWfs-QGMhHH4TTOKwl99yDVEfix5EFJz5vRA8qBMWxvf8-Y-PaNQNUvIeZ-CkdgaQg6gnD7zHBHKGfkBrt_v6fNBe9haTz_qqU8rNfbP30FeoKymrvikl-BOvpYZM-KVrb4XNbpGWnIgp3tpvlUZr5Eh-bJfXKvK1u0z2IQ
 
 ###
 #get all roles

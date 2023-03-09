@@ -4,8 +4,13 @@ import com.capstonebackend.managementuserservice.dto.*;
 import com.capstonebackend.managementuserservice.entity.*;
 import com.capstonebackend.managementuserservice.service.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +21,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/v1/api/users")
 @RequiredArgsConstructor
+@Slf4j
 public class UserController {
     private final UserServices userServices;
     private final PasswordEncoder passwordEncoder;
@@ -28,11 +34,32 @@ public class UserController {
     private final ApprovalGroupService approvalGroupService;
     private final ApprovalModuleService approvalModuleService;
 
+    private final AuthenticationManager authenticationManager;
+    private final TokenService tokenService;
+
+    @PostMapping("/login")
+    public ResponseEntity<ResponseDTO> token(@RequestBody UserEntity user) {
+        ResponseDTO response = new ResponseDTO();
+        log.warn(user.getUsername());
+        log.warn(user.getPassword());
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
+        String token = tokenService.generatedToken(authentication);
+        response.setCode(200);
+        response.setStatus("success");
+        response.setMessage(token);
+        return new ResponseEntity(response, HttpStatus.OK);
+
+    }
     @GetMapping
-    public ResponseEntity<UserResponseDTO> getAllUser(@RequestParam(name = "username", required = false) String username){
-        List<UserDTO> userDTOS = new ArrayList<>();
+    public ResponseEntity<UserResponseDTO> getAllUser(
+           @RequestParam(name = "username", required = false) String username,
+            @RequestHeader(name = "Authorization") String tokenBearer
+            ) {
+
+         List<UserDTO> userDTOS = new ArrayList<>();
         if(username != null) {
-            UserEntity user = userServices.getUserByUsername(username);
+            //UserEntity user = userServices.getUserByUsername(username);
+            UserDTO user = tokenService.decodeToken(tokenBearer);
             userDTOS.add(fnGetUserByUuid(user.getUuid()));
         } else {
             List<UserEntity> allUser = userServices.getAllUser();
@@ -40,6 +67,7 @@ public class UserController {
                 userDTOS.add(fnGetUserByUuid(user.getUuid()));
             }
         }
+
 
         UserResponseDTO response = new UserResponseDTO(userDTOS);
         response.setCode(200);
