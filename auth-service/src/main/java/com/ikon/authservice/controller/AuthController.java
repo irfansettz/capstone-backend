@@ -3,6 +3,7 @@ package com.ikon.authservice.controller;
 
 import com.ikon.authservice.dto.ResponseDTO;
 import com.ikon.authservice.dto.UserDTO;
+import com.ikon.authservice.dto.UserResponseDTO;
 import com.ikon.authservice.entity.User;
 import com.ikon.authservice.service.TokenService;
 
@@ -10,12 +11,12 @@ import com.ikon.authservice.service.impl.JpaUserDetailService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -27,22 +28,12 @@ import java.util.List;
 public class AuthController {
     private final TokenService tokenService;
     private final AuthenticationManager authenticationManager;
-    private final JpaUserDetailService jpaUserDetailService;
-    @PostMapping("/register")
-    public ResponseEntity<ResponseDTO> addUser(@RequestBody UserDTO userDTO) {
-        tokenService.addUser(userDTO);
-        return new ResponseEntity<ResponseDTO>(ResponseDTO.builder()
-                .httpStatus(HttpStatus.CREATED)
-                .message("success add user")
-                .data(userDTO).build(), HttpStatus.CREATED);
-    }
+    private final RestTemplate restTemplate;
+
     @PostMapping("/login")
     public ResponseEntity<ResponseDTO<String>> token(@RequestBody User user) {
-        System.out.println(user.getUsername());
-        System.out.println(user.getPassword());
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
         String token = tokenService.generatedToken(authentication);
-//        response.setHeader("Authorization", "Bearer " + token);
         return new ResponseEntity(ResponseDTO.builder()
                                     .httpStatus(HttpStatus.OK)
                                     .message("token created")
@@ -50,24 +41,11 @@ public class AuthController {
                                     .build(), HttpStatus.OK);
 
     }
-//    @GetMapping("/user-data")
-//    public ResponseEntity<ResponseDTO<Object>> userInfo(@RequestHeader(name = "Authorization") String tokenBearer) {
-//
-//        UserDTO user = tokenService.decodeToken(tokenBearer);
-//
-//        //add deeper structure
-//        return new ResponseEntity(ResponseDTO.builder().httpStatus(HttpStatus.OK).message("token found").data(user).build(), HttpStatus.OK);
-//        // return user;
-//    }
-//    //user
-//    @GetMapping("/user-data-2")
-//    public ResponseEntity<UserDTO> userInfo2(@RequestHeader(name = "Authorization") String tokenBearer) {
-//        UserDTO user = tokenService.decodeToken(tokenBearer);
-//        return new ResponseEntity<>(user, HttpStatus.OK);
-//    }
-//    @GetMapping("/all-users")
-//    public ResponseEntity<List<UserDTO>> allUsers() {
-//        log.info("AuthController method allUsers");
-//        return new ResponseEntity<>(jpaUserDetailService.getAll(), HttpStatus.OK);
-//    }
+
+    @GetMapping("/user-data")
+    public ResponseEntity<ResponseDTO<Object>> userInfo(@RequestHeader(name = "Authorization") String tokenBearer) {
+        UserDTO user = tokenService.decodeToken(tokenBearer);
+
+        return new ResponseEntity(ResponseDTO.builder().httpStatus(HttpStatus.OK).message("token found").data(user).build(), HttpStatus.OK);
+    }
 }

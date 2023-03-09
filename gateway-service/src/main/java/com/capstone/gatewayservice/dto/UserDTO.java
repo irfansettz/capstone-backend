@@ -1,7 +1,5 @@
-package com.ikon.authservice.dto;
+package com.capstone.gatewayservice.dto;
 
-import com.ikon.authservice.util.UserDepartment;
-import com.ikon.authservice.util.UserRole;
 import lombok.*;
 
 import java.util.List;

@@ -1,6 +1,7 @@
 package com.ikon.authservice.service.impl;
 
 import com.ikon.authservice.dto.UserDTO;
+import com.ikon.authservice.dto.UserResponseDTO;
 import com.ikon.authservice.entity.User;
 import com.ikon.authservice.exception.InvalidPasswordException;
 import com.ikon.authservice.exception.UserNotFoundException;
@@ -9,12 +10,17 @@ import com.ikon.authservice.util.PasswordValidator;
 import com.ikon.authservice.service.TokenService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -30,6 +36,7 @@ public class TokenServiceImpl implements TokenService {
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
     private final PasswordEncoder encoder;
+    private final RestTemplate restTemplate;
     @Override
     public String generatedToken(Authentication authentication) {
         Instant now = Instant.now();
@@ -53,9 +60,14 @@ public class TokenServiceImpl implements TokenService {
         String newToken = token.split(" ")[1];
         Jwt jwtToken = jwtDecoder.decode(newToken);
         String data = jwtToken.getSubject();
-        Optional<User> user = userRepository.findByUsername(data);
-        if (user.isPresent()) {
-            return modelMapper.map(user.get(), UserDTO.class);
+        HttpHeaders headers = new HttpHeaders();
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+        ResponseEntity<UserResponseDTO> response;
+        response = restTemplate.exchange("http://localhost:8082/v1/api/users?username=" + data, HttpMethod.GET, entity, UserResponseDTO.class);
+        System.out.println(response.getBody().getData().get(0));
+//        Optional<User> user = userRepository.findByUsername(data);
+        if (response.getBody().getData() != null) {
+            return response.getBody().getData().get(0);
         }
         throw new UserNotFoundException("user not found");
     }
