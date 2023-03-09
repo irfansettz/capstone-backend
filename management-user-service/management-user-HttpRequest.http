@@ -6,7 +6,7 @@ Content-Type: application/json
 
 # add user endpoint
 POST http://localhost:8082/v1/api/users
-Authorization: Bearer eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoiU1VQRVJBRE1JTiIsImV4cCI6MTY3ODMyMTI4MywiaWF0IjoxNjc4MzE3NjgzLCJzY29wZSI6IiJ9.TjavbYttR5PmuCT53slwPrP72v7xK-3Taetyw3Grv6F5nHr3WUYweWPa7Xd2NTapGhOGlTy4StzmiYEXjkGaWqVvRp_R10nS4JZqjivJ7Gq6UvGqNc6NHay6vNWQk6w9_wBtg54EC8HXHxReHAniF69tYdLuOBJPw5mTOC87YziT4IZRWfs-QGMhHH4TTOKwl99yDVEfix5EFJz5vRA8qBMWxvf8-Y-PaNQNUvIeZ-CkdgaQg6gnD7zHBHKGfkBrt_v6fNBe9haTz_qqU8rNfbP30FeoKymrvikl-BOvpYZM-KVrb4XNbpGWnIgp3tpvlUZr5Eh-bJfXKvK1u0z2IQ
+Authorization: Bearer {{auth_token}}
 Content-Type: application/json
 
 {
@@ -27,15 +27,17 @@ Content-Type: application/json
   "password" : "12345678"
 }
 
+> {% client.global.set("auth_token", response.body.message); %}
+
 ###
 # get user by uuid
 GET http://localhost:8082/v1/api/users/9dede466-d92f-4c80-84cb-12b9847ca06b
-Authorization: Bearer eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoiU1VQRVJBRE1JTiIsImV4cCI6MTY3ODMyMTI4MywiaWF0IjoxNjc4MzE3NjgzLCJzY29wZSI6IiJ9.TjavbYttR5PmuCT53slwPrP72v7xK-3Taetyw3Grv6F5nHr3WUYweWPa7Xd2NTapGhOGlTy4StzmiYEXjkGaWqVvRp_R10nS4JZqjivJ7Gq6UvGqNc6NHay6vNWQk6w9_wBtg54EC8HXHxReHAniF69tYdLuOBJPw5mTOC87YziT4IZRWfs-QGMhHH4TTOKwl99yDVEfix5EFJz5vRA8qBMWxvf8-Y-PaNQNUvIeZ-CkdgaQg6gnD7zHBHKGfkBrt_v6fNBe9haTz_qqU8rNfbP30FeoKymrvikl-BOvpYZM-KVrb4XNbpGWnIgp3tpvlUZr5Eh-bJfXKvK1u0z2IQ
+Authorization: Bearer {{auth_token}}
 
 ###
 # get user by username
 GET http://localhost:8082/v1/api/users?username=SUPERADMIN
-Authorization: Bearer eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoiU1VQRVJBRE1JTiIsImV4cCI6MTY3ODMyMTI4MywiaWF0IjoxNjc4MzE3NjgzLCJzY29wZSI6IiJ9.TjavbYttR5PmuCT53slwPrP72v7xK-3Taetyw3Grv6F5nHr3WUYweWPa7Xd2NTapGhOGlTy4StzmiYEXjkGaWqVvRp_R10nS4JZqjivJ7Gq6UvGqNc6NHay6vNWQk6w9_wBtg54EC8HXHxReHAniF69tYdLuOBJPw5mTOC87YziT4IZRWfs-QGMhHH4TTOKwl99yDVEfix5EFJz5vRA8qBMWxvf8-Y-PaNQNUvIeZ-CkdgaQg6gnD7zHBHKGfkBrt_v6fNBe9haTz_qqU8rNfbP30FeoKymrvikl-BOvpYZM-KVrb4XNbpGWnIgp3tpvlUZr5Eh-bJfXKvK1u0z2IQ
+Authorization: Bearer {{auth_token}}
 
 ###
 #get all roles
@@ -45,8 +47,7 @@ Content-Type: application/json
 ###
 #get roles by uuid
 GET http://localhost:8082/v1/api/users/roles/97da98e9-fe3a-4b06-94ad-16f48a8cc852
-Content-Type: application/json
-
+Authorization: Bearer {{auth_token}}
 ###
 #get all departments
 GET http://localhost:8082/v1/api/users/departments
