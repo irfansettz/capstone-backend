@@ -1,7 +1,6 @@
 package com.capstonebackend.itemservice.entity;
 
-import jakarta.annotation.Nullable;
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

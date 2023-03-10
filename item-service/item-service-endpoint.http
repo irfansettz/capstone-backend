@@ -1,0 +1,71 @@
+## Item Http Request endpoints
+
+### Create new item
+POST http://localhost:8083/api/v1/items
+Content-Type: application/json
+
+{
+  "name": "Mouse",
+  "created_by": "Nu'man Arif",
+  "lastupatedby": "Nu'man Arif"
+}
+
+### Get All Items
+GET http://localhost:8083/api/v1/items
+
+### Get Item by Id
+GET http://localhost:8083/api/v1/items/3
+
+### Get Item by uuid
+GET http://localhost:8083/api/v1/items/uuid/1409170d-04cd-487b-b998-5c26e75a0995
+
+### Delete Item
+DELETE http://localhost:8083/api/v1/items/3
+
+### Update Item
+PUT http://localhost:8083/api/v1/items/3
+Content-Type: application/json
+
+{
+  "name": "Headset",
+  "created_by": "Nu'man Arif",
+  "lastupatedby": "Nu'man Arif"
+}
+
+
+############################################################################################################
+
+
+## Service Http Request endpoints
+
+### Create new Service
+POST http://localhost:8083/api/v1/services
+Content-Type: application/json
+
+{
+  "name": "Service Komputer",
+  "created_by": "Nu'man Arif",
+  "lastupatedby": "Nu'man Arif"
+}
+
+### Get All Services
+GET http://localhost:8083/api/v1/services
+
+#### Get Service by Id
+GET http://localhost:8083/api/v1/services/12
+
+### Get Service by uuid
+GET http://localhost:8083/api/v1/services/uuid/afaee816-aaf2-4a5c-a2e5-b26c6734f140
+
+### Delete Service
+DELETE http://localhost:8083/api/v1/services/43
+
+### Update Service
+PUT http://localhost:8083/api/v1/services/1
+Content-Type: application/json
+
+{
+  "name": "Tes Update",
+  "created_by": "Nu'man Arif",
+  "lastupatedby": "Nu'man Arif"
+}

@@ -9,7 +9,8 @@ import java.util.Optional;
 @Repository
 public interface ItemRepository extends JpaRepository<ItemEntity, Long> {
 
-    Optional<ItemEntity> findByItemName(String name);
+    Optional<ItemEntity> findItemByName(String name);
 
     Optional<ItemEntity> findItemByUuid(String uuid);
+
 }
