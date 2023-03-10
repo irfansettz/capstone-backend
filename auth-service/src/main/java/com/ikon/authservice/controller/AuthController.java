@@ -43,9 +43,9 @@ public class AuthController {
     }
 
     @GetMapping("/user-data")
-    public ResponseEntity<ResponseDTO<Object>> userInfo(@RequestHeader(name = "Authorization") String tokenBearer) {
+    public ResponseEntity<UserDTO> userInfo(@RequestHeader(name = "Authorization") String tokenBearer) {
         UserDTO user = tokenService.decodeToken(tokenBearer);
 
-        return new ResponseEntity(ResponseDTO.builder().httpStatus(HttpStatus.OK).message("token found").data(user).build(), HttpStatus.OK);
+        return new ResponseEntity(user, HttpStatus.OK);
     }
 }
