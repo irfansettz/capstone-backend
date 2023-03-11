@@ -4,6 +4,7 @@ import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.jetbrains.annotations.NotNull;
 
@@ -31,7 +32,7 @@ public class ServiceEntity {
     private String created_by;
 
     @Column(name = "created_on")
-    @NotNull
+    @CreationTimestamp
     private Timestamp created_on;
 
     @NotNull

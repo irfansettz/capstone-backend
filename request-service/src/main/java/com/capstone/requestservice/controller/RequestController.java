@@ -4,6 +4,7 @@ import com.capstone.requestservice.dto.*;
 import com.capstone.requestservice.entity.RequestEntity;
 import com.capstone.requestservice.entity.RequestTypeEntity;
 import com.capstone.requestservice.service.RequestService;
+import com.capstone.requestservice.service.RequestTypeService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.*;
@@ -21,35 +22,9 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class RequestController {
     private final RequestService requestService;
+    private final RequestTypeService requestTypeService;
     private final ModelMapper modelMapper;
     private final RestTemplate restTemplate;
-
-    @GetMapping("/types")
-    public ResponseEntity<ResponseTypeDTO> getAllRequestType(){
-        List<RequestTypeEntity> requestTypeEntities = requestService.getAllRequestType();
-        System.out.println(requestTypeEntities);
-        List<TypeDTO> typeDTOS = new ArrayList<>();
-
-        for (RequestTypeEntity type: requestTypeEntities) {
-            typeDTOS.add(new TypeDTO(type.getUuid(), type.getType()));
-        }
-
-        ResponseTypeDTO response = new ResponseTypeDTO();
-        response.setData(typeDTOS);
-        response.setCode(200);
-        response.setStatus("success");
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
-
-    @GetMapping("/types/{typeUuid}")
-    public ResponseEntity<ResponseTypeDTO> getRequestTypeByUuid(@PathVariable String uuid){
-        RequestTypeEntity requestTypeEntity = requestService.getRequestTypeByUuid(uuid);
-
-        ResponseTypeDTO response = new ResponseTypeDTO(List.of(new TypeDTO(requestTypeEntity.getUuid(), requestTypeEntity.getType())));
-        response.setCode(200);
-        response.setStatus("success");
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
 
     @PostMapping
     public ResponseEntity<RequestResponseDTO> saveRequest(@RequestBody SaveRequestDTO request, @RequestHeader("Authorization") String authorizationHeader){
@@ -60,7 +35,7 @@ public class RequestController {
         HttpEntity<String> entity = new HttpEntity<>(headers);
         ResponseEntity<UserInfoDTO> userInfo = restTemplate.exchange("http://localhost:8081/api/v1/auth/user-data/username-dept", HttpMethod.GET, entity, UserInfoDTO.class);
         ResponseEntity<DepartmentInfoDTO> deptInfo = restTemplate.exchange("http://localhost:8082/v1/api/users/departments/" + userInfo.getBody().getDepartmentuuid(), HttpMethod.GET, entity, DepartmentInfoDTO.class);
-        RequestTypeEntity requestType = requestService.getRequestTypeByUuid(request.getTypeUuid());
+        RequestTypeEntity requestType = requestTypeService.getRequestTypeByUuid(request.getTypeUuid());
         RequestEntity saveRequest = new RequestEntity(null, UUID.randomUUID().toString(), requestType.getId(), deptInfo.getBody().getId(), generateNoTrans(deptInfo.getBody()), null, request.getDescription(), null, null, userInfo.getBody().getUsername(), null, userInfo.getBody().getUsername(), null);
         String uuid = requestService.addRequest(saveRequest);
 
@@ -71,7 +46,7 @@ public class RequestController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PutMapping("/{requestUuid}")
+    @PutMapping("/{uuid}")
     public ResponseEntity<ResponseDTO> updateRequestByUuid(@RequestHeader("Authorization") String authorizationHeader, @RequestBody SaveRequestDTO requestDTO, @PathVariable String uuid){
         String newToken = authorizationHeader.split(" ")[1];
         HttpHeaders headers = new HttpHeaders();

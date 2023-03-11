@@ -31,6 +31,7 @@ public class RequestDetailEntity {
 
     private double price;
 
+    @Column(name = "description", length = 500)
     private String description;
 
     @Column(name = "created_by")
