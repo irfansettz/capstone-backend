@@ -127,7 +127,7 @@ public class UserController {
         List<DepartmentEntity> allDept = departmentService.getAllDept();
         List<DepartmentDTO> departmentDTO = new ArrayList<>();
         for (DepartmentEntity department : allDept) {
-            departmentDTO.add(new DepartmentDTO(department.getUuid(), department.getCode(), department.getName()));
+            departmentDTO.add(new DepartmentDTO(department.getId(),department.getUuid(), department.getCode(), department.getName()));
         }
 
         // return response
@@ -138,16 +138,13 @@ public class UserController {
     }
 
     @GetMapping("/departments/{uuid}")
-    public ResponseEntity<DepartmentResponseDTO> getDepartmentByUuid(@PathVariable String uuid){
+    public ResponseEntity<DepartmentDTO> getDepartmentByUuid(@PathVariable String uuid){
         // get data
         DepartmentEntity dept = departmentService.getDeptByUuid(uuid);
-        DepartmentDTO departmentDTO = new DepartmentDTO(dept.getUuid(), dept.getCode(), dept.getName());
+        DepartmentDTO departmentDTO = new DepartmentDTO(dept.getId(),dept.getUuid(), dept.getCode(), dept.getName());
 
         // return response
-        DepartmentResponseDTO response = new DepartmentResponseDTO(List.of(departmentDTO));
-        response.setCode(200);
-        response.setStatus("success");
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(departmentDTO, HttpStatus.OK);
     }
 
     @PostMapping("/roles")
@@ -271,7 +268,7 @@ public class UserController {
         List<DepartmentDTO> allDeptUser = new ArrayList<>();
         for (UserDepartmentEntity userDept: allDepartmentUser) {
             DepartmentEntity department = departmentService.getDepartmentById(userDept.getDepartmentid());
-            DepartmentDTO departmentDTO = new DepartmentDTO(department.getUuid(), department.getCode(), department.getName());
+            DepartmentDTO departmentDTO = new DepartmentDTO(department.getId(),department.getUuid(), department.getCode(), department.getName());
             allDeptUser.add(departmentDTO);
         }
 

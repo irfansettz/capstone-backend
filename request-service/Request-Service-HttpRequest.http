@@ -1,0 +1,34 @@
+#get all request type
+GET http://localhost:8083/v1/api/requests/types
+Accept: application/json
+
+###
+#get request type by uuid
+GET http://localhost:8083/v1/api/requests/types/4400e94b-aae6-47f7-9b4e-141d92fbdaa1
+Accept: application/json
+
+###
+#add request
+POST http://localhost:8083/v1/api/requests
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoiU1VQRVJBRE1JTiIsImV4cCI6MTY3ODQ2ODIxMiwiaWF0IjoxNjc4NDY0NjEyLCJzY29wZSI6IiJ9.FQV4AgS-bo6cx_W2ONcP0hHxp5z0ai8wbeDpiXFFzjXdQTGxQpD_Rd2Nb5TXhkw8xSLfI6WERkQWoqpFF_Pt9abe1swIs-JvYA9AG9Q8SmUQYPngUJgwZJ-AmrXbkzaTUSnDbXPh56Wpqbw-9ptXngXX_q7hs4uMbTe8IE9d2I4f-qHYPZF75gNDTRdVwMeHf-YO9HG66NeuT6i6dYF19KtJVM7lmZkAvO1xv_RwSq3j85Ua7RlwxQ46Z2tfsIR3VmIdE9mFCW5N3tZlGiWIfns3h1tVwXXOBFvXcd0nb5KZZXp2aXz47f4hBj5AgLnj2FjdbceQaCeX1BU-a6bADw
+
+{
+  "typeUuid": "3e16033a-295a-4853-b74a-e6dc70ad9f98",
+  "description": "testing created"
+}
+
+###
+#update request type by uuid
+PUT http://localhost:8083/v1/api/requests/95d8fb23-4477-446e-9b26-ee784fa28b69
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoiU1VQRVJBRE1JTiIsImV4cCI6MTY3ODQ2NDc4MCwiaWF0IjoxNjc4NDYxMTgwLCJzY29wZSI6IiJ9.puM864AW6LuAGH45P-7JuCtUTbdkfMUo4Dlck_T4S8pkxAcOwHNaag4Lktk3o6H-qd8XO-h1UBmL5Mot3hPO5GIi1F_g-pli3DgB7M_Fo7aFEBS-C9M4khuR1An52OCNggt4assdtjaXV-Tu5_Rj3HXdkKWgqqA7StCgv4GAd-CirqXeIorkdTEd8edM8yA8KAN-mj2S_6Vr4VQvEcF1Ytcjf2ZpT4opmmHci-NP2LkkS3LQ96JH7WgRzSLg1w3qqeMxw63I_s8MQJ4VRVlXrAdODzeWoYDUP0WRGEpHUsjbey4uQejNfP8-gD6wx9WYcEI-5JFalmiFdrsRbakjqw
+
+{
+  "typeUuid": "f5769458-0c99-4e73-a6fd-0384fe3d7736",
+  "description": "testing updated"
+}
+
+###
+
+

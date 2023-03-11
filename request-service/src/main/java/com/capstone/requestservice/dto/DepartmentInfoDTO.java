@@ -1,13 +1,13 @@
-package com.capstonebackend.managementuserservice.dto;
+package com.capstone.requestservice.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
-@RequiredArgsConstructor
-public class DepartmentDTO {
+@NoArgsConstructor
+public class DepartmentInfoDTO {
     private Long id;
     private String uuid;
     private String code;

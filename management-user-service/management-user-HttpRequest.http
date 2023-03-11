@@ -44,7 +44,7 @@ Content-Type: application/json
 
 ###
 #get departments by uuid
-GET http://localhost:8082/v1/api/users/departments/bbf449db-a89a-4533-8625-e37d20076c89
+GET http://localhost:8082/v1/api/users/departments/654e0ecb-3838-4157-b7e4-867916568966
 Content-Type: application/json
 
 ###

@@ -3,6 +3,7 @@ package com.ikon.authservice.controller;
 
 import com.ikon.authservice.dto.ResponseDTO;
 import com.ikon.authservice.dto.UserDTO;
+import com.ikon.authservice.dto.UserInfoDTO;
 import com.ikon.authservice.dto.UserResponseDTO;
 import com.ikon.authservice.entity.User;
 import com.ikon.authservice.service.TokenService;
@@ -47,5 +48,12 @@ public class AuthController {
         UserDTO user = tokenService.decodeToken(tokenBearer);
 
         return new ResponseEntity(user, HttpStatus.OK);
+    }
+
+    @GetMapping("/user-data/username-dept")
+    public ResponseEntity<UserInfoDTO> usernameDeptInfo(@RequestHeader(name = "Authorization") String tokenBearer) {
+        UserDTO user = tokenService.decodeToken(tokenBearer);
+
+        return new ResponseEntity(new UserInfoDTO(user.getUsername(), user.getDepartments().get(0).getUuid()), HttpStatus.OK);
     }
 }
