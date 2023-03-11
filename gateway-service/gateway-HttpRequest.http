@@ -1,8 +1,7 @@
 # get all user
 GET http://localhost:8080/v1/api/users
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoiU1VQRVJBRE1JTiIsImV4cCI6MTY3ODQyMTc4NCwiaWF0IjoxNjc4NDE4MTg0LCJzY29wZSI6IiJ9.j_yMiT_oKFbgOKF5KZkMr5lHQKw9CG-3M9vwS0TwWo62ZSYR8rI2vH02_-nViB4_pJkLk6LeghIvFO8_8fEzz0Sk7bAzWgR1ky7Ba6k1mp4CzEqlsUkvut077dhMqWttORFAW4VjvbH1TpQsmtKY8KJE_jY46KhSDM5obb10QjnA-6CSLK-XewIraWF_9PGUcBz32trnSYfPoTEATpswQYfOvk8eWf3ol956MDVaFyxhLONwNk3gvqW2Ukp6K9bsjWkOIPRAgmTgfegKPQvTLz07TMGbbsJHWZNJz7oh2N41YBqWJYpx6hJOiYZ_G7yrRGgrHZYHv_tuYz92smiGxg
-
+Authorization: Bearer {{auth_token}}
 ###
 POST localhost:8080/api/v1/auth/login
 Content-Type: application/json
@@ -11,3 +10,5 @@ Content-Type: application/json
   "username" : "SUPERADMIN",
   "password" : "12345678"
 }
+
+> {% client.global.set("auth_token", response.body.data); %}
