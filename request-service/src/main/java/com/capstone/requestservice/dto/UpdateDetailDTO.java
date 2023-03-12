@@ -4,13 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Optional;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ResponseDTO {
-    private Integer code;
-    private String status;
-    private String message;
+public class UpdateDetailDTO {
+    private Integer qty;
+    private double price;
+    private String desc;
 }

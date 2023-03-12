@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RequestDetailRepository extends JpaRepository<RequestDetailEntity, Long> {
+    RequestDetailEntity findByUuid(String uuid);
 }
