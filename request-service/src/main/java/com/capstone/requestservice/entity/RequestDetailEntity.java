@@ -1,10 +1,12 @@
 package com.capstone.requestservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -21,7 +23,9 @@ public class RequestDetailEntity {
 
     private String uuid;
 
-    private Long requestid;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "requestid")
+    private RequestEntity requestid;
 
     private Long itemid;
 

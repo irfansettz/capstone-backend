@@ -16,8 +16,10 @@ public class UserDepartmentDataSeeder implements CommandLineRunner {
     private final UserDepartmentRepository userDepartmentRepository;
     @Override
     public void run(String... args) throws Exception {
-        UserDepartmentEntity userDept1 = new UserDepartmentEntity(1, 2L);
+        if (userDepartmentRepository.count() == 0){
+            UserDepartmentEntity userDept1 = new UserDepartmentEntity(1, 2L);
 
-        userDepartmentRepository.save(userDept1);
+            userDepartmentRepository.save(userDept1);
+        }
     }
 }

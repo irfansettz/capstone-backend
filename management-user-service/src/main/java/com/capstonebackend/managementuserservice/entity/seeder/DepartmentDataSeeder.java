@@ -18,10 +18,12 @@ public class DepartmentDataSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        DepartmentEntity dept1 = new DepartmentEntity(null, UUID.randomUUID().toString(), "FNC", "FINANCE", true, "SYSTEM INJECTOR", null, "SYSTEM INJECTOR", null);
-        DepartmentEntity dept2 = new DepartmentEntity(null, UUID.randomUUID().toString(), "IT", "INFORMATION TECHNOLOGY", true, "SYSTEM INJECTOR", null, "SYSTEM INJECTOR", null);
-        DepartmentEntity dept3 = new DepartmentEntity(null, UUID.randomUUID().toString(), "HRD", "HUMAN RESOURCES & DEVELOPMENT", true, "SYSTEM INJECTOR", null, "SYSTEM INJECTOR", null);
+        if (departmentRepository.count() == 0){
+            DepartmentEntity dept1 = new DepartmentEntity(null, UUID.randomUUID().toString(), "FNC", "FINANCE", true, "SYSTEM INJECTOR", null, "SYSTEM INJECTOR", null);
+            DepartmentEntity dept2 = new DepartmentEntity(null, UUID.randomUUID().toString(), "IT", "INFORMATION TECHNOLOGY", true, "SYSTEM INJECTOR", null, "SYSTEM INJECTOR", null);
+            DepartmentEntity dept3 = new DepartmentEntity(null, UUID.randomUUID().toString(), "HRD", "HUMAN RESOURCES & DEVELOPMENT", true, "SYSTEM INJECTOR", null, "SYSTEM INJECTOR", null);
 
-        departmentRepository.saveAll(List.of(dept1, dept2, dept3));
+            departmentRepository.saveAll(List.of(dept1, dept2, dept3));
+        }
     }
 }

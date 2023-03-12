@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.text.SimpleDateFormat;
 import java.util.UUID;
 
 @RestController
@@ -38,14 +39,14 @@ public class RequestDetailController {
             HttpEntity<String> entity = new HttpEntity<>(headers);
             ResponseEntity<ItemEntityDTO> response = restTemplate.exchange("http://localhost:8083/api/v1/items/uuid/" + requestDetail.getItemUuid(), HttpMethod.GET, entity, ItemEntityDTO.class);
             ItemEntityDTO item = response.getBody();
-            requestSave = new RequestDetailEntity(null, UUID.randomUUID().toString(), request.getId(),item.getId(), null, requestDetail.getQty(), requestDetail.getPrice(), requestDetail.getDesc(), request.getCreatedby(), null, request.getCreatedby(), null);
+            requestSave = new RequestDetailEntity(null, UUID.randomUUID().toString(), request,item.getId(), null, requestDetail.getQty(), requestDetail.getPrice(), requestDetail.getDesc(), request.getCreatedby(), null, request.getCreatedby(), null);
         } else {
             HttpHeaders headers = new HttpHeaders();
 
             HttpEntity<String> entity = new HttpEntity<>(headers);
             ResponseEntity<ServiceEntityDTO> response = restTemplate.exchange("http://localhost:8083/api/v1/services/uuid/" + requestDetail.getServiceUuid(), HttpMethod.GET, entity, ServiceEntityDTO.class);
             ServiceEntityDTO service = response.getBody();
-            requestSave = new RequestDetailEntity(null, UUID.randomUUID().toString(), request.getId(),null, service.getId(), requestDetail.getQty(), requestDetail.getPrice(), requestDetail.getDesc(), request.getCreatedby(), null, request.getCreatedby(), null);
+            requestSave = new RequestDetailEntity(null, UUID.randomUUID().toString(), request,null, service.getId(), requestDetail.getQty(), requestDetail.getPrice(), requestDetail.getDesc(), request.getCreatedby(), null, request.getCreatedby(), null);
         }
         requestDetailService.addDetail(requestSave);
         return new ResponseEntity<>(new ResponseDTO(201, "success", "Request Detail Saved"), HttpStatus.CREATED);
@@ -96,7 +97,7 @@ public class RequestDetailController {
             ServiceEntityDTO service = response.getBody();
             serviceDTO = new ServiceDTO(service.getUuid(), service.getName());
         }
-        RequestDetailResponseDTO responseDTO = new RequestDetailResponseDTO(request.getUuid(), itemDTO, serviceDTO, request.getQty(), request.getPrice(), request.getDescription(), request.getCreatedby(), request.getCreatedon(), request.getLastupdatedby(), request.getLastupdatedon());
+        RequestDetailResponseDTO responseDTO = new RequestDetailResponseDTO(request.getUuid(), itemDTO, serviceDTO, request.getQty(), request.getPrice(), request.getDescription(), request.getCreatedby(),  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(request.getCreatedon()), request.getLastupdatedby(),  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(request.getLastupdatedon()));
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 }

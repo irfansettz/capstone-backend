@@ -10,6 +10,16 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class RequestExcceptionController {
     @ExceptionHandler(RequestTypeNotFound.class)
     public ResponseEntity<ResponseDTO> requestTypeNotFound(RequestTypeNotFound e){
-        return new ResponseEntity<>(new ResponseDTO(404, e.getStatus(), e.getMessage()), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(new ResponseDTO(404, "failed", e.getMessage()), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(RequestNotFound.class)
+    public ResponseEntity<ResponseDTO> requestNotFound(RequestNotFound e){
+        return new ResponseEntity<>(new ResponseDTO(404, "failed", e.getMessage()), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(RequestDetailNotFound.class)
+    public ResponseEntity<ResponseDTO> requestDetailNotFound(RequestDetailNotFound e){
+        return new ResponseEntity<>(new ResponseDTO(404, "failed", e.getMessage()), HttpStatus.OK);
     }
 }

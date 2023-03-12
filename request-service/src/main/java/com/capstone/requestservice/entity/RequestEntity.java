@@ -1,17 +1,17 @@
 package com.capstone.requestservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Table(name = "request")
 @Entity
@@ -58,4 +58,7 @@ public class RequestEntity {
     @UpdateTimestamp
     @Column(name = "last_updated_on")
     private Timestamp lastupdatedon;
+
+    @OneToMany(mappedBy = "requestid", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<RequestDetailEntity> details;
 }

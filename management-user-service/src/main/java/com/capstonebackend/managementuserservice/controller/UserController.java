@@ -107,7 +107,22 @@ public class UserController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/roles/{uuid}")
+
+    @GetMapping ("/roles/{id}")
+    public ResponseEntity<RoleResponseDTO> getRoleById(@PathVariable Long id){
+        // get data
+        RoleEntity role = roleService.getRoleById(id);
+        RoleDTO roleDTO = getRole(role);
+
+        // return response
+        RoleResponseDTO response = new RoleResponseDTO(List.of(roleDTO));
+        response.setCode(200);
+        response.setStatus("success");
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/roles/uuid/{uuid}")
     public ResponseEntity<RoleResponseDTO> getRoleByUuid(@PathVariable String uuid){
         // get data
         RoleEntity role = roleService.getRoleByUuid(uuid);
@@ -137,7 +152,17 @@ public class UserController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/departments/{uuid}")
+    @GetMapping("/departments/{id}")
+    public ResponseEntity<DepartmentDTO> getDepartmentById(@PathVariable Long id){
+        // get data
+        DepartmentEntity dept = departmentService.getDepartmentById(id);
+        DepartmentDTO departmentDTO = new DepartmentDTO(dept.getId(),dept.getUuid(), dept.getCode(), dept.getName());
+
+        // return response
+        return new ResponseEntity<>(departmentDTO, HttpStatus.OK);
+    }
+
+    @GetMapping("/departments/uuid/{uuid}")
     public ResponseEntity<DepartmentDTO> getDepartmentByUuid(@PathVariable String uuid){
         // get data
         DepartmentEntity dept = departmentService.getDeptByUuid(uuid);

@@ -8,6 +8,16 @@ GET http://localhost:8084/v1/api/requesttypes/4400e94b-aae6-47f7-9b4e-141d92fbda
 Accept: application/json
 
 ###
+#get all request
+GET http://localhost:8084/v1/api/requests
+Accept: application/json
+
+###
+#get request by uuid
+GET http://localhost:8084/v1/api/requests/4400e94b-aae6-47f7-9b4e-141d92fbdaa1
+Accept: application/json
+
+###
 #add request
 POST http://localhost:8084/v1/api/requests
 Content-Type: application/json
@@ -17,6 +27,12 @@ Authorization: bearer eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoiU1VQRVJBR
   "typeUuid": "ce2c5a4a-48e7-468a-b527-4733d8981440",
   "description": "test request 2"
 }
+###
+#Delete requset by uuid
+DELETE http://localhost:8084/v1/api/requests/9e5830c5-9e12-432e-90af-613632546aba
+Accept: application/json
+
+###
 
 ###
 #update request type by uuid

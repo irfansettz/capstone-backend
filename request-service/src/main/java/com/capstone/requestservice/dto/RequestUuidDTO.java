@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RequestResponseDTO extends ResponseDTO{
+public class RequestUuidDTO extends ResponseDTO{
     private String requestUuid;
 }

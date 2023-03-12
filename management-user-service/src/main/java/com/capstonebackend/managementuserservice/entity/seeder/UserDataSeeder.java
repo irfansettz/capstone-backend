@@ -18,7 +18,9 @@ public class UserDataSeeder implements CommandLineRunner {
     private final PasswordEncoder passwordEncoder;
     @Override
     public void run(String... args) throws Exception {
-        UserEntity user = new UserEntity(null, UUID.randomUUID().toString(), "SUPERADMIN", "superadmin@gmail.com", passwordEncoder.encode("12345678"), true, null, "SYSTEM INJECTOR", null, "SYSTEM INJECTOR", null, null);
-        userRepository.save(user);
+        if (userRepository.count() == 0){
+            UserEntity user = new UserEntity(null, UUID.randomUUID().toString(), "SUPERADMIN", "superadmin@gmail.com", passwordEncoder.encode("12345678"), true, null, "SYSTEM INJECTOR", null, "SYSTEM INJECTOR", null, null);
+            userRepository.save(user);
+        }
     }
 }

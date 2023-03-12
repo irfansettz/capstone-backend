@@ -16,9 +16,11 @@ public class ServiceDataSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        ServiceEntity service1 = new ServiceEntity(null, UUID.randomUUID().toString(), "Service 1", "SYSTEM INJECTOR", null, "SYSTEM INJECTOR", null);
-        ServiceEntity service2 = new ServiceEntity(null, UUID.randomUUID().toString(), "Service 2", "SYSTEM INJECTOR", null, "SYSTEM INJECTOR", null);
+        if (serviceRepository.count() == 0){
+            ServiceEntity service1 = new ServiceEntity(null, UUID.randomUUID().toString(), "Service 1", "SYSTEM INJECTOR", null, "SYSTEM INJECTOR", null);
+            ServiceEntity service2 = new ServiceEntity(null, UUID.randomUUID().toString(), "Service 2", "SYSTEM INJECTOR", null, "SYSTEM INJECTOR", null);
 
-        serviceRepository.saveAll(List.of(service1, service2));
+            serviceRepository.saveAll(List.of(service1, service2));
+        }
     }
 }

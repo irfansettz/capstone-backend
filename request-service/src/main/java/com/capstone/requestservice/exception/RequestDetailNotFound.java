@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RequestTypeNotFound extends RuntimeException {
+public class RequestDetailNotFound extends RuntimeException{
     private String message;
 }

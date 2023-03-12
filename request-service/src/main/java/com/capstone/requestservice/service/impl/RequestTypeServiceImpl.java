@@ -20,7 +20,7 @@ public class RequestTypeServiceImpl implements RequestTypeService {
 
     @Override
     public RequestTypeEntity getRequestTypeByUuid(String uuid) {
-        if (requestTypeRepository.findByUuid(uuid) == null) throw new RequestTypeNotFound("failed", "Request Type Not Found");
+        if (requestTypeRepository.findByUuid(uuid) == null) throw new RequestTypeNotFound("Request Type Not Found");
         return requestTypeRepository.findByUuid(uuid);
     }
 

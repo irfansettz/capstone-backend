@@ -2,6 +2,7 @@ package com.capstone.requestservice.service.impl;
 
 import com.capstone.requestservice.dto.UpdateDetailDTO;
 import com.capstone.requestservice.entity.RequestDetailEntity;
+import com.capstone.requestservice.exception.RequestDetailNotFound;
 import com.capstone.requestservice.repository.RequestDetailRepository;
 import com.capstone.requestservice.service.RequestDetailService;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ public class RequestDetailServiceImpl implements RequestDetailService {
 
     @Override
     public void updateByUuid(String uuid, String username, UpdateDetailDTO detail) {
+        if (requestDetailRepository.findByUuid(uuid) == null ) throw new RequestDetailNotFound("Request detail not found");
         RequestDetailEntity requestDetail = requestDetailRepository.findByUuid(uuid);
         requestDetail.setLastupdatedby(username);
         requestDetail.setQty(detail.getQty());
@@ -29,12 +31,14 @@ public class RequestDetailServiceImpl implements RequestDetailService {
 
     @Override
     public void deleteByUuid(String uuid) {
+        if (requestDetailRepository.findByUuid(uuid) == null ) throw new RequestDetailNotFound("Request detail not found");
         RequestDetailEntity request = requestDetailRepository.findByUuid(uuid);
         requestDetailRepository.delete(request);
     }
 
     @Override
     public RequestDetailEntity getByUuid(String uuid) {
+        if (requestDetailRepository.findByUuid(uuid) == null ) throw new RequestDetailNotFound("Request detail not found");
         return requestDetailRepository.findByUuid(uuid);
     }
 }

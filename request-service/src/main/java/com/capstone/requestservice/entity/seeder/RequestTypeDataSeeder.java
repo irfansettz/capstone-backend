@@ -15,9 +15,11 @@ public class RequestTypeDataSeeder implements CommandLineRunner {
     private final RequestTypeRepository requestTypeRepository;
     @Override
     public void run(String... args) throws Exception {
-        RequestTypeEntity type1 = new RequestTypeEntity(null, UUID.randomUUID().toString(), "Item", "SYSTEM INJECTOR", null, "SYSTEM INJECTOR", null);
-        RequestTypeEntity type2 = new RequestTypeEntity(null, UUID.randomUUID().toString(), "Service", "SYSTEM INJECTOR", null, "SYSTEM INJECTOR", null);
+        if (requestTypeRepository.count() == 0){
+            RequestTypeEntity type1 = new RequestTypeEntity(null, UUID.randomUUID().toString(), "Item", "SYSTEM INJECTOR", null, "SYSTEM INJECTOR", null);
+            RequestTypeEntity type2 = new RequestTypeEntity(null, UUID.randomUUID().toString(), "Service", "SYSTEM INJECTOR", null, "SYSTEM INJECTOR", null);
 
-        requestTypeRepository.saveAll(List.of(type1, type2));
+            requestTypeRepository.saveAll(List.of(type1, type2));
+        }
     }
 }

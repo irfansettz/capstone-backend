@@ -16,13 +16,15 @@ public class ApprovalGroupDataSeeder implements CommandLineRunner {
     private final ApprovalGroupRepository approvalGroupRepository;
     @Override
     public void run(String... args) throws Exception {
-        // superadmin
-        ApprovalGroupEntity appGroup1 = new ApprovalGroupEntity(null, 1L, 1L);
-        ApprovalGroupEntity appGroup2 = new ApprovalGroupEntity(null, 1L, 2L);
-        // function manager
-        ApprovalGroupEntity appGroup3 = new ApprovalGroupEntity(null, 4L, 1L);
-        ApprovalGroupEntity appGroup4 = new ApprovalGroupEntity(null, 4L, 2L);
+        if (approvalGroupRepository.count() == 0){
+            // superadmin
+            ApprovalGroupEntity appGroup1 = new ApprovalGroupEntity(null, 1L, 1L);
+            ApprovalGroupEntity appGroup2 = new ApprovalGroupEntity(null, 1L, 2L);
+            // function manager
+            ApprovalGroupEntity appGroup3 = new ApprovalGroupEntity(null, 4L, 1L);
+            ApprovalGroupEntity appGroup4 = new ApprovalGroupEntity(null, 4L, 2L);
 
-        approvalGroupRepository.saveAll(List.of(appGroup1, appGroup2, appGroup3, appGroup4));
+            approvalGroupRepository.saveAll(List.of(appGroup1, appGroup2, appGroup3, appGroup4));
+        }
     }
 }
