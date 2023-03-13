@@ -84,7 +84,7 @@ public class RequestDetailController {
             HttpHeaders headers = new HttpHeaders();
 
             HttpEntity<String> entity = new HttpEntity<>(headers);
-            ResponseEntity<ItemEntityDTO> response = restTemplate.exchange("http://localhost:8083/api/v1/items/" + request.getItemid(), HttpMethod.GET, entity, ItemEntityDTO.class);
+            ResponseEntity<ItemEntityDTO> response = restTemplate.exchange("http://item-service:8083/api/v1/items/" + request.getItemid(), HttpMethod.GET, entity, ItemEntityDTO.class);
             ItemEntityDTO item = response.getBody();
             itemDTO = new ItemDTO(item.getUuid(), item.getName());
         }
@@ -93,7 +93,7 @@ public class RequestDetailController {
             HttpHeaders headers = new HttpHeaders();
 
             HttpEntity<String> entity = new HttpEntity<>(headers);
-            ResponseEntity<ServiceEntityDTO> response = restTemplate.exchange("http://localhost:8083/api/v1/services/" + request.getItemid(), HttpMethod.GET, entity, ServiceEntityDTO.class);
+            ResponseEntity<ServiceEntityDTO> response = restTemplate.exchange("http://item-service:8083/api/v1/services/" + request.getItemid(), HttpMethod.GET, entity, ServiceEntityDTO.class);
             ServiceEntityDTO service = response.getBody();
             serviceDTO = new ServiceDTO(service.getUuid(), service.getName());
         }
