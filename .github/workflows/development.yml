@@ -31,6 +31,6 @@ jobs:
           script: |
             cd /home/capstone/capstone-backend
             docker compose down
-            sudo chmod u+x ./remote_images.sh
+            chmod u+x ./remote_images.sh
             ./remove_images.sh
             docker compose up -d
