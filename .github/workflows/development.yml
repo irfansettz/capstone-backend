@@ -31,4 +31,5 @@ jobs:
           script: |
             cd /home/capstone/capstone-backend
             docker compose down
+            ./remove_images.sh
             docker compose up -d
