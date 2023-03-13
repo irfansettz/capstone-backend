@@ -1,0 +1,34 @@
+name: CI/CD development
+
+on:
+  push:
+    branches:
+      - development
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - name: Copy files to EC2 instance
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.EC2_INSTANCE_HOST }}
+          username: ${{ secrets.EC2_INSTANCE_NAME }}
+          password: ${{ secrets.EC2_INSTANCE_PASSWORD }}
+          source: ./capstone-backend
+          target: /home/${{ secrets.EC2_INSTANCE_NAME }}/capstone-backend/
+
+      - name: SSH into EC2 instance and deploy
+        uses: appleboy/ssh-action@v0.1.7
+        with:
+          host: ${{ secrets.EC2_INSTANCE_HOST }}
+          username: ${{ secrets.EC2_INSTANCE_NAME }}
+          password: ${{ secrets.EC2_INSTANCE_PASSWORD }}
+          script: |
+            cd /home/capstone/capstone-backend
+            docker compose down
+            docker compose up -d
