@@ -19,8 +19,8 @@ jobs:
           host: ${{ secrets.EC2_INSTANCE_HOST }}
           username: ${{ secrets.EC2_INSTANCE_NAME }}
           password: ${{ secrets.EC2_INSTANCE_PASSWORD }}
-          source: ./capstone-backend/capstone-backend/
-          target: /home/capstone/capstone-backend/
+          source: ./
+          target: /home/capstone/capstone-backend
 
       - name: SSH into EC2 instance and deploy
         uses: appleboy/ssh-action@v0.1.7
