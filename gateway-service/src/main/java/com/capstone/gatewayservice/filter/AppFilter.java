@@ -41,7 +41,7 @@ public class AppFilter implements GatewayFilter {
             headers.setBearerAuth(newToken);
 
             HttpEntity<String> entity = new HttpEntity<>(headers);
-            ResponseEntity<UserDTO> response = restTemplate.exchange("http://localhost:8081/api/v1/auth/user-data", HttpMethod.GET, entity, UserDTO.class);
+            ResponseEntity<UserDTO> response = restTemplate.exchange("http://auth-service:8081/api/v1/auth/user-data", HttpMethod.GET, entity, UserDTO.class);
             UserDTO userData = response.getBody();
 
             exchange.getRequest().mutate().header("role", String.valueOf(Objects.requireNonNull(userData.getRoles().get(0).getName()))).build();
