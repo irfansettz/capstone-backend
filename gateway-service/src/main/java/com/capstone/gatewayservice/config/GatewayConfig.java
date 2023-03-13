@@ -17,11 +17,19 @@ public class GatewayConfig {
                 .route(r -> r.path("/v1/api/users/**")
                         .and().method("GET")
                         .filters(f -> f.filter(filter))
-                        .uri("http://localhost:8082/"))
+                        .uri("http://management-user-service:8082/"))
                 .route(r -> r.path("/api/v1/auth/login")
                         .and().method("GET", "POST", "UPDATE", "DELETE")
                         .filters(f -> f.filter(filter))
-                        .uri("http://localhost:8081/"))
+                        .uri("http://auth-service:8081/"))
+                .route(r -> r.path("/api/v1/**")
+                        .and().method("GET", "POST", "UPDATE", "DELETE")
+                        .filters(f -> f.filter(filter))
+                        .uri("http://item-service:8083/"))
+                .route(r -> r.path("/v1/api/**")
+                        .and().method("GET", "POST", "UPDATE", "DELETE")
+                        .filters(f -> f.filter(filter))
+                        .uri("http://request-service:8084/"))
                 .build();
     }
 }

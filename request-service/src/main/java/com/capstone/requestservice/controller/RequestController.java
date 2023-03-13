@@ -101,7 +101,7 @@ public class RequestController {
         HttpEntity<String> entity = new HttpEntity<>(headers);
 
         // get dept info
-        ResponseEntity<DepartmentInfoDTO> deptInfo = restTemplate.exchange("http://localhost:8082/v1/api/users/departments/" + request.getDepartmentid(), HttpMethod.GET, entity, DepartmentInfoDTO.class);
+        ResponseEntity<DepartmentInfoDTO> deptInfo = restTemplate.exchange("http://management-user-service:8082/v1/api/users/departments/" + request.getDepartmentid(), HttpMethod.GET, entity, DepartmentInfoDTO.class);
         List<RequestDetailResponseDTO> details = new ArrayList<>();
 
         // get type
@@ -112,13 +112,13 @@ public class RequestController {
             // get item
             if (detail.getItemid() != null){
 
-                ResponseEntity<ItemEntityDTO> response = restTemplate.exchange("http://localhost:8083/api/v1/items/" + detail.getItemid(), HttpMethod.GET, entity, ItemEntityDTO.class);
+                ResponseEntity<ItemEntityDTO> response = restTemplate.exchange("http://item-service:8083/api/v1/items/" + detail.getItemid(), HttpMethod.GET, entity, ItemEntityDTO.class);
                 ItemEntityDTO item = response.getBody();
                 itemDTO = new ItemDTO(item.getUuid(), item.getName());
             }
             // get service
             if (detail.getServiceid() != null){
-                ResponseEntity<ServiceEntityDTO> response = restTemplate.exchange("http://localhost:8083/api/v1/services/" + detail.getItemid(), HttpMethod.GET, entity, ServiceEntityDTO.class);
+                ResponseEntity<ServiceEntityDTO> response = restTemplate.exchange("http://item-service:8083/api/v1/services/" + detail.getItemid(), HttpMethod.GET, entity, ServiceEntityDTO.class);
                 ServiceEntityDTO service = response.getBody();
                 serviceDTO = new ServiceDTO(service.getUuid(), service.getName());
             }
