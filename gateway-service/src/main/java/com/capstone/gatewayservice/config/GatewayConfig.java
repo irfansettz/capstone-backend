@@ -15,7 +15,7 @@ public class GatewayConfig {
     RouteLocator gatewayRoutes(RouteLocatorBuilder builder){
         return builder.routes()
                 .route(r -> r.path("/v1/api/users/**")
-                        .and().method("GET")
+                        .and().method("GET", "POST", "UPDATE", "DELETE")
                         .filters(f -> f.filter(filter))
                         .uri("http://management-user-service:8082/"))
                 .route(r -> r.path("/api/v1/auth/login")
