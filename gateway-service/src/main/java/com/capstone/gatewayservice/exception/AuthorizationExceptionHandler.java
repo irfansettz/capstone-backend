@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
-public class AuthorizationHandler {
-    @ExceptionHandler(AuthorizationFailed.class)
-    public ResponseEntity<ResponseDTO> authorizationFailed(AuthorizationFailed e){
+public class AuthorizationExceptionHandler {
+    @ExceptionHandler(UnauthorizationException.class)
+    public ResponseEntity<ResponseDTO> authorizationFailed(UnauthorizationException e){
         return new ResponseEntity<>(new ResponseDTO(HttpStatus.UNAUTHORIZED, e.getMessage()), HttpStatus.UNAUTHORIZED);
     }
 }

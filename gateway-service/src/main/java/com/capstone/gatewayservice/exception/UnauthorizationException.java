@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthorizationFailed extends RuntimeException{
+public class UnauthorizationException extends RuntimeException{
     private String message;
 }
