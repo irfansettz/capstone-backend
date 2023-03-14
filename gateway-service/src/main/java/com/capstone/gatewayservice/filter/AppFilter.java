@@ -26,6 +26,7 @@ public class AppFilter implements GatewayFilter {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         try {
+            log.debug("test log");
             ServerHttpRequest request =  exchange.getRequest();
             final List<String> apiEndpoints = List.of("/api/v1/auth/login");
 
