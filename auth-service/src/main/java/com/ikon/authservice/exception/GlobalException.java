@@ -26,6 +26,14 @@ public class GlobalException {
                 .data(e.getMessage())
                 .build(), HttpStatus.BAD_REQUEST);
     }
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<ResponseDTO<Object>> globalException(UserNotFoundException e) {
+        return new ResponseEntity<>(ResponseDTO.builder()
+                .httpStatus(HttpStatus.UNAUTHORIZED)
+                .message("Bad Request")
+                .data(e.getMessage())
+                .build(), HttpStatus.UNAUTHORIZED);
+    }
 }
 
 

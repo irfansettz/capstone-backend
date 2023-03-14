@@ -64,7 +64,7 @@ public class TokenServiceImpl implements TokenService {
         HttpEntity<String> entity = new HttpEntity<>(headers);
         ResponseEntity<UserResponseDTO> response;
         response = restTemplate.exchange("http://management-user-service:8082/v1/api/users?username=" + data, HttpMethod.GET, entity, UserResponseDTO.class);
-        System.out.println(response.getBody().getData());
+
         if (response.getBody().getData() != null) {
             return response.getBody().getData().get(0);
         }
