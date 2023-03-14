@@ -36,19 +36,15 @@ public class AppFilter implements GatewayFilter {
                 response.setStatusCode(HttpStatus.UNAUTHORIZED);
                 return response.setComplete();
             }
-            try {
-                final String token = request.getHeaders().getOrEmpty("Authorization").get(0);
-                String newToken = token.split(" ")[1];
-                HttpHeaders headers = new HttpHeaders();
-                headers.setBearerAuth(newToken);
+            final String token = request.getHeaders().getOrEmpty("Authorization").get(0);
+            String newToken = token.split(" ")[1];
+            HttpHeaders headers = new HttpHeaders();
+            headers.setBearerAuth(newToken);
 
-                HttpEntity<String> entity = new HttpEntity<>(headers);
-                ResponseEntity<UserDTO> response = restTemplate.exchange("http://auth-service:8081/api/v1/auth/user-data", HttpMethod.GET, entity, UserDTO.class);
-                UserDTO userData = response.getBody();
-                exchange.getRequest().mutate().header("role", String.valueOf(Objects.requireNonNull(userData.getRoles().get(0).getName()))).build();
-            } catch (UnauthorizationException e){
-                throw new UnauthorizationException("Authorization failed");
-            }
+            HttpEntity<String> entity = new HttpEntity<>(headers);
+            ResponseEntity<UserDTO> response = restTemplate.exchange("http://auth-service:8081/api/v1/auth/user-data", HttpMethod.GET, entity, UserDTO.class);
+            UserDTO userData = response.getBody();
+            exchange.getRequest().mutate().header("role", String.valueOf(Objects.requireNonNull(userData.getRoles().get(0).getName()))).build();
         }
         return chain.filter(exchange);
     }
