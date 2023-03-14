@@ -32,6 +32,7 @@ public class AppFilter implements GatewayFilter {
                 .noneMatch(uri -> r.getURI().getPath().contains(uri));
         if (isApiSecured.test(request)) {
             if (!request.getHeaders().containsKey("Authorization")) {
+                System.out.println("test sini 1");
                 ServerHttpResponse response = exchange.getResponse();
                 response.setStatusCode(HttpStatus.UNAUTHORIZED);
                 return response.setComplete();
@@ -43,6 +44,8 @@ public class AppFilter implements GatewayFilter {
 
             HttpEntity<String> entity = new HttpEntity<>(headers);
             ResponseEntity<UserDTO> response = restTemplate.exchange("http://auth-service:8081/api/v1/auth/user-data", HttpMethod.GET, entity, UserDTO.class);
+            System.out.println(response);
+            System.out.println("status code = " + response.getStatusCode());
             System.out.println("is auth = " + response.getStatusCode().is4xxClientError());
             if(response.getStatusCode().is4xxClientError()) throw new AuthorizationFailed("Authorization failed");
             UserDTO userData = response.getBody();
