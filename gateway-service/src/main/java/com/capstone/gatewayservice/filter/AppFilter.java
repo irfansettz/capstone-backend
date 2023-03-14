@@ -26,13 +26,13 @@ public class AppFilter implements GatewayFilter {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         try {
-            log.debug("test log");
             ServerHttpRequest request =  exchange.getRequest();
             final List<String> apiEndpoints = List.of("/api/v1/auth/login");
 
             Predicate<ServerHttpRequest> isApiSecured = r -> apiEndpoints.stream()
                     .noneMatch(uri -> r.getURI().getPath().contains(uri));
             if (isApiSecured.test(request)) {
+                System.out.println("test");
                 if (!request.getHeaders().containsKey("Authorization")) {
                     ServerHttpResponse response = exchange.getResponse();
                     response.setStatusCode(HttpStatus.UNAUTHORIZED);
@@ -45,9 +45,9 @@ public class AppFilter implements GatewayFilter {
 
                 HttpEntity<String> entity = new HttpEntity<>(headers);
                 ResponseEntity<UserDTO> response = restTemplate.exchange("http://auth-service:8081/api/v1/auth/user-data", HttpMethod.GET, entity, UserDTO.class);
-                log.debug("response =" + response);
-//                UserDTO userData = response.getBody();
-//                exchange.getRequest().mutate().header("role", String.valueOf(Objects.requireNonNull(userData.getRoles().get(0).getName()))).build();
+
+                UserDTO userData = response.getBody();
+                exchange.getRequest().mutate().header("role", String.valueOf(Objects.requireNonNull(userData.getRoles().get(0).getName()))).build();
             }
             return chain.filter(exchange);
         } catch (UnauthorizationException e){
