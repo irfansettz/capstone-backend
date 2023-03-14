@@ -63,7 +63,25 @@ public class AppFilter implements GatewayFilter {
                     byte[] bytes = message.getBytes(StandardCharsets.UTF_8);
                     DataBuffer buffer = response.bufferFactory().wrap(bytes);
                     return response.writeWith(Mono.just(buffer));
-                } 
+                }
+                if (ex instanceof HttpClientErrorException.BadRequest){
+                    ServerHttpResponse response = exchange.getResponse();
+                    response.setStatusCode(HttpStatus.BAD_REQUEST);
+                    response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
+                    String message = "Bad Request";
+                    byte[] bytes = message.getBytes(StandardCharsets.UTF_8);
+                    DataBuffer buffer = response.bufferFactory().wrap(bytes);
+                    return response.writeWith(Mono.just(buffer));
+                }
+                if (ex instanceof HttpClientErrorException.MethodNotAllowed){
+                    ServerHttpResponse response = exchange.getResponse();
+                    response.setStatusCode(HttpStatus.METHOD_NOT_ALLOWED);
+                    response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
+                    String message = "Method Not Allowed";
+                    byte[] bytes = message.getBytes(StandardCharsets.UTF_8);
+                    DataBuffer buffer = response.bufferFactory().wrap(bytes);
+                    return response.writeWith(Mono.just(buffer));
+                }
             }
         }
         return chain.filter(exchange);
