@@ -10,6 +10,7 @@ import org.springframework.http.*;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.server.ServerWebExchange;
@@ -37,30 +38,22 @@ public class AppFilter implements GatewayFilter {
                 response.setStatusCode(HttpStatus.UNAUTHORIZED);
                 return response.setComplete();
             }
-            final String token = request.getHeaders().getOrEmpty("Authorization").get(0);
-            String newToken = token.split(" ")[1];
-            HttpHeaders headers = new HttpHeaders();
-            headers.setBearerAuth(newToken);
+            try {
+                final String token = request.getHeaders().getOrEmpty("Authorization").get(0);
+                String newToken = token.split(" ")[1];
+                HttpHeaders headers = new HttpHeaders();
+                headers.setBearerAuth(newToken);
 
-            HttpEntity<String> entity = new HttpEntity<>(headers);
-            ResponseEntity<UserDTO> response = restTemplate.exchange("http://auth-service:8081/api/v1/auth/user-data", HttpMethod.GET, entity, UserDTO.class);
-            UserDTO userData = response.getBody();
-            exchange.getRequest().mutate().header("role", String.valueOf(Objects.requireNonNull(userData.getRoles().get(0).getName()))).build();
+                HttpEntity<String> entity = new HttpEntity<>(headers);
+                System.out.println("test");
+                ResponseEntity<UserDTO> response = restTemplate.exchange("http://auth-service:8081/api/v1/auth/user-data", HttpMethod.GET, entity, UserDTO.class);
+                UserDTO userData = response.getBody();
+                exchange.getRequest().mutate().header("role", String.valueOf(Objects.requireNonNull(userData.getRoles().get(0).getName()))).build();
+            }catch (Throwable ex){
+                System.out.println("testt");
+                if (ex instanceof HttpClientErrorException.Unauthorized) throw new UnauthorizationException("test");
+            }
         }
         return chain.filter(exchange);
-    }
-
-    public Mono<Void> handleErrorResponse(ServerWebExchange exchange, HttpStatus status) {
-        if (status == HttpStatus.UNAUTHORIZED) {
-            ServerHttpResponse response = exchange.getResponse();
-            response.setStatusCode(status);
-            return response.setComplete();
-        } else if (status.is4xxClientError()) {
-            return Mono.error(new ResponseStatusException(status, "Client error"));
-        } else if (status.is5xxServerError()) {
-            return Mono.error(new ResponseStatusException(status, "Server error"));
-        } else {
-            return Mono.error(new ResponseStatusException(status, "Unexpected error"));
-        }
     }
 }

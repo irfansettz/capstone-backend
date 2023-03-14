@@ -1,13 +1,11 @@
 package com.capstone.gatewayservice.config;
 
-import com.capstone.gatewayservice.exception.UnauthorizationException;
 import com.capstone.gatewayservice.filter.AppFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.util.ErrorHandler;
 
 @Configuration
 @RequiredArgsConstructor
