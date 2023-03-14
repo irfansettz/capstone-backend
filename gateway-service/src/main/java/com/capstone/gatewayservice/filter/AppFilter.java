@@ -34,10 +34,12 @@ public class AppFilter implements GatewayFilter {
             if (isApiSecured.test(request)) {
                 System.out.println("test");
                 if (!request.getHeaders().containsKey("Authorization")) {
+                    System.out.println("test2");
                     ServerHttpResponse response = exchange.getResponse();
                     response.setStatusCode(HttpStatus.UNAUTHORIZED);
                     return response.setComplete();
                 }
+                System.out.println("test3");
                 final String token = request.getHeaders().getOrEmpty("Authorization").get(0);
                 String newToken = token.split(" ")[1];
                 HttpHeaders headers = new HttpHeaders();
@@ -45,8 +47,9 @@ public class AppFilter implements GatewayFilter {
 
                 HttpEntity<String> entity = new HttpEntity<>(headers);
                 ResponseEntity<UserDTO> response = restTemplate.exchange("http://auth-service:8081/api/v1/auth/user-data", HttpMethod.GET, entity, UserDTO.class);
-
+                System.out.println("test4");
                 UserDTO userData = response.getBody();
+                System.out.println("test5");
                 exchange.getRequest().mutate().header("role", String.valueOf(Objects.requireNonNull(userData.getRoles().get(0).getName()))).build();
             }
             return chain.filter(exchange);
