@@ -45,13 +45,15 @@ public class AppFilter implements GatewayFilter {
                 headers.setBearerAuth(newToken);
 
                 HttpEntity<String> entity = new HttpEntity<>(headers);
-                System.out.println("test");
                 ResponseEntity<UserDTO> response = restTemplate.exchange("http://auth-service:8081/api/v1/auth/user-data", HttpMethod.GET, entity, UserDTO.class);
                 UserDTO userData = response.getBody();
                 exchange.getRequest().mutate().header("role", String.valueOf(Objects.requireNonNull(userData.getRoles().get(0).getName()))).build();
-            }catch (Throwable ex){
-                System.out.println("testt");
-                if (ex instanceof HttpClientErrorException.Unauthorized) throw new UnauthorizationException("test");
+            } catch (Throwable ex){
+                if (ex instanceof HttpClientErrorException.Unauthorized) {
+                    ServerHttpResponse response = exchange.getResponse();
+                    response.setStatusCode(HttpStatus.UNAUTHORIZED);
+                    return response.setComplete();
+                } 
             }
         }
         return chain.filter(exchange);
