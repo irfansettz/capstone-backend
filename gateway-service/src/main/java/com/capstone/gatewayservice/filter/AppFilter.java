@@ -11,6 +11,7 @@ import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -47,5 +48,19 @@ public class AppFilter implements GatewayFilter {
             exchange.getRequest().mutate().header("role", String.valueOf(Objects.requireNonNull(userData.getRoles().get(0).getName()))).build();
         }
         return chain.filter(exchange);
+    }
+
+    public Mono<Void> handleErrorResponse(ServerWebExchange exchange, HttpStatus status) {
+        if (status == HttpStatus.UNAUTHORIZED) {
+            ServerHttpResponse response = exchange.getResponse();
+            response.setStatusCode(status);
+            return response.setComplete();
+        } else if (status.is4xxClientError()) {
+            return Mono.error(new ResponseStatusException(status, "Client error"));
+        } else if (status.is5xxServerError()) {
+            return Mono.error(new ResponseStatusException(status, "Server error"));
+        } else {
+            return Mono.error(new ResponseStatusException(status, "Unexpected error"));
+        }
     }
 }

@@ -34,10 +34,4 @@ public class GatewayConfig {
                         .uri("http://request-service:8084/"))
                 .build();
     }
-
-    @Bean
-    public ErrorHandler errorHandler() {
-        throw new UnauthorizationException("Authorization failed");
-    }
-
 }
