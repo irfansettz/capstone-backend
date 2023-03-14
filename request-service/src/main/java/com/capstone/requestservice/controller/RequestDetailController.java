@@ -27,6 +27,7 @@ public class RequestDetailController {
 
     @PostMapping
     @Transactional
+    // todo add request header
     public ResponseEntity<ResponseDTO> addRequestDetail(@RequestBody RequestDetailDTO requestDetail){
         // get data request header
         RequestEntity request = requestService.getByUuid(requestDetail.getRequestUuid());

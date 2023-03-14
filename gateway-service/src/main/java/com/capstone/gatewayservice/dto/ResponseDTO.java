@@ -10,9 +10,8 @@ import java.io.Serializable;
 @Data
 @Builder
 @ToString
-public class ResponseDTO<T> implements Serializable {
+public class ResponseDTO {
     private HttpStatus httpStatus;
     private String message;
-    private T data;
 }
 

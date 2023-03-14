@@ -1,6 +1,7 @@
 package com.capstone.gatewayservice.filter;
 
 import com.capstone.gatewayservice.dto.UserDTO;
+import com.capstone.gatewayservice.exception.AuthorizationFailed;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
@@ -42,8 +43,8 @@ public class AppFilter implements GatewayFilter {
 
             HttpEntity<String> entity = new HttpEntity<>(headers);
             ResponseEntity<UserDTO> response = restTemplate.exchange("http://auth-service:8081/api/v1/auth/user-data", HttpMethod.GET, entity, UserDTO.class);
+            if(response.getStatusCode().is4xxClientError()) throw new AuthorizationFailed("Authorization failed");
             UserDTO userData = response.getBody();
-
             exchange.getRequest().mutate().header("role", String.valueOf(Objects.requireNonNull(userData.getRoles().get(0).getName()))).build();
         }
         return chain.filter(exchange);
