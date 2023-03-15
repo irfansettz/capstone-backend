@@ -17,4 +17,8 @@ public interface ApprovalService {
     List<ApprovalEntity> getAllApproval();
 
     List<ApprovalEntity> getByDepartmentId(Long id);
+
+    void deleteByUuid(String uuid);
+
+    ApprovalEntity getById(Long id);
 }

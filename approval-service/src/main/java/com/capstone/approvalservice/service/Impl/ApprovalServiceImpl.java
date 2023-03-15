@@ -42,4 +42,15 @@ public class ApprovalServiceImpl implements ApprovalService {
     public List<ApprovalEntity> getByDepartmentId(Long id) {
         return approvalRepository.findAllByDepartmentid(id);
     }
+
+    @Override
+    public void deleteByUuid(String uuid) {
+        ApprovalEntity approval = approvalRepository.findByUuid(uuid);
+        approvalRepository.delete(approval);
+    }
+
+    @Override
+    public ApprovalEntity getById(Long id) {
+        return approvalRepository.findById(id).get();
+    }
 }

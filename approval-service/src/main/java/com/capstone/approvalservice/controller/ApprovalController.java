@@ -63,7 +63,14 @@ public class ApprovalController {
         return new ResponseEntity<>(new ResponseDTO<>(HttpStatus.CREATED, "updated", "success"), HttpStatus.CREATED);
     }
 
-    @GetMapping("/{uuid}")
+    @GetMapping("/{id}")
+    public ResponseEntity<ResponseDTO<ApprovalDTO>> getByApprovalUuid(@PathVariable Long id){
+        ApprovalEntity approval = approvalService.getById(id);
+
+        return new ResponseEntity<>(new ResponseDTO<>(HttpStatus.OK, "success", getDataApproval(approval)), HttpStatus.OK);
+    }
+
+    @GetMapping("uuid/{uuid}")
     public ResponseEntity<ResponseDTO<ApprovalDTO>> getByApprovalUuid(@PathVariable String uuid){
         ApprovalEntity approval = approvalService.getByUuid(uuid);
 
@@ -90,6 +97,12 @@ public class ApprovalController {
         return new ResponseEntity<>(new ResponseDTO<>(HttpStatus.OK, "success", data),HttpStatus.OK);
     }
 
+    @DeleteMapping("/{uuid}")
+    private ResponseEntity<ResponseDTO> deleteApprovalByUuid(@PathVariable String uuid){
+        approvalService.deleteByUuid(uuid);
+
+        return new ResponseEntity<>(new ResponseDTO<>(HttpStatus.OK, "success", null), HttpStatus.OK);
+    }
     public ApprovalDTO getDataApproval(ApprovalEntity approval){
         HttpHeaders headers = new HttpHeaders();
         HttpEntity<String> entity = new HttpEntity<>(headers);

@@ -118,7 +118,18 @@ public class RequestController {
         // get dept info
         ResponseEntity<DepartmentInfoDTO> deptInfo = restTemplate.exchange("http://localhost:8082/v1/api/users/departments/" + request.getDepartmentid(), HttpMethod.GET, entity, DepartmentInfoDTO.class);
         List<RequestDetailResponseDTO> details = new ArrayList<>();
-
+        // get approval dept head
+        ApprovalDTO approvalHeadDpt = null;
+        if (request.getApprovaldpt() != null){
+            ResponseEntity<ResponseApprovalDTO> data = restTemplate.exchange("http://localhost:8085/api/v1/approvals/" + request.getApprovaldpt(), HttpMethod.GET, entity, ResponseApprovalDTO.class);
+            approvalHeadDpt = data.getBody().getData();
+        }
+        // get approval head fnc
+        ApprovalDTO approvalHeadFnc = null;
+        if (request.getApprovalfnc() != null){
+            ResponseEntity<ResponseApprovalDTO> data = restTemplate.exchange("http://localhost:8085/api/v1/approvals/" + request.getApprovalfnc(), HttpMethod.GET, entity, ResponseApprovalDTO.class);
+            approvalHeadFnc = data.getBody().getData();
+        }
         // get type
         RequestTypeEntity type = requestTypeService.getTypeById(request.getRequesttypeid());
         for (RequestDetailEntity detail: request.getDetails()) {
@@ -139,6 +150,6 @@ public class RequestController {
             }
             details.add(new RequestDetailResponseDTO(detail.getUuid(), itemDTO, serviceDTO, detail.getQty(), detail.getPrice(), detail.getDescription(), detail.getCreatedby(),  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(detail.getCreatedon()), detail.getLastupdatedby(),  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(detail.getLastupdatedon())));
         }
-        return new RequestDTO(request.getUuid(), new TypeDTO(type.getUuid(), type.getType()), deptInfo.getBody(), request.getNotrans(), request.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")), request.getDescription(), request.getApprovaldpt(), request.getApprovalfnc(), request.getCreatedby(), new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(request.getCreatedon()), request.getLastupdatedby(), new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(request.getLastupdatedon()), details);
+        return new RequestDTO(request.getUuid(), new TypeDTO(type.getUuid(), type.getType()), deptInfo.getBody(), request.getNotrans(), request.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")), request.getDescription(), approvalHeadDpt, approvalHeadFnc, request.getCreatedby(), new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(request.getCreatedon()), request.getLastupdatedby(), new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(request.getLastupdatedon()), details);
     }
 }

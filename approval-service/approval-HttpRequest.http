@@ -20,8 +20,13 @@ Authorization: bearer eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoiU1VQRVJBR
 }
 
 ###
+#get by id
+GET http://localhost:8085/api/v1/approvals/3
+Content-Type: application/json
+
+###
 #get by uuid
-GET http://localhost:8085/api/v1/approvals/2ec2234b-daa6-4d86-908b-7ab80ccba777
+GET http://localhost:8085/api/v1/approvals/uuid/2ec2234b-daa6-4d86-908b-7ab80ccba777
 Content-Type: application/json
 
 ###
