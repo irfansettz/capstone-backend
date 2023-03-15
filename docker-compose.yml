@@ -10,7 +10,6 @@ services:
       dockerfile: Dockerfile
     environment:
       - spring.jpa.show-sql=true
-      - spring.main.web-application-type=reactive
     expose:
       - "8080"
     ports:
