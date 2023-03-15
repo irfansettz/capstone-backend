@@ -1,5 +1,6 @@
 package com.capstone.requestservice.service;
 
+import com.capstone.requestservice.dto.UpdateApprovalDTO;
 import com.capstone.requestservice.entity.RequestEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,4 +18,6 @@ public interface RequestService {
     List<RequestEntity> getAllRequest();
 
     void deleteByUuid(String uuid);
+
+    void updateApproval(String uuid, String username, UpdateApprovalDTO approvalDTO);
 }

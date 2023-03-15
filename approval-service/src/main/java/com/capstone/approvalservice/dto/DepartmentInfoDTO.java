@@ -1,16 +1,15 @@
-package com.capstonebackend.managementuserservice.dto;
+package com.capstone.approvalservice.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ApprovalModuleDTO {
+public class DepartmentInfoDTO {
     private Long id;
     private String uuid;
+    private String code;
     private String name;
-    private String explain;
 }

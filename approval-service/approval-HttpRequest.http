@@ -1,0 +1,35 @@
+#add approval
+POST http://localhost:8085/api/v1/approvals
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoiU1VQRVJBRE1JTiIsImV4cCI6MTY3ODg2NDkxMSwiaWF0IjoxNjc4ODYxMzExLCJzY29wZSI6IiJ9.ggJ49GDHtWnvtl-1Np6D390PZASDR6pHF__yg4PwSGOER85ZrfsgAKgROSjt-5NHrl7YzxDw5Z_BsNpr5pq6g3s8qze8CK4EJ9yRehGSJA7kwWOTri94Eh_DqFK2HChuF7SGlV0XTf7f1U04KmUya5LHuPu0weiTYb0mNB9FD6qGutlMo0jDz_tygUwszFmzhwj5F21ZObrJeBjjJxybDqVxyRsiP0c8wANh9d5kzXmRkruVRBl_36LypWCz9x-SejYU3BQTV3TTCmIgKHcMwZKFW22c7b6QxQLqxA__nDtxM1MFBb8vlonHWt46cRtufy54bC4gnDfHRL2nRDEswA
+
+{
+  "requestuuid": "30a4cb83-522a-4721-be0d-afe4d49bd06a",
+  "modulename": "ApprovalHeadDept",
+  "explain": "test approval"
+}
+
+###
+#update status approval
+PUT http://localhost:8085/api/v1/approvals/2ec2234b-daa6-4d86-908b-7ab80ccba777
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoiU1VQRVJBRE1JTiIsImV4cCI6MTY3ODg2NDkxMSwiaWF0IjoxNjc4ODYxMzExLCJzY29wZSI6IiJ9.ggJ49GDHtWnvtl-1Np6D390PZASDR6pHF__yg4PwSGOER85ZrfsgAKgROSjt-5NHrl7YzxDw5Z_BsNpr5pq6g3s8qze8CK4EJ9yRehGSJA7kwWOTri94Eh_DqFK2HChuF7SGlV0XTf7f1U04KmUya5LHuPu0weiTYb0mNB9FD6qGutlMo0jDz_tygUwszFmzhwj5F21ZObrJeBjjJxybDqVxyRsiP0c8wANh9d5kzXmRkruVRBl_36LypWCz9x-SejYU3BQTV3TTCmIgKHcMwZKFW22c7b6QxQLqxA__nDtxM1MFBb8vlonHWt46cRtufy54bC4gnDfHRL2nRDEswA
+
+{
+  "status": "APPROVED"
+}
+
+###
+#get by uuid
+GET http://localhost:8085/api/v1/approvals/2ec2234b-daa6-4d86-908b-7ab80ccba777
+Content-Type: application/json
+
+###
+#get all data
+GET http://localhost:8085/api/v1/approvals
+Content-Type: application/json
+
+###
+#get all data by departmentuuid
+GET http://localhost:8085/api/v1/approvals?departmentuuid=d0ef4c4f-c47e-475f-b088-958d50888ccf
+Content-Type: application/json
