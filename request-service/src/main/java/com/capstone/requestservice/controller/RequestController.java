@@ -73,6 +73,7 @@ public class RequestController {
 
     @GetMapping
     @Transactional
+    // todo add by department
     public ResponseEntity<List<RequestDTO>> getAllRequest(){
         List<RequestEntity> resquests = requestService.getAllRequest();
         List<RequestDTO> requestDTOS = new ArrayList<>();
@@ -105,6 +106,7 @@ public class RequestController {
 
         return new ResponseEntity<>("success", HttpStatus.CREATED);
     }
+    // todo add enpoint simpan request + detail
     public String generateNoTrans(DepartmentInfoDTO deptInfo){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMms");
         LocalDateTime dateTime = LocalDateTime.now();

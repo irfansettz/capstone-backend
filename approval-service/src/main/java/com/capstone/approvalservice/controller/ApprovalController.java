@@ -34,7 +34,7 @@ public class ApprovalController {
         ResponseEntity<ApprovalModuleDTO> approvalMdl = restTemplate.exchange("http://localhost:8082/v1/api/users/approval-module?name=" + approval.getModulename(), HttpMethod.GET, entity, ApprovalModuleDTO.class);
 
         String uuid = UUID.randomUUID().toString();
-        ApprovalEntity approvalSave = new ApprovalEntity(null, uuid, deptInfo.getBody().getId(), approvalMdl.getBody().getId(), approval.getExplain(), "NEED_APPROVE", userInfo.getBody().getUsername(), null, userInfo.getBody().getUsername(), null);
+        ApprovalEntity approvalSave = new ApprovalEntity(null, uuid, deptInfo.getBody().getId(), approvalMdl.getBody().getId(), approval.getExplain(), "PENDING", userInfo.getBody().getUsername(), null, userInfo.getBody().getUsername(), null);
 
         Long approvalid = approvalService.addApproval(approvalSave);
 
