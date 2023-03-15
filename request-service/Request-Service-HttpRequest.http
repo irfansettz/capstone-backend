@@ -18,13 +18,16 @@ GET http://localhost:8084/v1/api/requests/4400e94b-aae6-47f7-9b4e-141d92fbdaa1
 Accept: application/json
 
 ###
+POST http://localhost:8084/v1/api/requests/tes
+
+###
 #add request
 POST http://localhost:8084/v1/api/requests
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoiU1VQRVJBRE1JTiIsImV4cCI6MTY3ODUyMzA0OSwiaWF0IjoxNjc4NTE5NDQ5LCJzY29wZSI6IiJ9.cDWEDJi2ojqX8tFLNqAk0zuOBqzhX1YtCMQ6pgZqUbVSdE6k7nA5_Gb2O6gC8L0FqPbSDanRWkZYmdCizVkPErNPdo84TnaCZkQ0mjdQozzImAjtw9qICoG3WDI1QXTrTGamX1kUjJZVPb7KPDc-wvOz2SFsOjGSchq7u5n82i6LS-syN6q1haF1quJPk5qo0XXlsOIbtNgpH4UO4-0XY18B3v8h-nEphJ9nFDgJFVAz7rp-lEKKN5K23WrtjsHXle8mOuCyT4HaY2LPxerJQCUr3UMn7dRPX8FeLsGxcgiDw00Mv968DsbM9jmiCGOWIbhpCtC8qY3vCikpwYeE4w
+Authorization: bearer eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoiU1VQRVJBRE1JTiIsImV4cCI6MTY3ODg3NDQ2MiwiaWF0IjoxNjc4ODcwODYyLCJzY29wZSI6IiJ9.EFOWIGiNRduUAeMK0nc-DoMuIKaP6YdTBF1OsM-J-ThL37VvczlRtv9xizV_PBeI76F-phdLsZYIWl5UqRp6eezues3gV-Td7qSVXshBmb_pcefBZToRyabu7LtRXucnyvyaA6CaG6ZbFK_IETUFdH4DLW-PWMCuQ7r05teWAKJ5CHscj2oP619YLxIPeq7jv6SBWxrXQrOAx7_9sZEZIa3yqw6QxmTbZ71LfQKAqi76ALx1dlvJsiDQNSvcMRIFawcQCwQ6oWRUJ7Nexvd-EOE_2xSF3HrJspX-BGqNfUDfkoGp3RTszZyl2Kgv1zB3f8FGO0-ucorR-52x6URPOQ
 
 {
-  "typeUuid": "ce2c5a4a-48e7-468a-b527-4733d8981440",
+  "typeUuid": "c6216277-06c6-473e-8de4-e5881f0b93ce",
   "description": "test request 2"
 }
 ###

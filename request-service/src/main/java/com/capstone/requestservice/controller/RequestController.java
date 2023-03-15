@@ -6,7 +6,9 @@ import com.capstone.requestservice.entity.RequestEntity;
 import com.capstone.requestservice.entity.RequestTypeEntity;
 import com.capstone.requestservice.service.RequestService;
 import com.capstone.requestservice.service.RequestTypeService;
+import com.capstone.requestservice.service.impl.EmailService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -27,18 +29,35 @@ public class RequestController {
     private final RequestTypeService requestTypeService;
     private final RestTemplate restTemplate;
 
+
+    private final EmailService emailService;
+
+
     @PostMapping
-    public ResponseEntity<RequestUuidDTO> saveRequest(@RequestBody SaveRequestDTO request, @RequestHeader("Authorization") String authorizationHeader){
+    public ResponseEntity<RequestUuidDTO> saveRequest(
+            @RequestBody SaveRequestDTO request, @RequestHeader("Authorization") String authorizationHeader){
         String newToken = authorizationHeader.split(" ")[1];
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(newToken);
 
         HttpEntity<String> entity = new HttpEntity<>(headers);
-        ResponseEntity<UserInfoDTO> userInfo = restTemplate.exchange("http://auth-service:8081/api/v1/auth/user-data/username-dept", HttpMethod.GET, entity, UserInfoDTO.class);
-        ResponseEntity<DepartmentInfoDTO> deptInfo = restTemplate.exchange("http://management-user-service:8082/v1/api/users/departments/uuid/" + userInfo.getBody().getDepartmentuuid(), HttpMethod.GET, entity, DepartmentInfoDTO.class);
+        ResponseEntity<UserInfoDTO> userInfo = restTemplate.exchange("http://localhost:8081/api/v1/auth/user-data/username-dept", HttpMethod.GET, entity, UserInfoDTO.class);
+        ResponseEntity<DepartmentInfoDTO> deptInfo = restTemplate.exchange("http://localhost:8082/v1/api/users/departments/uuid/" + userInfo.getBody().getDepartmentuuid(), HttpMethod.GET, entity, DepartmentInfoDTO.class);
         RequestTypeEntity requestType = requestTypeService.getRequestTypeByUuid(request.getTypeUuid());
         RequestEntity saveRequest = new RequestEntity(null, UUID.randomUUID().toString(), requestType.getId(), deptInfo.getBody().getId(), generateNoTrans(deptInfo.getBody()), null, request.getDescription(), null, null, userInfo.getBody().getUsername(), null, userInfo.getBody().getUsername(), null, null);
         String uuid = requestService.addRequest(saveRequest);
+
+        String messageText = "";
+        messageText += "\n\nPermintaan anda dengan kode " + uuid;
+        messageText += "\nsudah kami terima, terima kasih.";
+
+        // Send email notification
+        emailService.sendEmailMessage(
+                "numanarif87@gmail.com",
+                "Request for item",
+                messageText
+        );
+
 
         RequestUuidDTO response = new RequestUuidDTO(uuid);
         response.setCode(201);
