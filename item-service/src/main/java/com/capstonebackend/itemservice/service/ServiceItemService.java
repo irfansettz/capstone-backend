@@ -6,7 +6,9 @@ import com.capstonebackend.itemservice.exception.NotFoundException;
 import com.capstonebackend.itemservice.repository.ServiceRepository;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,9 +16,11 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Data
+@Transactional
 public class ServiceItemService{
     private final ServiceRepository serviceRepository;
 
+    @Cacheable("services")
     public List<ServiceEntity> getAllServices() {
         List<ServiceEntity> services = serviceRepository.findAll();
         if (services != null) {

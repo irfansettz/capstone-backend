@@ -52,16 +52,16 @@ Content-Type: application/json
 GET http://localhost:8083/api/v1/services
 
 #### Get Service by Id
-GET http://localhost:8083/api/v1/services/12
+GET http://localhost:8083/api/v1/services/3
 
 ### Get Service by uuid
 GET http://localhost:8083/api/v1/services/uuid/afaee816-aaf2-4a5c-a2e5-b26c6734f140
 
 ### Delete Service
-DELETE http://localhost:8083/api/v1/services/43
+DELETE http://localhost:8083/api/v1/services/3
 
 ### Update Service
-PUT http://localhost:8083/api/v1/services/1
+PUT http://localhost:8083/api/v1/services/3
 Content-Type: application/json
 
 {

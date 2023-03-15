@@ -8,13 +8,14 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 @Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class ServiceEntity {
+public class ServiceEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
