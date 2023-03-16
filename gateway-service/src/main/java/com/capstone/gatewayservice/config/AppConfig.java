@@ -25,6 +25,8 @@ public class AppConfig {
         configuration.addExposedHeader("X-Get-Header");
         configuration.addAllowedOrigin("http://localhost:3000");
         configuration.addAllowedMethod("*");
+        configuration.addExposedHeader("Access-Control-Allow-Origin");
+        configuration.addExposedHeader("Access-Control-Allow-Credentials");
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
