@@ -15,10 +15,10 @@ public class GatewayConfig {
     RouteLocator gatewayRoutes(RouteLocatorBuilder builder){
         return builder.routes()
                 // aurh service
-//                 .route(r -> r.path("/api/v1/auth/login")
-//                         .and().method("GET", "POST", "PUT", "DELETE")
-//                         .filters(f -> f.filter(filter))
-//                         .uri("http://auth-service:8081/"))
+                .route(r -> r.path("/api/v1/auth/login")
+                        .and().method("GET", "POST", "PUT", "DELETE")
+                        //.filters(f -> f.filter(filter))
+                        .uri("http://auth-service:8081/"))
                 // management user service
                 .route(r -> r.path("/v1/api/users/**")
                         .and().method("GET", "POST", "PUT", "DELETE")
@@ -51,9 +51,6 @@ public class GatewayConfig {
                         .and().method("GET", "POST", "PUT", "DELETE")
                         .filters(f -> f.filter(filter))
                         .uri("http://approval-service:8085/"))
-                .route(r -> r.path("/api/v1/auth/login")
-//                         .and().method("GET", "POST", "PUT", "DELETE")
-                        .uri("http://auth-service:8081/"))
                 .build();
     }
 }
