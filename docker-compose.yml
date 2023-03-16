@@ -90,6 +90,25 @@ services:
       - "8084"
     ports:
       - "8084:8084"
+  approval-service:
+    image: 'approval-service:latest'
+    container_name: approval-service
+    build:
+      context: approval-service
+      dockerfile: Dockerfile
+    depends_on:
+      - request-db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://request-db:3306/request_db
+      - SPRING_DATASOURCE_USERNAME=capstone
+      - SPRING_DATASOURCE_PASSWORD=12345678
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - spring.jpa.show-sql=true
+      - SERVER_PORT=8085
+    expose:
+      - "8085"
+    ports:
+      - "8085:8085"
   # database 
   user-db:
     image: 'postgres:15-alpine'
