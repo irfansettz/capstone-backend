@@ -42,7 +42,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         return http
                 .csrf(csrf -> csrf.disable())
-                .cors(cors->cors.disable())
+                .cors(Customizer.withDefaults())
                 .authorizeRequests(auth -> {
                     auth.antMatchers("/api/v1/auth/login", "/swagger-ui/**", "/v2/**").permitAll();
                     auth.anyRequest().authenticated();
