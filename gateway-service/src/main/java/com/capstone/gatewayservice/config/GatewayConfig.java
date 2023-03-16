@@ -30,6 +30,10 @@ public class GatewayConfig {
                         .and().method("GET", "POST", "UPDATE", "DELETE")
                         .filters(f -> f.filter(filter))
                         .uri("http://request-service:8084/"))
+                .route(r -> r.path("/api/v1/**")
+                        .and().method("GET", "POST", "UPDATE", "DELETE")
+                        .filters(f -> f.filter(filter))
+                        .uri("http://approval-service:8085/"))
                 .build();
     }
 }
