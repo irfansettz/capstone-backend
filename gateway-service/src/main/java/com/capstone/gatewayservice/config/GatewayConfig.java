@@ -17,7 +17,7 @@ public class GatewayConfig {
                 // aurh service
                 .route(r -> r.path("/api/v1/auth/login")
                         .and().method("GET", "POST", "PUT", "DELETE")
-                        //.filters(f -> f.filter(filter))
+                        .filters(f -> f.filter(filter))
                         .uri("http://auth-service:8081/"))
                 // management user service
                 .route(r -> r.path("/v1/api/users/**")
