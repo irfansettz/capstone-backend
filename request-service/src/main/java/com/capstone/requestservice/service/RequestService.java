@@ -9,7 +9,7 @@ import java.util.List;
 
 @Service
 public interface RequestService {
-    String addRequest(RequestEntity saveRequest);
+    RequestEntity addRequest(RequestEntity saveRequest);
 
     void updateByUiid(String uuid, String desc, String username);
 
@@ -20,4 +20,6 @@ public interface RequestService {
     void deleteByUuid(String uuid);
 
     void updateApproval(String uuid, String username, UpdateApprovalDTO approvalDTO);
+
+    List<RequestEntity> getAllByDepartmentid(Long departmentid);
 }

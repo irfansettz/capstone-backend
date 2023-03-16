@@ -4,10 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
-public class SaveRequestDTO {
-    private String typeUuid;
-    private String description;
+@Data
+public class AddRequestDetailDTO {
+    private SaveRequestDTO header;
+    private List<RequestDetailDTO> details;
 }

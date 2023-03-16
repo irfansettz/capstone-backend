@@ -8,6 +8,8 @@ import com.capstone.requestservice.service.RequestDetailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class RequestDetailServiceImpl implements RequestDetailService {
@@ -40,5 +42,10 @@ public class RequestDetailServiceImpl implements RequestDetailService {
     public RequestDetailEntity getByUuid(String uuid) {
         if (requestDetailRepository.findByUuid(uuid) == null ) throw new RequestDetailNotFound("Request detail not found");
         return requestDetailRepository.findByUuid(uuid);
+    }
+
+    @Override
+    public void saveAllDetail(List<RequestDetailEntity> requestDetails) {
+        requestDetailRepository.saveAll(requestDetails);
     }
 }

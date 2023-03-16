@@ -25,33 +25,32 @@ public class RequestDetailController {
     private final RequestTypeService requestTypeService;
     private final RestTemplate restTemplate;
 
-    @PostMapping
-    @Transactional
-    // todo add request header
-    public ResponseEntity<ResponseDTO> addRequestDetail(@RequestBody RequestDetailDTO requestDetail){
-        // get data request header
-        RequestEntity request = requestService.getByUuid(requestDetail.getRequestUuid());
-        // get data request type
-        RequestTypeEntity requestType = requestTypeService.getTypeById(request.getRequesttypeid());
-        RequestDetailEntity requestSave;
-        if ( requestType.getType().equals("Item")){
-            HttpHeaders headers = new HttpHeaders();
-
-            HttpEntity<String> entity = new HttpEntity<>(headers);
-            ResponseEntity<ItemEntityDTO> response = restTemplate.exchange("http://localhost:8083/api/v1/items/uuid/" + requestDetail.getItemUuid(), HttpMethod.GET, entity, ItemEntityDTO.class);
-            ItemEntityDTO item = response.getBody();
-            requestSave = new RequestDetailEntity(null, UUID.randomUUID().toString(), request,item.getId(), null, requestDetail.getQty(), requestDetail.getPrice(), requestDetail.getDesc(), request.getCreatedby(), null, request.getCreatedby(), null);
-        } else {
-            HttpHeaders headers = new HttpHeaders();
-
-            HttpEntity<String> entity = new HttpEntity<>(headers);
-            ResponseEntity<ServiceEntityDTO> response = restTemplate.exchange("http://localhost:8083/api/v1/services/uuid/" + requestDetail.getServiceUuid(), HttpMethod.GET, entity, ServiceEntityDTO.class);
-            ServiceEntityDTO service = response.getBody();
-            requestSave = new RequestDetailEntity(null, UUID.randomUUID().toString(), request,null, service.getId(), requestDetail.getQty(), requestDetail.getPrice(), requestDetail.getDesc(), request.getCreatedby(), null, request.getCreatedby(), null);
-        }
-        requestDetailService.addDetail(requestSave);
-        return new ResponseEntity<>(new ResponseDTO(201, "success", "Request Detail Saved"), HttpStatus.CREATED);
-    }
+//    @PostMapping
+//    @Transactional
+//    public ResponseEntity<ResponseDTO> addRequestDetail(@RequestBody RequestDetailDTO requestDetail){
+//        // get data request header
+//        RequestEntity request = requestService.getByUuid(requestDetail.getRequestUuid());
+//        // get data request type
+//        RequestTypeEntity requestType = requestTypeService.getTypeById(request.getRequesttypeid());
+//        RequestDetailEntity requestSave;
+//        if ( requestType.getType().equals("Item")){
+//            HttpHeaders headers = new HttpHeaders();
+//
+//            HttpEntity<String> entity = new HttpEntity<>(headers);
+//            ResponseEntity<ItemEntityDTO> response = restTemplate.exchange("http://localhost:8083/api/v1/items/uuid/" + requestDetail.getItemUuid(), HttpMethod.GET, entity, ItemEntityDTO.class);
+//            ItemEntityDTO item = response.getBody();
+//            requestSave = new RequestDetailEntity(null, UUID.randomUUID().toString(), request,item.getId(), null, requestDetail.getQty(), requestDetail.getPrice(), requestDetail.getDesc(), request.getCreatedby(), null, request.getCreatedby(), null);
+//        } else {
+//            HttpHeaders headers = new HttpHeaders();
+//
+//            HttpEntity<String> entity = new HttpEntity<>(headers);
+//            ResponseEntity<ServiceEntityDTO> response = restTemplate.exchange("http://localhost:8083/api/v1/services/uuid/" + requestDetail.getServiceUuid(), HttpMethod.GET, entity, ServiceEntityDTO.class);
+//            ServiceEntityDTO service = response.getBody();
+//            requestSave = new RequestDetailEntity(null, UUID.randomUUID().toString(), request,null, service.getId(), requestDetail.getQty(), requestDetail.getPrice(), requestDetail.getDesc(), request.getCreatedby(), null, request.getCreatedby(), null);
+//        }
+//        requestDetailService.addDetail(requestSave);
+//        return new ResponseEntity<>(new ResponseDTO(201, "success", "Request Detail Saved"), HttpStatus.CREATED);
+//    }
 
     @PutMapping("/{uuid}")
     @Transactional

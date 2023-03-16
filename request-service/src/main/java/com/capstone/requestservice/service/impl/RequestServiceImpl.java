@@ -18,8 +18,8 @@ public class RequestServiceImpl implements RequestService {
     private final ReqeustRepository reqeustRepository;
 
     @Override
-    public String addRequest(RequestEntity saveRequest) {
-        return reqeustRepository.save(saveRequest).getUuid();
+    public RequestEntity addRequest(RequestEntity saveRequest) {
+        return reqeustRepository.save(saveRequest);
     }
 
     @Override
@@ -59,5 +59,10 @@ public class RequestServiceImpl implements RequestService {
             request.setApprovalfnc(approvalDTO.getApprovalid());
         }
         reqeustRepository.save(request);
+    }
+
+    @Override
+    public List<RequestEntity> getAllByDepartmentid(Long departmentid) {
+        return reqeustRepository.findByDepartmentid(departmentid);
     }
 }

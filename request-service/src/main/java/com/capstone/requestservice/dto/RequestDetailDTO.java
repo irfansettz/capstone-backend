@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RequestDetailDTO {
-    private String requestUuid;
     private String itemUuid;
     private String serviceUuid;
     private Integer qty;

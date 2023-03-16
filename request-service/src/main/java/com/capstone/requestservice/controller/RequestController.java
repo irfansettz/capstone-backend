@@ -4,6 +4,7 @@ import com.capstone.requestservice.dto.*;
 import com.capstone.requestservice.entity.RequestDetailEntity;
 import com.capstone.requestservice.entity.RequestEntity;
 import com.capstone.requestservice.entity.RequestTypeEntity;
+import com.capstone.requestservice.service.RequestDetailService;
 import com.capstone.requestservice.service.RequestService;
 import com.capstone.requestservice.service.RequestTypeService;
 import lombok.RequiredArgsConstructor;
@@ -26,21 +27,39 @@ public class RequestController {
     private final RequestService requestService;
     private final RequestTypeService requestTypeService;
     private final RestTemplate restTemplate;
+    private final RequestDetailService requestDetailService;
 
     @PostMapping
-    public ResponseEntity<RequestUuidDTO> saveRequest(@RequestBody SaveRequestDTO request, @RequestHeader("Authorization") String authorizationHeader){
+    @Transactional
+    public ResponseEntity<RequestUuidDTO> saveRequest(@RequestBody AddRequestDetailDTO request, @RequestHeader("Authorization") String authorizationHeader){
         String newToken = authorizationHeader.split(" ")[1];
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(newToken);
 
+        // save header
         HttpEntity<String> entity = new HttpEntity<>(headers);
         ResponseEntity<UserInfoDTO> userInfo = restTemplate.exchange("http://localhost:8081/api/v1/auth/user-data/username-dept", HttpMethod.GET, entity, UserInfoDTO.class);
         ResponseEntity<DepartmentInfoDTO> deptInfo = restTemplate.exchange("http://localhost:8082/v1/api/users/departments/uuid/" + userInfo.getBody().getDepartmentuuid(), HttpMethod.GET, entity, DepartmentInfoDTO.class);
-        RequestTypeEntity requestType = requestTypeService.getRequestTypeByUuid(request.getTypeUuid());
-        RequestEntity saveRequest = new RequestEntity(null, UUID.randomUUID().toString(), requestType.getId(), deptInfo.getBody().getId(), generateNoTrans(deptInfo.getBody()), null, request.getDescription(), null, null, userInfo.getBody().getUsername(), null, userInfo.getBody().getUsername(), null, null);
-        String uuid = requestService.addRequest(saveRequest);
+        RequestTypeEntity requestType = requestTypeService.getRequestTypeByUuid(request.getHeader().getTypeUuid());
+        RequestEntity saveRequest = new RequestEntity(null, UUID.randomUUID().toString(), requestType.getId(), deptInfo.getBody().getId(), generateNoTrans(deptInfo.getBody()), null, request.getHeader().getDescription(), null, null, userInfo.getBody().getUsername(), null, userInfo.getBody().getUsername(), null, null);
+        RequestEntity requestSaved = requestService.addRequest(saveRequest);
 
-        RequestUuidDTO response = new RequestUuidDTO(uuid);
+        // save detail
+        List<RequestDetailEntity> requestDetails = new ArrayList<>();
+        for (RequestDetailDTO detail: request.getDetails()) {
+            if ( requestType.getType().equals("Item")){
+                ResponseEntity<ItemEntityDTO> response = restTemplate.exchange("http://localhost:8083/api/v1/items/uuid/" + detail.getItemUuid(), HttpMethod.GET, entity, ItemEntityDTO.class);
+                ItemEntityDTO item = response.getBody();
+                requestDetails.add(new RequestDetailEntity(null, UUID.randomUUID().toString(), requestSaved,item.getId(), null, detail.getQty(), detail.getPrice(), detail.getDesc(), requestSaved.getCreatedby(), null, requestSaved.getCreatedby(), null));
+            } else if( requestType.getType().equals("Service")) {
+                ResponseEntity<ServiceEntityDTO> response = restTemplate.exchange("http://localhost:8083/api/v1/services/uuid/" + detail.getServiceUuid(), HttpMethod.GET, entity, ServiceEntityDTO.class);
+                ServiceEntityDTO service = response.getBody();
+                requestDetails.add(new RequestDetailEntity(null, UUID.randomUUID().toString(), requestSaved,null, service.getId(), detail.getQty(), detail.getPrice(), detail.getDesc(), requestSaved.getCreatedby(), null, requestSaved.getCreatedby(), null));
+            }
+        }
+        requestDetailService.saveAllDetail(requestDetails);
+
+        RequestUuidDTO response = new RequestUuidDTO(requestSaved.getUuid());
         response.setCode(201);
         response.setStatus("success");
         response.setMessage("request saved");
@@ -73,9 +92,13 @@ public class RequestController {
 
     @GetMapping
     @Transactional
-    // todo add by department
-    public ResponseEntity<List<RequestDTO>> getAllRequest(){
-        List<RequestEntity> resquests = requestService.getAllRequest();
+    public ResponseEntity<List<RequestDTO>> getAllRequest(@RequestParam(name = "departmentid", required = false) Long departmentid){
+        List<RequestEntity> resquests = null;
+        if (departmentid != null){
+            resquests = requestService.getAllByDepartmentid(departmentid);
+        } else {
+            resquests = requestService.getAllRequest();
+        }
         List<RequestDTO> requestDTOS = new ArrayList<>();
 
         for (RequestEntity request: resquests) {
@@ -106,7 +129,7 @@ public class RequestController {
 
         return new ResponseEntity<>("success", HttpStatus.CREATED);
     }
-    // todo add enpoint simpan request + detail
+
     public String generateNoTrans(DepartmentInfoDTO deptInfo){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMms");
         LocalDateTime dateTime = LocalDateTime.now();
