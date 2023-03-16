@@ -21,8 +21,8 @@ public class AppConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        //config.setAllowedOrigins(List.of("*"));
-        config.setAllowedOrigins("*");
+        config.setAllowedOrigins(List.of("*"));
+        config.addAllowedOrigin("http://localhost:3000");
         config.addAllowedMethod("GET");
         config.addAllowedMethod("POST");
         config.addAllowedMethod("PUT");
