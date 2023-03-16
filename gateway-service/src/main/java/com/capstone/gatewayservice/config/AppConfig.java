@@ -23,7 +23,7 @@ public class AppConfig {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.addAllowedHeader("Requestor-Type");
         configuration.addExposedHeader("X-Get-Header");
-        configuration.addAllowedOrigin("*");
+        configuration.addAllowedOrigin("http://localhost:3000");
         configuration.addAllowedMethod("*");
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
