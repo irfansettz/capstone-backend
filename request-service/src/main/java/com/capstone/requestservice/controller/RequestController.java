@@ -38,8 +38,8 @@ public class RequestController {
 
         // save header
         HttpEntity<String> entity = new HttpEntity<>(headers);
-        ResponseEntity<UserInfoDTO> userInfo = restTemplate.exchange("http://localhost:8081/api/v1/auth/user-data/username-dept", HttpMethod.GET, entity, UserInfoDTO.class);
-        ResponseEntity<DepartmentInfoDTO> deptInfo = restTemplate.exchange("http://localhost:8082/v1/api/users/departments/uuid/" + userInfo.getBody().getDepartmentuuid(), HttpMethod.GET, entity, DepartmentInfoDTO.class);
+        ResponseEntity<UserInfoDTO> userInfo = restTemplate.exchange("http://auth-service:8081/api/v1/auth/user-data/username-dept", HttpMethod.GET, entity, UserInfoDTO.class);
+        ResponseEntity<DepartmentInfoDTO> deptInfo = restTemplate.exchange("http://management-user-service:8082/v1/api/users/departments/uuid/" + userInfo.getBody().getDepartmentuuid(), HttpMethod.GET, entity, DepartmentInfoDTO.class);
         RequestTypeEntity requestType = requestTypeService.getRequestTypeByUuid(request.getHeader().getTypeUuid());
         RequestEntity saveRequest = new RequestEntity(null, UUID.randomUUID().toString(), requestType.getId(), deptInfo.getBody().getId(), generateNoTrans(deptInfo.getBody()), null, request.getHeader().getDescription(), null, null, userInfo.getBody().getUsername(), null, userInfo.getBody().getUsername(), null, null);
         RequestEntity requestSaved = requestService.addRequest(saveRequest);
@@ -48,11 +48,11 @@ public class RequestController {
         List<RequestDetailEntity> requestDetails = new ArrayList<>();
         for (RequestDetailDTO detail: request.getDetails()) {
             if ( requestType.getType().equals("Item")){
-                ResponseEntity<ItemEntityDTO> response = restTemplate.exchange("http://localhost:8083/api/v1/items/uuid/" + detail.getItemUuid(), HttpMethod.GET, entity, ItemEntityDTO.class);
+                ResponseEntity<ItemEntityDTO> response = restTemplate.exchange("http://item-service:8083/api/v1/items/uuid/" + detail.getItemUuid(), HttpMethod.GET, entity, ItemEntityDTO.class);
                 ItemEntityDTO item = response.getBody();
                 requestDetails.add(new RequestDetailEntity(null, UUID.randomUUID().toString(), requestSaved,item.getId(), null, detail.getQty(), detail.getPrice(), detail.getDesc(), requestSaved.getCreatedby(), null, requestSaved.getCreatedby(), null));
             } else if( requestType.getType().equals("Service")) {
-                ResponseEntity<ServiceEntityDTO> response = restTemplate.exchange("http://localhost:8083/api/v1/services/uuid/" + detail.getServiceUuid(), HttpMethod.GET, entity, ServiceEntityDTO.class);
+                ResponseEntity<ServiceEntityDTO> response = restTemplate.exchange("http://item-service:8083/api/v1/services/uuid/" + detail.getServiceUuid(), HttpMethod.GET, entity, ServiceEntityDTO.class);
                 ServiceEntityDTO service = response.getBody();
                 requestDetails.add(new RequestDetailEntity(null, UUID.randomUUID().toString(), requestSaved,null, service.getId(), detail.getQty(), detail.getPrice(), detail.getDesc(), requestSaved.getCreatedby(), null, requestSaved.getCreatedby(), null));
             }
@@ -73,7 +73,7 @@ public class RequestController {
         headers.setBearerAuth(newToken);
 
         HttpEntity<String> entity = new HttpEntity<>(headers);
-        ResponseEntity<UserInfoDTO> userInfo = restTemplate.exchange("http://localhost:8081/api/v1/auth/user-data/username-dept", HttpMethod.GET, entity, UserInfoDTO.class);
+        ResponseEntity<UserInfoDTO> userInfo = restTemplate.exchange("http://auth-service:8081/api/v1/auth/user-data/username-dept", HttpMethod.GET, entity, UserInfoDTO.class);
         requestService.updateByUiid(uuid, requestDTO.getDescription(), userInfo.getBody().getUsername());
 
         RequestUuidDTO response = new RequestUuidDTO(uuid);
@@ -123,7 +123,7 @@ public class RequestController {
         headers.setBearerAuth(newToken);
 
         HttpEntity<String> entity = new HttpEntity<>(headers);
-        ResponseEntity<UserInfoDTO> userInfo = restTemplate.exchange("http://localhost:8081/api/v1/auth/user-data/username-dept", HttpMethod.GET, entity, UserInfoDTO.class);
+        ResponseEntity<UserInfoDTO> userInfo = restTemplate.exchange("http://auth-service:8081/api/v1/auth/user-data/username-dept", HttpMethod.GET, entity, UserInfoDTO.class);
 
         requestService.updateApproval(uuid, userInfo.getBody().getUsername(), approvalDTO);
 
@@ -141,18 +141,18 @@ public class RequestController {
         HttpEntity<String> entity = new HttpEntity<>(headers);
 
         // get dept info
-        ResponseEntity<DepartmentInfoDTO> deptInfo = restTemplate.exchange("http://localhost:8082/v1/api/users/departments/" + request.getDepartmentid(), HttpMethod.GET, entity, DepartmentInfoDTO.class);
+        ResponseEntity<DepartmentInfoDTO> deptInfo = restTemplate.exchange("http://management-user-service:8082/v1/api/users/departments/" + request.getDepartmentid(), HttpMethod.GET, entity, DepartmentInfoDTO.class);
         List<RequestDetailResponseDTO> details = new ArrayList<>();
         // get approval dept head
         ApprovalDTO approvalHeadDpt = null;
         if (request.getApprovaldpt() != null){
-            ResponseEntity<ResponseApprovalDTO> data = restTemplate.exchange("http://localhost:8085/api/v1/approvals/" + request.getApprovaldpt(), HttpMethod.GET, entity, ResponseApprovalDTO.class);
+            ResponseEntity<ResponseApprovalDTO> data = restTemplate.exchange("http://approval-service:8085/api/v1/approvals/" + request.getApprovaldpt(), HttpMethod.GET, entity, ResponseApprovalDTO.class);
             approvalHeadDpt = data.getBody().getData();
         }
         // get approval head fnc
         ApprovalDTO approvalHeadFnc = null;
         if (request.getApprovalfnc() != null){
-            ResponseEntity<ResponseApprovalDTO> data = restTemplate.exchange("http://localhost:8085/api/v1/approvals/" + request.getApprovalfnc(), HttpMethod.GET, entity, ResponseApprovalDTO.class);
+            ResponseEntity<ResponseApprovalDTO> data = restTemplate.exchange("http://approval-service:8085/api/v1/approvals/" + request.getApprovalfnc(), HttpMethod.GET, entity, ResponseApprovalDTO.class);
             approvalHeadFnc = data.getBody().getData();
         }
         // get type
@@ -163,13 +163,13 @@ public class RequestController {
             // get item
             if (detail.getItemid() != null){
 
-                ResponseEntity<ItemEntityDTO> response = restTemplate.exchange("http://localhost:8083/api/v1/items/" + detail.getItemid(), HttpMethod.GET, entity, ItemEntityDTO.class);
+                ResponseEntity<ItemEntityDTO> response = restTemplate.exchange("http://item-service:8083/api/v1/items/" + detail.getItemid(), HttpMethod.GET, entity, ItemEntityDTO.class);
                 ItemEntityDTO item = response.getBody();
                 itemDTO = new ItemDTO(item.getUuid(), item.getName());
             }
             // get service
             if (detail.getServiceid() != null){
-                ResponseEntity<ServiceEntityDTO> response = restTemplate.exchange("http://localhost:8083/api/v1/services/" + detail.getItemid(), HttpMethod.GET, entity, ServiceEntityDTO.class);
+                ResponseEntity<ServiceEntityDTO> response = restTemplate.exchange("http://item-service:8083/api/v1/services/" + detail.getItemid(), HttpMethod.GET, entity, ServiceEntityDTO.class);
                 ServiceEntityDTO service = response.getBody();
                 serviceDTO = new ServiceDTO(service.getUuid(), service.getName());
             }

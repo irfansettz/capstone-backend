@@ -29,15 +29,15 @@ public class ApprovalController {
         headers.setBearerAuth(newToken);
 
         HttpEntity<String> entity = new HttpEntity<>(headers);
-        ResponseEntity<UserInfoDTO> userInfo = restTemplate.exchange("http://localhost:8081/api/v1/auth/user-data/username-dept", HttpMethod.GET, entity, UserInfoDTO.class);
-        ResponseEntity<ApprovalModuleDTO> approvalMdl = restTemplate.exchange("http://localhost:8082/v1/api/users/approval-module?name=" + approval.getModulename(), HttpMethod.GET, entity, ApprovalModuleDTO.class);
+        ResponseEntity<UserInfoDTO> userInfo = restTemplate.exchange("http://auth-service:8081/api/v1/auth/user-data/username-dept", HttpMethod.GET, entity, UserInfoDTO.class);
+        ResponseEntity<ApprovalModuleDTO> approvalMdl = restTemplate.exchange("http://management-user-service:8082/v1/api/users/approval-module?name=" + approval.getModulename(), HttpMethod.GET, entity, ApprovalModuleDTO.class);
 
         DepartmentInfoDTO deptInfo = null;
         if (approvalMdl.getBody().getName().equals("ApprovalHeadFNC")){
-            ResponseEntity<DepartmentInfoDTO> response = restTemplate.exchange("http://localhost:8082/v1/api/users/departments/code/FNC", HttpMethod.GET, entity, DepartmentInfoDTO.class);
+            ResponseEntity<DepartmentInfoDTO> response = restTemplate.exchange("http://management-user-service:8082/v1/api/users/departments/code/FNC", HttpMethod.GET, entity, DepartmentInfoDTO.class);
             deptInfo = response.getBody();
         } else {
-            ResponseEntity<DepartmentInfoDTO> response = restTemplate.exchange("http://localhost:8082/v1/api/users/departments/uuid/" + userInfo.getBody().getDepartmentuuid(), HttpMethod.GET, entity, DepartmentInfoDTO.class);
+            ResponseEntity<DepartmentInfoDTO> response = restTemplate.exchange("http://management-user-service:8082/v1/api/users/departments/uuid/" + userInfo.getBody().getDepartmentuuid(), HttpMethod.GET, entity, DepartmentInfoDTO.class);
             deptInfo = response.getBody();
         }
         String uuid = UUID.randomUUID().toString();
@@ -47,7 +47,7 @@ public class ApprovalController {
 
         // update request
         HttpEntity<UpdateApprovalDTO> aprovalUpdate = new HttpEntity<>(new UpdateApprovalDTO(approvalid, approval.getModulename()),headers);
-        ResponseEntity<String> request = restTemplate.exchange("http://localhost:8084/v1/api/requests/approval/" + approval.getRequestuuid(), HttpMethod.PUT, aprovalUpdate, String.class);
+        ResponseEntity<String> request = restTemplate.exchange("http://request-service:8084/v1/api/requests/approval/" + approval.getRequestuuid(), HttpMethod.PUT, aprovalUpdate, String.class);
         ResponseDTO<String> response = new ResponseDTO<>();
         response.setHttpStatus(HttpStatus.CREATED);
         response.setMessage("created");
@@ -63,7 +63,7 @@ public class ApprovalController {
         headers.setBearerAuth(newToken);
 
         HttpEntity<String> entity = new HttpEntity<>(headers);
-        ResponseEntity<UserInfoDTO> userInfo = restTemplate.exchange("http://localhost:8081/api/v1/auth/user-data/username-dept", HttpMethod.GET, entity, UserInfoDTO.class);
+        ResponseEntity<UserInfoDTO> userInfo = restTemplate.exchange("http://auth-service:8081/api/v1/auth/user-data/username-dept", HttpMethod.GET, entity, UserInfoDTO.class);
 
         approvalService.updateStatusByUuid(uuid, userInfo.getBody().getUsername(), status);
 
@@ -90,7 +90,7 @@ public class ApprovalController {
         if (departmentuuid != null){
             HttpHeaders headers = new HttpHeaders();
             HttpEntity<String> entity = new HttpEntity<>(headers);
-            ResponseEntity<DepartmentInfoDTO> deptInfo = restTemplate.exchange("http://localhost:8082/v1/api/users/departments/uuid/" + departmentuuid, HttpMethod.GET, entity, DepartmentInfoDTO.class);
+            ResponseEntity<DepartmentInfoDTO> deptInfo = restTemplate.exchange("http://management-user-service:8082/v1/api/users/departments/uuid/" + departmentuuid, HttpMethod.GET, entity, DepartmentInfoDTO.class);
             List<ApprovalEntity> approvals = approvalService.getByDepartmentId(deptInfo.getBody().getId());
             for (ApprovalEntity approval:approvals) {
                 data.add(getDataApproval(approval));
@@ -114,8 +114,8 @@ public class ApprovalController {
         HttpHeaders headers = new HttpHeaders();
         HttpEntity<String> entity = new HttpEntity<>(headers);
 
-        ResponseEntity<DepartmentInfoDTO> deptInfo = restTemplate.exchange("http://localhost:8082/v1/api/users/departments/" + approval.getDepartmentid(), HttpMethod.GET, entity, DepartmentInfoDTO.class);
-        ResponseEntity<ApprovalModuleDTO> approvalMdl = restTemplate.exchange("http://localhost:8082/v1/api/users/approval-module/" + approval.getModuleid(), HttpMethod.GET, entity, ApprovalModuleDTO.class);
+        ResponseEntity<DepartmentInfoDTO> deptInfo = restTemplate.exchange("http://management-user-service:8082/v1/api/users/departments/" + approval.getDepartmentid(), HttpMethod.GET, entity, DepartmentInfoDTO.class);
+        ResponseEntity<ApprovalModuleDTO> approvalMdl = restTemplate.exchange("http://management-user-service:8082/v1/api/users/approval-module/" + approval.getModuleid(), HttpMethod.GET, entity, ApprovalModuleDTO.class);
 
         return new ApprovalDTO(approval.getId(), approval.getUuid(), approvalMdl.getBody(), deptInfo.getBody(), approval.getDescription(), approval.getStatus(), approval.getCreatedby(), new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(approval.getCreatedon()), approval.getLastupdatedby(), new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(approval.getLastupdatedon()));
     }
