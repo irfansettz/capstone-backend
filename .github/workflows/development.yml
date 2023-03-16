@@ -12,6 +12,16 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+
+      - name: Delete directory target
+        uses: appleboy/ssh-action@v0.1.7
+        with:
+          host: ${{ secrets.EC2_INSTANCE_HOST }}
+          username: ${{ secrets.EC2_INSTANCE_NAME }}
+          password: ${{ secrets.EC2_INSTANCE_PASSWORD }}
+          script: |
+            cd ~/
+            rm -rf capstone-backend
         
       - name: Copy files to EC2 instance
         uses: appleboy/scp-action@master
@@ -20,7 +30,7 @@ jobs:
           username: ${{ secrets.EC2_INSTANCE_NAME }}
           password: ${{ secrets.EC2_INSTANCE_PASSWORD }}
           source: ./
-          target: /home/capstone/capstone-backend
+          target: ~/capstone-backend
 
       - name: SSH into EC2 instance and deploy
         uses: appleboy/ssh-action@v0.1.7
@@ -29,7 +39,7 @@ jobs:
           username: ${{ secrets.EC2_INSTANCE_NAME }}
           password: ${{ secrets.EC2_INSTANCE_PASSWORD }}
           script: |
-            cd /home/capstone/capstone-backend
+            cd ~/capstone-backend
             docker compose down
             chmod u+x remove_images.sh
             ./remove_images.sh
