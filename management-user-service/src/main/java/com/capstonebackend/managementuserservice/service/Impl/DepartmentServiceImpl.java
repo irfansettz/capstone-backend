@@ -27,4 +27,9 @@ public class DepartmentServiceImpl implements DepartmentService {
     public DepartmentEntity getDeptByUuid(String uuid) {
         return departmentRepository.findByUuid(uuid);
     }
+
+    @Override
+    public DepartmentEntity getAllByCode(String code) {
+        return departmentRepository.findByCode(code);
+    }
 }

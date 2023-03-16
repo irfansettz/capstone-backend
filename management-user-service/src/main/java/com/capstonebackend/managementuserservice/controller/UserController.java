@@ -137,19 +137,16 @@ public class UserController {
     }
 
     @GetMapping("/departments")
-    public ResponseEntity<DepartmentResponseDTO> getAllDepartments(){
+    public ResponseEntity<List<DepartmentDTO>> getAllDepartments(){
         // get data
-        List<DepartmentEntity> allDept = departmentService.getAllDept();
+        List<DepartmentEntity> allDept = departmentService.getAllDept();;
+
         List<DepartmentDTO> departmentDTO = new ArrayList<>();
         for (DepartmentEntity department : allDept) {
             departmentDTO.add(new DepartmentDTO(department.getId(),department.getUuid(), department.getCode(), department.getName()));
         }
 
-        // return response
-        DepartmentResponseDTO response = new DepartmentResponseDTO(departmentDTO);
-        response.setCode(200);
-        response.setStatus("success");
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(departmentDTO, HttpStatus.OK);
     }
 
     @GetMapping("/departments/{id}")
@@ -172,6 +169,15 @@ public class UserController {
         return new ResponseEntity<>(departmentDTO, HttpStatus.OK);
     }
 
+    @GetMapping("/departments/code/{code}")
+    public ResponseEntity<DepartmentDTO> getDepartmentByCode(@PathVariable String code){
+        // get data
+        DepartmentEntity dept = departmentService.getAllByCode(code);
+        DepartmentDTO departmentDTO = new DepartmentDTO(dept.getId(),dept.getUuid(), dept.getCode(), dept.getName());
+
+        // return response
+        return new ResponseEntity<>(departmentDTO, HttpStatus.OK);
+    }
     @PostMapping("/roles")
     public ResponseEntity<UserResponseDTO> addUserRole(@RequestBody UserRoleDTO userRoleDTO){
         // get data

@@ -30,11 +30,18 @@ public class ApprovalController {
 
         HttpEntity<String> entity = new HttpEntity<>(headers);
         ResponseEntity<UserInfoDTO> userInfo = restTemplate.exchange("http://localhost:8081/api/v1/auth/user-data/username-dept", HttpMethod.GET, entity, UserInfoDTO.class);
-        ResponseEntity<DepartmentInfoDTO> deptInfo = restTemplate.exchange("http://localhost:8082/v1/api/users/departments/uuid/" + userInfo.getBody().getDepartmentuuid(), HttpMethod.GET, entity, DepartmentInfoDTO.class);
         ResponseEntity<ApprovalModuleDTO> approvalMdl = restTemplate.exchange("http://localhost:8082/v1/api/users/approval-module?name=" + approval.getModulename(), HttpMethod.GET, entity, ApprovalModuleDTO.class);
 
+        DepartmentInfoDTO deptInfo = null;
+        if (approvalMdl.getBody().getName().equals("ApprovalHeadFNC")){
+            ResponseEntity<DepartmentInfoDTO> response = restTemplate.exchange("http://localhost:8082/v1/api/users/departments/code/FNC", HttpMethod.GET, entity, DepartmentInfoDTO.class);
+            deptInfo = response.getBody();
+        } else {
+            ResponseEntity<DepartmentInfoDTO> response = restTemplate.exchange("http://localhost:8082/v1/api/users/departments/uuid/" + userInfo.getBody().getDepartmentuuid(), HttpMethod.GET, entity, DepartmentInfoDTO.class);
+            deptInfo = response.getBody();
+        }
         String uuid = UUID.randomUUID().toString();
-        ApprovalEntity approvalSave = new ApprovalEntity(null, uuid, deptInfo.getBody().getId(), approvalMdl.getBody().getId(), approval.getExplain(), "PENDING", userInfo.getBody().getUsername(), null, userInfo.getBody().getUsername(), null);
+        ApprovalEntity approvalSave = new ApprovalEntity(null, uuid, deptInfo.getId(), approvalMdl.getBody().getId(), approval.getExplain(), "PENDING", userInfo.getBody().getUsername(), null, userInfo.getBody().getUsername(), null);
 
         Long approvalid = approvalService.addApproval(approvalSave);
 

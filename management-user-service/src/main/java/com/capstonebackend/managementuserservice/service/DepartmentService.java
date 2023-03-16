@@ -12,4 +12,6 @@ public interface DepartmentService {
     List<DepartmentEntity> getAllDept();
 
     DepartmentEntity getDeptByUuid(String uuid);
+
+    DepartmentEntity getAllByCode(String code);
 }
