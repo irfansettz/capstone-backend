@@ -9,9 +9,9 @@ POST http://localhost:8082/v1/api/users
 Content-Type: application/json
 
 {
-  "username": "irfanset",
-  "email": "irfanset@gmail.com",
-  "password": "irfanset123",
+  "username": "numanarif",
+  "email": "arifnuman87@gmail.com",
+  "password": "numanarif@123",
   "active": true,
   "createdby": "system",
   "lastupdatedby": "system"
@@ -53,8 +53,8 @@ POST http://localhost:8082/v1/api/users/roles
 Content-Type: application/json
 
 {
-  "useruuid": "9dede466-d92f-4c80-84cb-12b9847ca06b",
-  "roleuuid": "dbf05dbc-d802-4a31-9ed0-61e62d39a60e"
+  "useruuid": "8cc4a2ba-c762-41f4-a584-73528369147d",
+  "roleuuid": "b1418f14-219f-40f0-be62-a125f3361a2e"
 }
 
 ###
@@ -68,8 +68,8 @@ POST http://localhost:8082/v1/api/users/departments
 Content-Type: application/json
 
 {
-  "useruuid": "7fa11c88-5922-49b0-be0d-14c500d466ca",
-  "departmentuuid": "bbf449db-a89a-4533-8625-e37d20076c89"
+  "useruuid": "8cc4a2ba-c762-41f4-a584-73528369147d",
+  "departmentuuid": "39bf1b19-4adc-4868-8c80-3091c8fa547b"
 }
 
 ###

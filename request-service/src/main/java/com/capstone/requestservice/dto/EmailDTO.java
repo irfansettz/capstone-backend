@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserInfoDTO {
-    private String email;
-    private String username;
-    private String departmentuuid;
+public class EmailDTO {
+    private String to;
+    private String subject;
+    private String body;
 }

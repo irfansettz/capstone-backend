@@ -19,7 +19,7 @@ public class UserDataSeeder implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         if (userRepository.count() == 0){
-            UserEntity user = new UserEntity(null, UUID.randomUUID().toString(), "SUPERADMIN", "superadmin@gmail.com", passwordEncoder.encode("12345678"), true, null, "SYSTEM INJECTOR", null, "SYSTEM INJECTOR", null, null);
+            UserEntity user = new UserEntity(null, UUID.randomUUID().toString(), "SUPERADMIN", "arifnuman87@gmail.com", passwordEncoder.encode("12345678"), true, null, "SYSTEM INJECTOR", null, "SYSTEM INJECTOR", null, null);
             userRepository.save(user);
         }
     }

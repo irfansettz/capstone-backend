@@ -29,8 +29,7 @@ public class RequestController {
     private final RequestTypeService requestTypeService;
     private final RestTemplate restTemplate;
 
-
-    private final EmailService emailService;
+    private static final String NOTIFICATION_SERVICE_URL = "http://localhost:8086/api/v1/send-email";
 
 
     @PostMapping
@@ -47,17 +46,16 @@ public class RequestController {
         RequestEntity saveRequest = new RequestEntity(null, UUID.randomUUID().toString(), requestType.getId(), deptInfo.getBody().getId(), generateNoTrans(deptInfo.getBody()), null, request.getDescription(), null, null, userInfo.getBody().getUsername(), null, userInfo.getBody().getUsername(), null, null);
         String uuid = requestService.addRequest(saveRequest);
 
+        // Send email notification
         String messageText = "";
         messageText += "\n\nPermintaan anda dengan kode " + uuid;
         messageText += "\nsudah kami terima, terima kasih.";
 
-        // Send email notification
-        emailService.sendEmailMessage(
-                "numanarif87@gmail.com",
-                "Request for item",
-                messageText
+        HttpEntity<EmailDTO> emailRequest = new HttpEntity<>(
+                new EmailDTO(userInfo.getBody().getUsername(), "Request for item", messageText),
+                headers
         );
-
+        restTemplate.postForEntity(NOTIFICATION_SERVICE_URL, emailRequest, String.class);
 
         RequestUuidDTO response = new RequestUuidDTO(uuid);
         response.setCode(201);
@@ -65,6 +63,7 @@ public class RequestController {
         response.setMessage("request saved");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
 
     @PutMapping("/{uuid}")
     public ResponseEntity<ResponseDTO> updateRequestByUuid(@RequestHeader("Authorization") String authorizationHeader, @RequestBody SaveRequestDTO requestDTO, @PathVariable String uuid){
