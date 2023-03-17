@@ -29,12 +29,25 @@ public class UserServiceImpl implements UserServices {
 
     @Override
     public UserEntity getUserByUsername(String username) {
-        if (userRepository.findByUsername(username) == null)  throw new UserNotFound("user not found");
+        if (userRepository.findByUsername(username) == null) throw new UserNotFound("user not found");
         return userRepository.findByUsername(username);
     }
 
     @Override
     public List<UserEntity> getAllUser() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public UserEntity getUserByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public void resetPasswordByUuid(String uuid, String encode) {
+        if (userRepository.findByUuid(uuid) == null) throw new UserNotFound("user not found");
+        UserEntity user = userRepository.findByUuid(uuid);
+        user.setPassword(encode);
+        userRepository.save(user);
     }
 }

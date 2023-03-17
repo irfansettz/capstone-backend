@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -29,10 +30,13 @@ public class UserController {
     private final ApprovalModuleService approvalModuleService;
 
     @GetMapping
-    public ResponseEntity<UserResponseDTO> getAllUser(@RequestParam(name = "username", required = false) String username){
+    public ResponseEntity<UserResponseDTO> getAllUser(@RequestParam(name = "username", required = false) String username, @RequestParam(name = "email", required = false) String email){
         List<UserDTO> userDTOS = new ArrayList<>();
         if(username != null) {
             UserEntity user = userServices.getUserByUsername(username);
+            userDTOS.add(fnGetUserByUuid(user.getUuid()));
+        } else if(email != null) {
+            UserEntity user = userServices.getUserByEmail(email);
             userDTOS.add(fnGetUserByUuid(user.getUuid()));
         } else {
             List<UserEntity> allUser = userServices.getAllUser();
@@ -46,6 +50,7 @@ public class UserController {
         response.setStatus("success");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
     @PostMapping
     public ResponseEntity<UserResponseDTO> addUser(@RequestBody UserRequestDTO user){
         //set up data to save
@@ -106,7 +111,6 @@ public class UserController {
         response.setData(roleDTO);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
 
     @GetMapping ("/roles/{id}")
     public ResponseEntity<RoleResponseDTO> getRoleById(@PathVariable Long id){
@@ -178,6 +182,7 @@ public class UserController {
         // return response
         return new ResponseEntity<>(departmentDTO, HttpStatus.OK);
     }
+
     @PostMapping("/roles")
     public ResponseEntity<UserResponseDTO> addUserRole(@RequestBody UserRoleDTO userRoleDTO){
         // get data
@@ -286,6 +291,13 @@ public class UserController {
         ApprovalModuleDTO response = new ApprovalModuleDTO(approvalModule.getId(), approvalModule.getUuid(), approvalModule.getName(), approvalModule.getExplain());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @PutMapping("/reset-password/{uuid}")
+    public ResponseEntity<ResponseDTO> resetPasswordByUuid(@RequestBody PasswordDTO password, @PathVariable String uuid){
+        userServices.resetPasswordByUuid(uuid, passwordEncoder.encode(password.getPassword()));
+        return new ResponseEntity<>(new ResponseDTO(201, "success", "Password Updated"), HttpStatus.CREATED);
+    }
+
     public UserDTO fnGetUserByUuid(String uuid){
         UserEntity user = userServices.getUserByUuid(uuid);
 
