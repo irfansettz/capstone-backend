@@ -114,12 +114,12 @@ services:
       - "8085"
     ports:
       - "8085:8085"
-  message-broker-service:
-    image: 'message-broker-service:latest'
-    container_name: message-broker-service
-    build:
-      context: message-broker-service
-      dockerfile: Dockerfile
+#  message-broker-service:
+#    image: 'message-broker-service:latest'
+#    container_name: message-broker-service
+#    build:
+#      context: message-broker-service
+#      dockerfile: Dockerfile
   notification-service:
     image: 'notification-service:latest'
     container_name: notification-service
