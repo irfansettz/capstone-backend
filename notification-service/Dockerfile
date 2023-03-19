@@ -3,7 +3,8 @@ FROM maven:3.8.3-openjdk-17-slim AS maven
 WORKDIR /usr/src/app
 
 COPY pom.xml .
-RUN mvn dependency:go-offline
+#RUN mvn dependency:go-offline
+RUN mvn clean install -U -DskipTests
 
 COPY src/ src/
 RUN mvn package -DskipTests
