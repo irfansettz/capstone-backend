@@ -120,38 +120,38 @@ services:
     build:
       context: message-broker-service
       dockerfile: Dockerfile
-#  notification-service:
-#    image: 'notification-service:latest'
-#    container_name: notification-service
-#    build:
-#      context: notification-service
-#      dockerfile: Dockerfile
-#    environment:
-#      - spring.mail.host=smtp.gmail.com
-#      - spring.mail.port=587
-#      - spring.mail.username=ikonpms@gmail.com
-#      - spring.mail.password=jjgritwumqdzqlvd
-#      - spring.mail.properties.mail.debug=true
-#      - spring.mail.properties.mail.transport.protocol=smtp
-#      - spring.mail.properties.mail.smtp.auth=true
-#      - spring.mail.properties.mail.smtp.starttls.enable=true
-#      - server.port=8086
-#    expose:
-#      - "8086"
-#    ports:
-#      - "8086:8086"
-#  chat-service:
-#    image: 'chat-service:latest'
-#    container_name: chat-service
-#    build:
-#      context: chat-service
-#      dockerfile: Dockerfile
-#    environment:
-#      - server.port=8087
-#    expose:
-#      - "8087"
-#    ports:
-#      - "8087:8087"
+  notification-service:
+    image: 'notification-service:latest'
+    container_name: notification-service
+    build:
+      context: notification-service
+      dockerfile: Dockerfile
+    environment:
+      - spring.mail.host=smtp.gmail.com
+      - spring.mail.port=587
+      - spring.mail.username=ikonpms@gmail.com
+      - spring.mail.password=jjgritwumqdzqlvd
+      - spring.mail.properties.mail.debug=true
+      - spring.mail.properties.mail.transport.protocol=smtp
+      - spring.mail.properties.mail.smtp.auth=true
+      - spring.mail.properties.mail.smtp.starttls.enable=true
+      - server.port=8086
+    expose:
+      - "8086"
+    ports:
+      - "8086:8086"
+  chat-service:
+    image: 'chat-service:latest'
+    container_name: chat-service
+    build:
+      context: chat-service
+      dockerfile: Dockerfile
+    environment:
+      - server.port=8087
+    expose:
+      - "8087"
+    ports:
+      - "8087:8087"
   cache-redis-db:
     image: redis:6.2-alpine
     container_name: cache-redis-db
