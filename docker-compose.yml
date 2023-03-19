@@ -128,7 +128,6 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - rabbitmq
-      - message-broker-service
     environment:
       - spring.mail.host=smtp.gmail.com
       - spring.mail.port=587
