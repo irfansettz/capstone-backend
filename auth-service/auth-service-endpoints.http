@@ -16,8 +16,8 @@ POST localhost:8081/api/v1/auth/login
 Content-Type: application/json
 
 {
-  "username" : "SUPERADMIN",
-  "password" : "12345678"
+  "username" : "numanarif",
+  "password" : "numanarif@123"
 }
 
 > {%
@@ -26,5 +26,4 @@ client.global.set("token", response.body.data);
 ###
 
 GET localhost:8081/api/v1/auth/user-data
-Authorization: Bearer eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoiU1VQRVJBRE1JTiIsImV4cCI6MTY3ODM3MDU5NSwiaWF0IjoxNjc4MzY2OTk1LCJzY29wZSI6IiJ9.pfzGdLxDfRaX0qq9PPA3Ol7jNcFM7jZlspeHvbpKGKfTjgAdjBVAZRfQoG8F6lNbqZ9hB9ph0Fb6slYvqcdBuH4432_ezobwttvdSW9mG9OrEkWChoxkW86QbkVmFAjNCzUajVuzEV-fojKSGtUEbeYJnx4_N9Whqbljelx_ZVI0Pp8ccl7PE-i4y56FY1jyHAUOAissMesCDt801gYstL0-fwog69RoJYNG6I6qJ_3agXwoFnkPNC-ML5JNwCrZHXUYmGQa8DIvEoG1SZm9SyD30eX_dv2gXRfMskcGUpyq8KpvEPjObO1EdzLeNoAZu_Sic0KGRMg55unsXKi4AA
-
+Authorization: Bearer {{token}}

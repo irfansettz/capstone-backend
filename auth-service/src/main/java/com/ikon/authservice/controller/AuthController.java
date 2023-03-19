@@ -47,6 +47,8 @@ public class AuthController {
     public ResponseEntity<UserDTO> userInfo(@RequestHeader(name = "Authorization") String tokenBearer) {
         UserDTO user = tokenService.decodeToken(tokenBearer);
 
+        System.out.println(user.getEmail());
+
         return new ResponseEntity(user, HttpStatus.OK);
     }
 
@@ -54,6 +56,6 @@ public class AuthController {
     public ResponseEntity<UserInfoDTO> usernameDeptInfo(@RequestHeader(name = "Authorization") String tokenBearer) {
         UserDTO user = tokenService.decodeToken(tokenBearer);
 
-        return new ResponseEntity(new UserInfoDTO(user.getUsername(), user.getDepartments().get(0).getUuid()), HttpStatus.OK);
+        return new ResponseEntity(new UserInfoDTO(user.getUsername(), user.getEmail(),user.getDepartments().get(0).getUuid()), HttpStatus.OK);
     }
 }

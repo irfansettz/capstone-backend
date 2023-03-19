@@ -5,7 +5,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-@SpringBootApplication
+@SpringBootApplication(
+        scanBasePackages = {
+                "com.capstone.requestservice",
+                "com.capstone.messagebrokerservice",
+        }
+)
 @EnableWebMvc
 public class RequestServiceApplication {
 
