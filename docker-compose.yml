@@ -126,16 +126,16 @@ services:
     build:
       context: notification-service
       dockerfile: Dockerfile
-#    environment:
-#      - spring.mail.host=smtp.gmail.com
-#      - spring.mail.port=587
-#      - spring.mail.username=ikonpms@gmail.com
-#      - spring.mail.password=jjgritwumqdzqlvd
-#      - spring.mail.properties.mail.debug=true
-#      - spring.mail.properties.mail.transport.protocol=smtp
-#      - spring.mail.properties.mail.smtp.auth=true
-#      - spring.mail.properties.mail.smtp.starttls.enable=true
-#      - server.port=8086
+    environment:
+      - spring.mail.host=smtp.gmail.com
+      - spring.mail.port=587
+      - spring.mail.username=ikonpms@gmail.com
+      - spring.mail.password=jjgritwumqdzqlvd
+      - spring.mail.properties.mail.debug=true
+      - spring.mail.properties.mail.transport.protocol=smtp
+      - spring.mail.properties.mail.smtp.auth=true
+      - spring.mail.properties.mail.smtp.starttls.enable=true
+      - server.port=8086
     expose:
       - "8086"
     ports:
