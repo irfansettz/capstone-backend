@@ -10,6 +10,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Delete local .m2 repository
+        run: rm -rf ~/.m2/repository
+
       - name: Checkout code
         uses: actions/checkout@v2
 
