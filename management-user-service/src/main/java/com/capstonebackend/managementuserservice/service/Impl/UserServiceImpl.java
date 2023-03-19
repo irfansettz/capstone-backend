@@ -50,4 +50,6 @@ public class UserServiceImpl implements UserServices {
         user.setPassword(encode);
         userRepository.save(user);
     }
+
 }
+

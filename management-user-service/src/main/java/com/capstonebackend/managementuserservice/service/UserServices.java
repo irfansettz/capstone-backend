@@ -18,4 +18,6 @@ public interface UserServices {
     UserEntity getUserByEmail(String email);
 
     void resetPasswordByUuid(String uuid, String encode);
+
 }
+
