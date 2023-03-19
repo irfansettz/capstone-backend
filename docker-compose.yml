@@ -79,6 +79,8 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - request-db
+    networks:
+      - msg-broker
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://request-db:3306/request_db
       - SPRING_DATASOURCE_USERNAME=capstone
@@ -114,12 +116,14 @@ services:
       - "8085"
     ports:
       - "8085:8085"
-#  message-broker-service:
-#    image: 'message-broker-service:latest'
-#    container_name: message-broker-service
-#    build:
-#      context: message-broker-service
-#      dockerfile: Dockerfile
+  message-broker-service:
+    image: 'message-broker-service:latest'
+    container_name: message-broker-service
+    build:
+      context: message-broker-service
+      dockerfile: Dockerfile
+    networks:
+      - msg-broker
   notification-service:
     image: 'notification-service:latest'
     container_name: notification-service
@@ -128,6 +132,8 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - rabbitmq
+    networks:
+      - msg-broker
     environment:
       - spring.mail.host=smtp.gmail.com
       - spring.mail.port=587
@@ -171,6 +177,8 @@ services:
     ports:
       - "5673:5672"
       - "15673:15672"
+    networks:
+      - msg-broker
     volumes:
       - rabbit_mq1:/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
       - rabbit_mq2:/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
@@ -205,6 +213,9 @@ services:
       - "3306"
     ports:
       - "3306:3306"
+
+networks:
+  msg-broker:
       
 volumes:
   user_db:
