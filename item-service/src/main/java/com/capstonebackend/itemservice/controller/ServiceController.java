@@ -6,8 +6,10 @@ import com.capstonebackend.itemservice.dto.ServiceDTO;
 import com.capstonebackend.itemservice.entity.ServiceEntity;
 import com.capstonebackend.itemservice.service.ServiceItemService;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +21,8 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/v1/services")
 @Data
+@RequiredArgsConstructor
+@Transactional
 public class ServiceController {
     private final ServiceItemService serviceItemService;
 

@@ -1,5 +1,6 @@
 package com.capstone.requestservice.controller;
 
+import com.capstone.messagebrokerservice.RabbitMQMessageProducer;
 import com.capstone.requestservice.dto.*;
 import com.capstone.requestservice.entity.RequestDetailEntity;
 import com.capstone.requestservice.entity.RequestEntity;
@@ -28,6 +29,10 @@ public class RequestController {
     private final RequestTypeService requestTypeService;
     private final RestTemplate restTemplate;
     private final RequestDetailService requestDetailService;
+
+    private final RabbitMQMessageProducer rabbitMQMessageProducer;
+
+
 
     @PostMapping
     @Transactional
@@ -58,6 +63,20 @@ public class RequestController {
             }
         }
         requestDetailService.saveAllDetail(requestDetails);
+
+        // Send email notification
+        HttpEntity<EmailDTO> emailRequest = new HttpEntity<>(
+                new EmailDTO(userInfo.getBody().getEmail(), "Request for item", "Permintaan anda sudah kami terima, terima kasih.")
+                //headers
+        );
+
+        rabbitMQMessageProducer.publish(
+                emailRequest.getBody(),
+                "internal.exchange",
+                "internal.notification.routing-key"
+        );
+        //restTemplate.postForEntity(NOTIFICATION_SERVICE_URL, emailRequest, String.class);
+
 
         RequestUuidDTO response = new RequestUuidDTO(requestSaved.getUuid());
         response.setCode(201);

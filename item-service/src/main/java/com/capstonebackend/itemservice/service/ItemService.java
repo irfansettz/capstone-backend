@@ -3,18 +3,22 @@ package com.capstonebackend.itemservice.service;
 import com.capstonebackend.itemservice.entity.ItemEntity;
 import com.capstonebackend.itemservice.exception.NotFoundException;
 import com.capstonebackend.itemservice.repository.ItemRepository;
+import org.springframework.cache.annotation.Cacheable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ItemService {
 
     private final ItemRepository itemRepository;
 
+    @Cacheable("items")
     public List<ItemEntity> getAllItems() {
         List<ItemEntity> items = itemRepository.findAll();
         if (items != null) {

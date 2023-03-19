@@ -9,12 +9,12 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.Timestamp;
-
+import java.io.Serializable;
 @Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class ItemEntity {
+public class ItemEntity implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

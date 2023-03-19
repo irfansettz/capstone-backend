@@ -9,9 +9,9 @@ POST http://localhost:8082/v1/api/users
 Content-Type: application/json
 
 {
-  "username": "irfanset",
-  "email": "irfanset@gmail.com",
-  "password": "irfanset123",
+  "username": "numanarif",
+  "email": "arifnuman87@gmail.com",
+  "password": "numanarif@123",
   "active": true,
   "createdby": "system",
   "lastupdatedby": "system"

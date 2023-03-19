@@ -21,11 +21,23 @@ Accept: application/json
 #add request
 POST http://localhost:8084/v1/api/requests
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoiU1VQRVJBRE1JTiIsImV4cCI6MTY3ODg2NDkxMSwiaWF0IjoxNjc4ODYxMzExLCJzY29wZSI6IiJ9.ggJ49GDHtWnvtl-1Np6D390PZASDR6pHF__yg4PwSGOER85ZrfsgAKgROSjt-5NHrl7YzxDw5Z_BsNpr5pq6g3s8qze8CK4EJ9yRehGSJA7kwWOTri94Eh_DqFK2HChuF7SGlV0XTf7f1U04KmUya5LHuPu0weiTYb0mNB9FD6qGutlMo0jDz_tygUwszFmzhwj5F21ZObrJeBjjJxybDqVxyRsiP0c8wANh9d5kzXmRkruVRBl_36LypWCz9x-SejYU3BQTV3TTCmIgKHcMwZKFW22c7b6QxQLqxA__nDtxM1MFBb8vlonHWt46cRtufy54bC4gnDfHRL2nRDEswA
+Authorization: bearer eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoibnVtYW5hcmlmIiwiZXhwIjoxNjc5MDUyNDYxLCJpYXQiOjE2NzkwNDg4NjEsInNjb3BlIjoiIn0.ASnA7z49W87lflb_efpho6w6gjacd9ipDEcFHQt8uY-3Gux2Bk2i8r698QGwqnVjUDgYVQJT0WUI2uD4rTWLmI7aY8JRGp1MhTKHPpfoM2Pe4zkTGxw_ba-VcmrCjlXr_KrMyzXAuylVIkSrCH9bJpAHpGQ3FRbXupDDp9hAq9SonfqpLVETUEG8Bm-tx_ZV3zmn2h-xQSpUT_xlYqQAeKuTsi6lPx18siQ5X7zrYbsURKeHRU8O4fTkhl9t26rWwta4oBMeOn_r_VB3KY1rXeGtrAaHavv60QLvde4R6c3hyo6qcm5BwM1VmNl8PScs69SJmyzeZadewK0pD_DEfA
 
 {
-  "typeUuid": "e93df47d-f5d8-4807-8c55-6b0241c8dec9",
-  "description": "test request 1"
+  "header": {
+    "typeUuid": "35f72873-6284-4a07-b4db-265439f6ea30",
+    "description": "test request tipe item 1"
+  },
+  "details": [
+    {
+      "itemUuid": "f4ffd41c-a7ca-4512-bfd7-0098d00e9866",
+      "serviceUuid": "",
+      "qty": 4,
+      "price": 9000000,
+      "desc": "test item 1"
+    }
+
+  ]
 }
 ###
 #Delete requset by uuid
