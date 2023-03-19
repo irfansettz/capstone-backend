@@ -166,7 +166,8 @@ services:
     volumes:
       - rabbit_mq1:/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
       - rabbit_mq2:/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
-  # database 
+
+  # databases
   user-db:
     image: 'postgres:15-alpine'
     container_name: user-db
