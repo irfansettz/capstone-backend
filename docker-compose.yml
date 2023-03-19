@@ -114,38 +114,38 @@ services:
       - "8085"
     ports:
       - "8085:8085"
-  notification-service:
-    image: 'notification-service:latest'
-    container_name: notification-service
-    build:
-      context: notification-service
-      dockerfile: Dockerfile
-    environment:
-      - spring.mail.host=smtp.gmail.com
-      - spring.mail.port=587
-      - spring.mail.username=ikonpms@gmail.com
-      - spring.mail.password=jjgritwumqdzqlvd
-      - spring.mail.properties.mail.debug=true
-      - spring.mail.properties.mail.transport.protocol=smtp
-      - spring.mail.properties.mail.smtp.auth=true
-      - spring.mail.properties.mail.smtp.starttls.enable=true
-      - server.port=8086
-    expose:
-      - "8086"
-    ports:
-      - "8086:8086"
-  chat-service:
-    image: 'chat-service:latest'
-    container_name: chat-service
-    build:
-      context: chat-service
-      dockerfile: Dockerfile
-    environment:
-      - server.port=8087
-    expose:
-      - "8087"
-    ports:
-      - "8087:8087"
+#  notification-service:
+#    image: 'notification-service:latest'
+#    container_name: notification-service
+#    build:
+#      context: notification-service
+#      dockerfile: Dockerfile
+#    environment:
+#      - spring.mail.host=smtp.gmail.com
+#      - spring.mail.port=587
+#      - spring.mail.username=ikonpms@gmail.com
+#      - spring.mail.password=jjgritwumqdzqlvd
+#      - spring.mail.properties.mail.debug=true
+#      - spring.mail.properties.mail.transport.protocol=smtp
+#      - spring.mail.properties.mail.smtp.auth=true
+#      - spring.mail.properties.mail.smtp.starttls.enable=true
+#      - server.port=8086
+#    expose:
+#      - "8086"
+#    ports:
+#      - "8086:8086"
+#  chat-service:
+#    image: 'chat-service:latest'
+#    container_name: chat-service
+#    build:
+#      context: chat-service
+#      dockerfile: Dockerfile
+#    environment:
+#      - server.port=8087
+#    expose:
+#      - "8087"
+#    ports:
+#      - "8087:8087"
   cache-redis-db:
     image: redis:6.2-alpine
     container_name: cache-redis-db
@@ -154,18 +154,18 @@ services:
       - '6379:6379'
     volumes:
       - cache_redis_db:/data
-  rabbitmq:
-    image: rabbitmq:3.9.11-management-alpine
-    container_name: 'rabbitmq-local'
-    expose:
-      - "15672"
-      - "5672"
-    ports:
-      - "5673:5672"
-      - "15673:15672"
-    volumes:
-      - rabbit_mq1:/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
-      - rabbit_mq2:/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+#  rabbitmq:
+#    image: rabbitmq:3.9.11-management-alpine
+#    container_name: 'rabbitmq-local'
+#    expose:
+#      - "15672"
+#      - "5672"
+#    ports:
+#      - "5673:5672"
+#      - "15673:15672"
+#    volumes:
+#      - rabbit_mq1:/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+#      - rabbit_mq2:/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
   # databases
   user-db:
     image: 'postgres:15-alpine'
@@ -202,8 +202,8 @@ volumes:
   user_db:
   request_db:
   cache_redis_db:
-  rabbit_mq1:
-  rabbit_mq2:
+#  rabbit_mq1:
+#  rabbit_mq2:
 
 
 
