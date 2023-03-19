@@ -33,8 +33,6 @@ public class RequestController {
     private final RabbitMQMessageProducer rabbitMQMessageProducer;
 
 
-    private static final String NOTIFICATION_SERVICE_URL = "http://localhost:8086/api/v1/send-email";
-
 
     @PostMapping
     @Transactional
@@ -45,8 +43,8 @@ public class RequestController {
 
         // save header
         HttpEntity<String> entity = new HttpEntity<>(headers);
-        ResponseEntity<UserInfoDTO> userInfo = restTemplate.exchange("http://localhost:8081/api/v1/auth/user-data/username-dept", HttpMethod.GET, entity, UserInfoDTO.class);
-        ResponseEntity<DepartmentInfoDTO> deptInfo = restTemplate.exchange("http://localhost:8082/v1/api/users/departments/uuid/" + userInfo.getBody().getDepartmentuuid(), HttpMethod.GET, entity, DepartmentInfoDTO.class);
+        ResponseEntity<UserInfoDTO> userInfo = restTemplate.exchange("http://auth-service:8081/api/v1/auth/user-data/username-dept", HttpMethod.GET, entity, UserInfoDTO.class);
+        ResponseEntity<DepartmentInfoDTO> deptInfo = restTemplate.exchange("http://management-user-service:8082/v1/api/users/departments/uuid/" + userInfo.getBody().getDepartmentuuid(), HttpMethod.GET, entity, DepartmentInfoDTO.class);
         RequestTypeEntity requestType = requestTypeService.getRequestTypeByUuid(request.getHeader().getTypeUuid());
         RequestEntity saveRequest = new RequestEntity(null, UUID.randomUUID().toString(), requestType.getId(), deptInfo.getBody().getId(), generateNoTrans(deptInfo.getBody()), null, request.getHeader().getDescription(), null, null, userInfo.getBody().getUsername(), null, userInfo.getBody().getUsername(), null, null);
         RequestEntity requestSaved = requestService.addRequest(saveRequest);
@@ -55,11 +53,11 @@ public class RequestController {
         List<RequestDetailEntity> requestDetails = new ArrayList<>();
         for (RequestDetailDTO detail: request.getDetails()) {
             if ( requestType.getType().equals("Item")){
-                ResponseEntity<ItemEntityDTO> response = restTemplate.exchange("http://localhost:8083/api/v1/items/uuid/" + detail.getItemUuid(), HttpMethod.GET, entity, ItemEntityDTO.class);
+                ResponseEntity<ItemEntityDTO> response = restTemplate.exchange("http://item-service:8083/api/v1/items/uuid/" + detail.getItemUuid(), HttpMethod.GET, entity, ItemEntityDTO.class);
                 ItemEntityDTO item = response.getBody();
                 requestDetails.add(new RequestDetailEntity(null, UUID.randomUUID().toString(), requestSaved,item.getId(), null, detail.getQty(), detail.getPrice(), detail.getDesc(), requestSaved.getCreatedby(), null, requestSaved.getCreatedby(), null));
             } else if( requestType.getType().equals("Service")) {
-                ResponseEntity<ServiceEntityDTO> response = restTemplate.exchange("http://localhost:8083/api/v1/services/uuid/" + detail.getServiceUuid(), HttpMethod.GET, entity, ServiceEntityDTO.class);
+                ResponseEntity<ServiceEntityDTO> response = restTemplate.exchange("http://item-service:8083/api/v1/services/uuid/" + detail.getServiceUuid(), HttpMethod.GET, entity, ServiceEntityDTO.class);
                 ServiceEntityDTO service = response.getBody();
                 requestDetails.add(new RequestDetailEntity(null, UUID.randomUUID().toString(), requestSaved,null, service.getId(), detail.getQty(), detail.getPrice(), detail.getDesc(), requestSaved.getCreatedby(), null, requestSaved.getCreatedby(), null));
             }
