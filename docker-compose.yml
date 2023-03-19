@@ -131,7 +131,8 @@ services:
       context: notification-service
       dockerfile: Dockerfile
     depends_on:
-      - rabbitmq
+#      - rabbitmq
+      - message-broker-service
     networks:
       - msg-broker
     environment:
