@@ -39,12 +39,12 @@
 			<artifactId>amqp-client</artifactId>
 			<version>5.12.0</version>
 		</dependency>
-		<dependency>
-			<groupId>com.capstone</groupId>
-			<artifactId>message-broker-service</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-			<scope>compile</scope>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>com.capstone</groupId>-->
+<!--			<artifactId>message-broker-service</artifactId>-->
+<!--			<version>0.0.1-SNAPSHOT</version>-->
+<!--			<scope>compile</scope>-->
+<!--		</dependency>-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
