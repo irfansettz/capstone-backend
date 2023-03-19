@@ -156,7 +156,7 @@ services:
       - cache_redis_db:/data
   rabbitmq:
     image: rabbitmq:3.9.11-management-alpine
-    container_name: 'rabbitmq'
+    container_name: 'rabbitmq-local'
     expose:
       - "15672"
       - "5672"
@@ -166,7 +166,6 @@ services:
     volumes:
       - rabbit_mq1:/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
       - rabbit_mq2:/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
-
   # databases
   user-db:
     image: 'postgres:15-alpine'
