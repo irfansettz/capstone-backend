@@ -126,6 +126,8 @@ services:
     build:
       context: notification-service
       dockerfile: Dockerfile
+    depends_on:
+      - rabbitmq
     environment:
       - spring.mail.host=smtp.gmail.com
       - spring.mail.port=587
