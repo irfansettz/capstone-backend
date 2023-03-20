@@ -105,6 +105,7 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - request-db
+      - cache-redis-db
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://request-db:3306/request_db
       - SPRING_DATASOURCE_USERNAME=capstone
