@@ -92,10 +92,14 @@ public class RequestController {
 
     @GetMapping
     @Transactional
-    public ResponseEntity<List<RequestDTO>> getAllRequest(@RequestParam(name = "departmentid", required = false) Long departmentid){
+    public ResponseEntity<List<RequestDTO>> getAllRequest(@RequestParam(name = "departmentid", required = false) Long departmentid, @RequestParam(name= "approvalheadid", required = false) Long approvalheadid, @RequestParam(name = "approvalfncid") Long approvalfncid ){
         List<RequestEntity> resquests = null;
         if (departmentid != null){
             resquests = requestService.getAllByDepartmentid(departmentid);
+        } else if(approvalheadid != null) {
+            resquests = requestService.getAllByApprovalHead(approvalheadid);
+        } else if (approvalfncid != null) {
+            resquests = requestService.getAllByApprovalFnc(approvalfncid);
         } else {
             resquests = requestService.getAllRequest();
         }

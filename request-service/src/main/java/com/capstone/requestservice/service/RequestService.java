@@ -22,4 +22,8 @@ public interface RequestService {
     void updateApproval(String uuid, String username, UpdateApprovalDTO approvalDTO);
 
     List<RequestEntity> getAllByDepartmentid(Long departmentid);
+
+    List<RequestEntity> getAllByApprovalHead(Long approvalheadid);
+
+    List<RequestEntity> getAllByApprovalFnc(Long approvalfncid);
 }

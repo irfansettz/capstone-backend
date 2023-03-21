@@ -65,4 +65,14 @@ public class RequestServiceImpl implements RequestService {
     public List<RequestEntity> getAllByDepartmentid(Long departmentid) {
         return reqeustRepository.findByDepartmentid(departmentid);
     }
+
+    @Override
+    public List<RequestEntity> getAllByApprovalHead(Long approvalheadid) {
+        return reqeustRepository.findByApprovaldpt(approvalheadid);
+    }
+
+    @Override
+    public List<RequestEntity> getAllByApprovalFnc(Long approvalfncid) {
+        return reqeustRepository.findByApprovalfnc(approvalfncid);
+    }
 }

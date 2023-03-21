@@ -11,4 +11,8 @@ public interface ReqeustRepository extends JpaRepository<RequestEntity, Long> {
     RequestEntity findByUuid(String uuid);
 
     List<RequestEntity> findByDepartmentid(Long departmentid);
+
+    List<RequestEntity> findByApprovaldpt(Long approvalheadid);
+
+    List<RequestEntity> findByApprovalfnc(Long approvalfncid);
 }
