@@ -169,7 +169,7 @@ public class RequestController {
             }
             // get service
             if (detail.getServiceid() != null){
-                ResponseEntity<ServiceEntityDTO> response = restTemplate.exchange("http://item-service:8083/api/v1/services/" + detail.getItemid(), HttpMethod.GET, entity, ServiceEntityDTO.class);
+                ResponseEntity<ServiceEntityDTO> response = restTemplate.exchange("http://item-service:8083/api/v1/services/" + detail.getServiceid(), HttpMethod.GET, entity, ServiceEntityDTO.class);
                 ServiceEntityDTO service = response.getBody();
                 serviceDTO = new ServiceDTO(service.getUuid(), service.getName());
             }
