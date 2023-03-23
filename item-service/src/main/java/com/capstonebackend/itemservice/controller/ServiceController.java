@@ -83,7 +83,7 @@ public class ServiceController {
 
         serviceItemService.deleteServiceById(id);
 
-        return "Item has been deleted";
+        return "Service has been deleted";
     }
 
     @PutMapping("/{id}")
