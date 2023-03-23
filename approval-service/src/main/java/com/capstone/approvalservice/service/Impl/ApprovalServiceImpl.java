@@ -24,6 +24,7 @@ public class ApprovalServiceImpl implements ApprovalService {
     public void updateStatusByUuid(String uuid, String username, StatusDTO status) {
         ApprovalEntity approval = approvalRepository.findByUuid(uuid);
         approval.setStatus(status.getStatus());
+        approval.setDescription(status.getExplain());
         approval.setLastupdatedby(username);
         approval.setLastupdatedon(null);
         approvalRepository.save(approval);
