@@ -14,6 +14,9 @@ public class GatewayConfig {
     @Bean
     RouteLocator gatewayRoutes(RouteLocatorBuilder builder){
         return builder.routes()
+                // swagger
+                .route(r -> r.path("/api/management-user-service/**")
+                        .uri("http://management-user-service:8082/"))
                 // aurh service
                 .route(r -> r.path("/api/v1/auth/login")
                         .and().method("GET", "POST", "PUT", "DELETE")

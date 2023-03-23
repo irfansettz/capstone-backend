@@ -48,6 +48,7 @@ services:
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
       - spring.jpa.show-sql=true
       - SERVER_PORT=8082
+      - SPRINGDOC_APIDOCS_PATH=/api/management-user-service/v3/api-docs
     expose:
       - "8082"
     ports:
