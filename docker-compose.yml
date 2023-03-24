@@ -202,7 +202,7 @@ services:
     image: mysql:latest
     container_name: request-db
     command: --default-authentication-plugin=mysql_native_password
-    restart: always
+    restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: 12345678
       MYSQL_USER: capstone
